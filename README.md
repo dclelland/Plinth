@@ -14,3 +14,17 @@ Hardware-accelerated matrix library for Swift
 - https://github.com/hollance/Matrix
 - https://github.com/stsievert/swix
 - https://github.com/cgarciae/NDArray
+
+## Todo
+
+- Make variables `internal(set)`
+- Arithmetic functions
+    - Infix operators
+        - Survey MATLAB 
+    - Where are the Surge infix operators used?
+- DSP functions
+- Random numbers
+- Complex numbers
+- MATLAB-esque subscripting
+    - Expanding mutation subscript
+- Pretty printing
