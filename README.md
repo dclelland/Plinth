@@ -1,2 +1,2 @@
 # QRIMatrix
-Hardware-accelerated Matrix library for Swift
+Hardware-accelerated matrix library for Swift
