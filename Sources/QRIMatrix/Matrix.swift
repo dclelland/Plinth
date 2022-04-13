@@ -128,6 +128,23 @@ extension Matrix: ExpressibleByArrayLiteral {
     
 }
 
+extension Matrix: Equatable {
+    
+    public static func == <Element>(lhs: Matrix<Element>, rhs: Matrix<Element>) -> Bool {
+        return lhs.size == rhs.size && lhs.elements == rhs.elements
+    }
+    
+}
+
+extension Matrix: Hashable where Element: Hashable {
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(size)
+        hasher.combine(elements)
+    }
+    
+}
+
 extension Matrix: Sequence {
     
     public typealias Iterator = AnyIterator<Element>

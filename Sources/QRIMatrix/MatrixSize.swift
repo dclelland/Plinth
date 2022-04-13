@@ -7,7 +7,7 @@
 
 import Foundation
     
-public struct MatrixSize: Equatable {
+public struct MatrixSize {
     
     public var rows: Int
     public var columns: Int
@@ -37,6 +37,23 @@ extension MatrixSize {
     
     internal func contains(row: Int, column: Int) -> Bool {
         return contains(row: row) && contains(column: column)
+    }
+    
+}
+
+extension MatrixSize: Equatable {
+    
+    public static func == (lhs: MatrixSize, rhs: MatrixSize) -> Bool {
+        return lhs.rows == rhs.rows && lhs.columns == rhs.columns
+    }
+    
+}
+
+extension MatrixSize: Hashable {
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(rows)
+        hasher.combine(columns)
     }
     
 }
