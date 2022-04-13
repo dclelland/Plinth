@@ -8,14 +8,6 @@
 import Foundation
 import Accelerate
 
-public typealias ComplexFloat = DSPComplex
-
-public typealias ComplexFloatVector = DSPSplitComplex
-
-public typealias ComplexDouble = DSPDoubleComplex
-
-public typealias ComplexDoubleVector = DSPDoubleSplitComplex
-
 public struct ComplexMatrix<Element: Numeric> {
     
     public var real: Matrix<Element>
@@ -45,48 +37,45 @@ extension ComplexMatrix {
     
 }
 
-/*
-extension ComplexMatrix where Element == Float {
+extension ComplexMatrix {
     
-    public subscript(row: Int, column: Int) -> ComplexFloat {
+    public subscript(row: Int, column: Int) -> Complex<Element> {
         get {
-            return ComplexFloat(
-                real: real[row, column],
-                imag: imaginary[row, column]
-            )
+            return Complex<Element>(real: real[row, column], imaginary: imaginary[row, column])
         }
         set {
             real[row, column] = newValue.real
-            imaginary[row, column] = newValue.imag
+            imaginary[row, column] = newValue.imaginary
         }
     }
 
-    public subscript(row row: Int) -> [ComplexFloat] {
+    public subscript(row row: Int) -> [Complex<Element>] {
         get {
             return zip(real[row: row], imaginary[row: row]).map { real, imaginary in
-                return ComplexFloat(real: real, imag: imaginary)
+                return Complex<Element>(real: real, imaginary: imaginary)
             }
         }
         set {
             real[row: row] = newValue.map { $0.real }
-            imaginary[row: row] = newValue.map { $0.imag }
+            imaginary[row: row] = newValue.map { $0.imaginary }
         }
     }
 
-    public subscript(column column: Int) -> [ComplexFloat] {
+    public subscript(column column: Int) -> [Complex<Element>] {
         get {
             return zip(real[column: column], imaginary[column: column]).map { real, imaginary in
-                return ComplexFloat(real: real, imag: imaginary)
+                return Complex<Element>(real: real, imaginary: imaginary)
             }
         }
         set {
             real[column: column] = newValue.map { $0.real }
-            imaginary[column: column] = newValue.map { $0.imag }
+            imaginary[column: column] = newValue.map { $0.imaginary }
         }
     }
     
 }
 
+/*
 extension ComplexMatrix: Sequence {
     
     public typealias Iterator = AnyIterator<Element>
@@ -139,10 +128,10 @@ extension ComplexMatrix: Hashable where Element: Hashable {
 
 extension ComplexMatrix where Element == Float {
     
-    @inlinable public mutating func withUnsafeMutableComplexVector<R>(_ body: (inout ComplexFloatVector) throws -> R) rethrows -> R {
+    @inlinable public mutating func withUnsafeMutableSplitComplexVector<R>(_ body: (inout DSPSplitComplex) throws -> R) rethrows -> R {
         return try real.withUnsafeMutableBufferPointer { realPointer in
             return try imaginary.withUnsafeMutableBufferPointer { imaginaryPointer in
-                var split = ComplexFloatVector(realp: realPointer.baseAddress!, imagp: imaginaryPointer.baseAddress!)
+                var split = DSPSplitComplex(realp: realPointer.baseAddress!, imagp: imaginaryPointer.baseAddress!)
                 return try body(&split)
             }
         }
@@ -152,10 +141,10 @@ extension ComplexMatrix where Element == Float {
 
 extension ComplexMatrix where Element == Double {
     
-    @inlinable public mutating func withUnsafeMutableComplexVector<R>(_ body: (inout ComplexDoubleVector) throws -> R) rethrows -> R {
+    @inlinable public mutating func withUnsafeMutableSplitComplexVector<R>(_ body: (inout DSPDoubleSplitComplex) throws -> R) rethrows -> R {
         return try real.withUnsafeMutableBufferPointer { realPointer in
             return try imaginary.withUnsafeMutableBufferPointer { imaginaryPointer in
-                var split = ComplexDoubleVector(realp: realPointer.baseAddress!, imagp: imaginaryPointer.baseAddress!)
+                var split = DSPDoubleSplitComplex(realp: realPointer.baseAddress!, imagp: imaginaryPointer.baseAddress!)
                 return try body(&split)
             }
         }
