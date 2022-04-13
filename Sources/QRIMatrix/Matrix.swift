@@ -130,8 +130,32 @@ extension Matrix: ExpressibleByArrayLiteral {
 
 extension Matrix: Sequence {
     
-    public func makeIterator() -> IndexingIterator<[Element]> {
-        return elements.makeIterator()
+    public typealias Iterator = AnyIterator<Element>
+    
+    public func makeIterator() -> Iterator {
+        return Iterator(elements.makeIterator())
+    }
+    
+}
+
+extension Matrix: Collection {
+    
+    public typealias Index = Int
+
+    public var startIndex: Index {
+        return elements.startIndex
+    }
+
+    public var endIndex: Index {
+        return elements.endIndex
+    }
+    
+    public func index(after index: Index) -> Index {
+        return elements.index(after: index)
+    }
+
+    public subscript(_ index: Index) -> Element {
+        return elements[index]
     }
     
 }
