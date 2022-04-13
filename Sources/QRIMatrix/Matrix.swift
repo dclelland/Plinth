@@ -10,8 +10,8 @@ import Accelerate
 
 public struct Matrix<Element: Numeric> {
     
-    public var size: MatrixSize
-    public var elements: [Element]
+    public internal(set) var size: MatrixSize
+    public internal(set) var elements: [Element]
     
     public init(size: MatrixSize, elements: [Element]) {
         precondition(size.count == elements.count)
