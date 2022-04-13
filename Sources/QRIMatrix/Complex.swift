@@ -21,13 +21,13 @@ public struct Complex<Element: Numeric> {
 
 extension Complex: Equatable {
     
-    public static func == (lhs: MatrixSize, rhs: MatrixSize) -> Bool {
+    public static func == <Element>(lhs: Complex<Element>, rhs: Complex<Element>) -> Bool {
         return lhs.real == rhs.real && lhs.imaginary == rhs.imaginary
     }
     
 }
 
-extension Complex: Hashable {
+extension Complex: Hashable where Element: Hashable {
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(real)
