@@ -127,3 +127,11 @@ extension Matrix: ExpressibleByArrayLiteral {
     }
     
 }
+
+extension Matrix: Sequence {
+    
+    public func makeIterator() -> IndexingIterator<[Element]> {
+        return elements.makeIterator()
+    }
+    
+}
