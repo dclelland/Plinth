@@ -57,47 +57,38 @@ extension Matrix {
 
     public subscript(row: Int, column: Int) -> Element {
         get {
-            assert(size.contains(row: row, column: column))
-            return elements[(row * size.columns) + column]
+            precondition(size.contains(row: row, column: column))
+            return elements[size.indexFor(row: row, column: column)]
         }
         set {
-            assert(size.contains(row: row, column: column))
-            elements[(row * size.columns) + column] = newValue
+            precondition(size.contains(row: row, column: column))
+            elements[size.indexFor(row: row, column: column)] = newValue
         }
     }
 
     public subscript(row row: Int) -> [Element] {
         get {
             assert(size.contains(row: row))
-            let startIndex = row * size.columns
-            let endIndex = row * size.columns + size.columns
-            return Array(elements[startIndex..<endIndex])
+            return Array(elements[size.indicesFor(row: row)])
         }
         set {
             assert(size.contains(row: row))
-            assert(newValue.count == size.columns)
-            let startIndex = row * size.columns
-            let endIndex = row * size.columns + size.columns
-            elements.replaceSubrange(startIndex..<endIndex, with: newValue)
+            assert(size.columns == newValue.count)
+            elements.replaceSubrange(size.indicesFor(row: row), with: newValue)
         }
     }
 
     public subscript(column column: Int) -> [Element] {
         get {
-            assert(size.contains(column: column))
-            var result = [Element](repeating: .zero, count: size.rows)
-            for i in 0..<size.rows {
-                let index = i * size.columns + column
-                result[i] = elements[index]
+            return size.rowIndices.map { row in
+                return elements[size.indexFor(row: row, column: column)]
             }
-            return result
         }
         set {
             assert(size.contains(column: column))
-            assert(newValue.count == size.rows)
-            for i in 0..<size.rows {
-                let index = i * size.columns + column
-                elements[index] = newValue[i]
+            assert(size.rows == newValue.count)
+            size.rowIndices.forEach { row in
+                elements[size.indexFor(row: row, column: column)] = newValue[row]
             }
         }
     }
