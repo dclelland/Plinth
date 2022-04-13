@@ -18,3 +18,20 @@ public struct Complex<Element: Numeric> {
     }
     
 }
+
+extension Complex: Equatable {
+    
+    public static func == (lhs: MatrixSize, rhs: MatrixSize) -> Bool {
+        return lhs.real == rhs.real && lhs.imaginary == rhs.imaginary
+    }
+    
+}
+
+extension Complex: Hashable {
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(real)
+        hasher.combine(imaginary)
+    }
+    
+}

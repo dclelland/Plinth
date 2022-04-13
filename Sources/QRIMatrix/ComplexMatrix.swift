@@ -75,39 +75,27 @@ extension ComplexMatrix {
     
 }
 
-/*
-extension ComplexMatrix: Sequence {
-    
-    public typealias Iterator = AnyIterator<Element>
-    
-    public func makeIterator() -> Iterator {
-        return Iterator(elements.makeIterator())
-    }
-    
-}
-
 extension ComplexMatrix: Collection {
     
     public typealias Index = Int
 
     public var startIndex: Index {
-        return elements.startIndex
+        return 0
     }
 
     public var endIndex: Index {
-        return elements.endIndex
+        return size.count
     }
     
     public func index(after index: Index) -> Index {
-        return elements.index(after: index)
+        return index + 1
     }
 
-    public subscript(_ index: Index) -> Element {
-        return elements[index]
+    public subscript(_ index: Index) -> Complex<Element> {
+        return Complex<Element>(real: real[index], imaginary: imaginary[index])
     }
     
 }
-*/
 
 extension ComplexMatrix: Equatable {
     
