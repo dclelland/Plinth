@@ -7,7 +7,7 @@
 
 import Foundation
     
-public struct MatrixSize {
+public struct MatrixSize: Equatable {
     
     public var rows: Int
     public var columns: Int
@@ -21,6 +21,22 @@ public struct MatrixSize {
         precondition(columns > 0)
         self.rows = rows
         self.columns = columns
+    }
+    
+}
+
+extension MatrixSize {
+    
+    internal func contains(row: Int) -> Bool {
+        return (0..<rows).contains(row)
+    }
+    
+    internal func contains(column: Int) -> Bool {
+        return (0..<columns).contains(column)
+    }
+    
+    internal func contains(row: Int, column: Int) -> Bool {
+        return contains(row: row) && contains(column: column)
     }
     
 }
