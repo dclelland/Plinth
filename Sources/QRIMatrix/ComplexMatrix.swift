@@ -8,15 +8,48 @@
 import Foundation
 import Accelerate
 
-public struct ComplexMatrix<Element: Numeric> {
+public struct ComplexMatrix<Scalar: Numeric> {
     
-    public var real: Matrix<Element>
-    public var imaginary: Matrix<Element>
+    public var real: Matrix<Scalar>
+    public var imaginary: Matrix<Scalar>
     
-    public init(real: Matrix<Element>, imaginary: Matrix<Element>) {
+    public init(real: Matrix<Scalar>, imaginary: Matrix<Scalar>) {
         precondition(real.size == imaginary.size)
         self.real = real
         self.imaginary = imaginary
+    }
+    
+}
+
+extension ComplexMatrix {
+    
+    public init(size: MatrixSize, elements: [Complex<Scalar>]) {
+        precondition(size.count == elements.count)
+        self.real = .init(size: size, elements: elements.map { $0.real })
+        self.imaginary = .init(size: size, elements: elements.map { $0.imaginary })
+    }
+    
+    public init(size: MatrixSize, _ closure: (_ row: Int, _ column: Int) throws -> Complex<Scalar>) rethrows {
+        var elements: [Complex<Scalar>] = []
+        elements.reserveCapacity(size.count)
+        for row in 0..<size.rows {
+            for column in 0..<size.columns {
+                elements.append(try closure(row, column))
+            }
+        }
+        self.init(size: size, elements: elements)
+    }
+    
+}
+
+extension ComplexMatrix {
+    
+    public init(_ element: Complex<Scalar>) {
+        self.init(size: .init(), elements: [element])
+    }
+    
+    public init(_ elements: [Complex<Scalar>]) {
+        self.init(size: .init(columns: elements.count), elements: elements)
     }
     
 }
@@ -39,9 +72,9 @@ extension ComplexMatrix {
 
 extension ComplexMatrix {
     
-    public subscript(row: Int, column: Int) -> Complex<Element> {
+    public subscript(row: Int, column: Int) -> Complex<Scalar> {
         get {
-            return Complex<Element>(real: real[row, column], imaginary: imaginary[row, column])
+            return Complex<Scalar>(real: real[row, column], imaginary: imaginary[row, column])
         }
         set {
             real[row, column] = newValue.real
@@ -49,10 +82,10 @@ extension ComplexMatrix {
         }
     }
 
-    public subscript(row row: Int) -> [Complex<Element>] {
+    public subscript(row row: Int) -> [Complex<Scalar>] {
         get {
             return zip(real[row: row], imaginary[row: row]).map { real, imaginary in
-                return Complex<Element>(real: real, imaginary: imaginary)
+                return Complex<Scalar>(real: real, imaginary: imaginary)
             }
         }
         set {
@@ -61,16 +94,57 @@ extension ComplexMatrix {
         }
     }
 
-    public subscript(column column: Int) -> [Complex<Element>] {
+    public subscript(column column: Int) -> [Complex<Scalar>] {
         get {
             return zip(real[column: column], imaginary[column: column]).map { real, imaginary in
-                return Complex<Element>(real: real, imaginary: imaginary)
+                return Complex<Scalar>(real: real, imaginary: imaginary)
             }
         }
         set {
             real[column: column] = newValue.map { $0.real }
             imaginary[column: column] = newValue.map { $0.imaginary }
         }
+    }
+    
+}
+
+extension ComplexMatrix: ExpressibleByIntegerLiteral where Scalar == IntegerLiteralType {
+
+    public init(integerLiteral value: Scalar) {
+        self.init(Complex<Scalar>(integerLiteral: value))
+    }
+
+}
+
+extension ComplexMatrix: ExpressibleByFloatLiteral where Scalar == FloatLiteralType {
+
+    public init(floatLiteral value: Scalar) {
+        self.init(Complex<Scalar>(floatLiteral: value))
+    }
+
+}
+
+extension ComplexMatrix: ExpressibleByArrayLiteral {
+
+    public init(arrayLiteral elements: Complex<Scalar>...) {
+        self.init(elements)
+    }
+
+}
+
+extension ComplexMatrix: Equatable {
+    
+    public static func == <Scalar>(lhs: ComplexMatrix<Scalar>, rhs: ComplexMatrix<Scalar>) -> Bool {
+        return lhs.real == rhs.real && lhs.imaginary == rhs.imaginary
+    }
+    
+}
+
+extension ComplexMatrix: Hashable where Scalar: Hashable {
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(real)
+        hasher.combine(imaginary)
     }
     
 }
@@ -91,30 +165,13 @@ extension ComplexMatrix: Collection {
         return index + 1
     }
 
-    public subscript(_ index: Index) -> Complex<Element> {
-        return Complex<Element>(real: real[index], imaginary: imaginary[index])
+    public subscript(_ index: Index) -> Complex<Scalar> {
+        return Complex<Scalar>(real: real[index], imaginary: imaginary[index])
     }
     
 }
 
-extension ComplexMatrix: Equatable {
-    
-    public static func == <Element>(lhs: ComplexMatrix<Element>, rhs: ComplexMatrix<Element>) -> Bool {
-        return lhs.real == rhs.real && lhs.imaginary == rhs.imaginary
-    }
-    
-}
-
-extension ComplexMatrix: Hashable where Element: Hashable {
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(real)
-        hasher.combine(imaginary)
-    }
-    
-}
-
-extension ComplexMatrix where Element == Float {
+extension ComplexMatrix where Scalar == Float {
     
     @inlinable public mutating func withUnsafeMutableSplitComplexVector<R>(_ body: (inout DSPSplitComplex) throws -> R) rethrows -> R {
         return try real.withUnsafeMutableBufferPointer { realPointer in
@@ -127,7 +184,7 @@ extension ComplexMatrix where Element == Float {
     
 }
 
-extension ComplexMatrix where Element == Double {
+extension ComplexMatrix where Scalar == Double {
     
     @inlinable public mutating func withUnsafeMutableSplitComplexVector<R>(_ body: (inout DSPDoubleSplitComplex) throws -> R) rethrows -> R {
         return try real.withUnsafeMutableBufferPointer { realPointer in

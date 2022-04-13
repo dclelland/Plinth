@@ -8,27 +8,25 @@
 import Foundation
 import Accelerate
 
-public struct Matrix<Element: Numeric> {
+public struct Matrix<Scalar: Numeric> {
     
     public internal(set) var size: MatrixSize
-    public internal(set) var elements: [Element]
+    public internal(set) var elements: [Scalar]
     
-    public init(size: MatrixSize, elements: [Element]) {
+    public init(size: MatrixSize, elements: [Scalar]) {
         precondition(size.count == elements.count)
         self.size = size
         self.elements = elements
     }
     
-    public init(size: MatrixSize, _ closure: (_ row: Int, _ column: Int) throws -> Element) rethrows {
-        var elements: [Element] = []
+    public init(size: MatrixSize, _ closure: (_ row: Int, _ column: Int) throws -> Scalar) rethrows {
+        var elements: [Scalar] = []
         elements.reserveCapacity(size.count)
-
         for row in 0..<size.rows {
             for column in 0..<size.columns {
                 elements.append(try closure(row, column))
             }
         }
-
         self.init(size: size, elements: elements)
     }
 
@@ -36,11 +34,11 @@ public struct Matrix<Element: Numeric> {
 
 extension Matrix {
     
-    public init(_ element: Element) {
+    public init(_ element: Scalar) {
         self.init(size: .init(), elements: [element])
     }
     
-    public init(_ elements: [Element]) {
+    public init(_ elements: [Scalar]) {
         self.init(size: .init(columns: elements.count), elements: elements)
     }
     
@@ -56,7 +54,7 @@ extension Matrix {
 
 extension Matrix {
 
-    public subscript(row: Int, column: Int) -> Element {
+    public subscript(row: Int, column: Int) -> Scalar {
         get {
             precondition(size.contains(row: row, column: column))
             return elements[size.indexFor(row: row, column: column)]
@@ -67,7 +65,7 @@ extension Matrix {
         }
     }
 
-    public subscript(row row: Int) -> [Element] {
+    public subscript(row row: Int) -> [Scalar] {
         get {
             assert(size.contains(row: row))
             return Array(elements[size.indicesFor(row: row)])
@@ -79,7 +77,7 @@ extension Matrix {
         }
     }
 
-    public subscript(column column: Int) -> [Element] {
+    public subscript(column column: Int) -> [Scalar] {
         get {
             return size.rowIndices.map { row in
                 return elements[size.indexFor(row: row, column: column)]
@@ -96,17 +94,17 @@ extension Matrix {
     
 }
 
-extension Matrix: ExpressibleByIntegerLiteral where Element == IntegerLiteralType {
+extension Matrix: ExpressibleByIntegerLiteral where Scalar == IntegerLiteralType {
     
-    public init(integerLiteral value: Element) {
+    public init(integerLiteral value: Scalar) {
         self.init(value)
     }
     
 }
 
-extension Matrix: ExpressibleByFloatLiteral where Element == FloatLiteralType {
+extension Matrix: ExpressibleByFloatLiteral where Scalar == FloatLiteralType {
     
-    public init(floatLiteral value: FloatLiteralType) {
+    public init(floatLiteral value: Scalar) {
         self.init(value)
     }
 
@@ -114,7 +112,7 @@ extension Matrix: ExpressibleByFloatLiteral where Element == FloatLiteralType {
 
 extension Matrix: ExpressibleByArrayLiteral {
     
-    public init(arrayLiteral elements: Element...) {
+    public init(arrayLiteral elements: Scalar...) {
         self.init(elements)
     }
     
@@ -122,13 +120,13 @@ extension Matrix: ExpressibleByArrayLiteral {
 
 extension Matrix: Equatable {
     
-    public static func == <Element>(lhs: Matrix<Element>, rhs: Matrix<Element>) -> Bool {
+    public static func == <Scalar>(lhs: Matrix<Scalar>, rhs: Matrix<Scalar>) -> Bool {
         return lhs.size == rhs.size && lhs.elements == rhs.elements
     }
     
 }
 
-extension Matrix: Hashable where Element: Hashable {
+extension Matrix: Hashable where Scalar: Hashable {
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(size)
@@ -153,7 +151,7 @@ extension Matrix: Collection {
         return index + 1
     }
 
-    public subscript(_ index: Index) -> Element {
+    public subscript(_ index: Index) -> Scalar {
         return elements[index]
     }
     
@@ -161,7 +159,7 @@ extension Matrix: Collection {
 
 extension Matrix: AccelerateBuffer {
     
-    public func withUnsafeBufferPointer<R>(_ body: (UnsafeBufferPointer<Element>) throws -> R) rethrows -> R {
+    public func withUnsafeBufferPointer<R>(_ body: (UnsafeBufferPointer<Scalar>) throws -> R) rethrows -> R {
         return try elements.withUnsafeBufferPointer(body)
     }
     
@@ -169,7 +167,7 @@ extension Matrix: AccelerateBuffer {
 
 extension Matrix: AccelerateMutableBuffer {
     
-    public mutating func withUnsafeMutableBufferPointer<R>(_ body: (inout UnsafeMutableBufferPointer<Element>) throws -> R) rethrows -> R {
+    public mutating func withUnsafeMutableBufferPointer<R>(_ body: (inout UnsafeMutableBufferPointer<Scalar>) throws -> R) rethrows -> R {
         return try elements.withUnsafeMutableBufferPointer(body)
     }
     
