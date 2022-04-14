@@ -8,7 +8,7 @@
 import Foundation
 import Accelerate
 
-public struct Matrix<Scalar: Numeric> {
+public struct Matrix<Scalar> {
     
     public let size: MatrixSize
     
@@ -50,6 +50,10 @@ extension Matrix {
     public static var empty: Matrix {
         return .init(size: .empty, elements: [])
     }
+    
+}
+    
+extension Matrix where Scalar: Numeric {
     
     public static func zeros(size: MatrixSize) -> Matrix {
         return .init(size: size, elements: Array(repeating: .zero, count: size.count))
@@ -147,9 +151,9 @@ extension Matrix: CustomStringConvertible {
     
 }
 
-extension Matrix: Equatable {
+extension Matrix: Equatable where Scalar: Equatable {
     
-    public static func == <Scalar>(lhs: Matrix<Scalar>, rhs: Matrix<Scalar>) -> Bool {
+    public static func == (lhs: Matrix, rhs: Matrix) -> Bool {
         return lhs.size == rhs.size && lhs.elements == rhs.elements
     }
     

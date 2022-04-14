@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Complex<Scalar: Numeric> {
+public struct Complex<Scalar> {
     
     public var real: Scalar
     public var imaginary: Scalar
@@ -43,9 +43,9 @@ extension Complex: CustomStringConvertible {
     
 }
 
-extension Complex: Equatable {
+extension Complex: Equatable where Scalar: Equatable {
     
-    public static func == <Scalar>(lhs: Complex<Scalar>, rhs: Complex<Scalar>) -> Bool {
+    public static func == (lhs: Complex, rhs: Complex) -> Bool {
         return lhs.real == rhs.real && lhs.imaginary == rhs.imaginary
     }
     

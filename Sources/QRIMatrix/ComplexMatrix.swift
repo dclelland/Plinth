@@ -8,7 +8,7 @@
 import Foundation
 import Accelerate
 
-public struct ComplexMatrix<Scalar: Numeric> {
+public struct ComplexMatrix<Scalar> {
     
     public var real: Matrix<Scalar>
     public var imaginary: Matrix<Scalar>
@@ -57,6 +57,10 @@ extension ComplexMatrix {
     public static var empty: ComplexMatrix {
         return .init(size: .empty, elements: [])
     }
+    
+}
+
+extension ComplexMatrix where Scalar: Numeric {
     
     public static func zeros(size: MatrixSize) -> ComplexMatrix {
         return .init(real: .zeros(size: size), imaginary: .zeros(size: size))
@@ -169,9 +173,9 @@ extension ComplexMatrix: CustomStringConvertible {
     
 }
 
-extension ComplexMatrix: Equatable {
+extension ComplexMatrix: Equatable where Scalar: Equatable {
     
-    public static func == <Scalar>(lhs: ComplexMatrix<Scalar>, rhs: ComplexMatrix<Scalar>) -> Bool {
+    public static func == (lhs: ComplexMatrix, rhs: ComplexMatrix) -> Bool {
         return lhs.real == rhs.real && lhs.imaginary == rhs.imaginary
     }
     
