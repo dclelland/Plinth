@@ -21,6 +21,7 @@ Hardware-accelerated matrix library for Swift
     - https://developer.apple.com/library/archive/documentation/IDEs/Conceptual/CustomClassDisplay_in_QuickLook/CH01-quick_look_for_custom_objects/CH01-quick_look_for_custom_objects.html#//apple_ref/doc/uid/TP40014001-CH2-SW2
 - Implement `Functor` typeclass for combining with vDSP operations
     - Inlinable infix functions
+    - ComplexMatrix will need typeclass instances for operating on both the real/imaginary tuple and the split vector
 - Add vDSP arithmetic helpers...?
     - Also to complex numbers?
 - Put vDSP functions somewhere sensible
