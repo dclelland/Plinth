@@ -114,33 +114,6 @@ extension Matrix {
     
 }
 
-/*
-infix operator <*>
-
-public func <*> <Scalar>(closure: ([Scalar]) -> [Scalar], matrix: Matrix<Scalar>) -> Matrix<Scalar> {
-    return Matrix<Scalar>(size: matrix.size, elements: closure(matrix.elements))
-}
-
-public func <*> <Scalar>(closure: ([Scalar], [Scalar]) -> [Scalar], matrices: (Matrix<Scalar>, Matrix<Scalar>)) -> Matrix<Scalar> {
-    return Matrix<Scalar>(size: matrices.0.size, elements: closure(matrices.0.elements, matrices.1.elements))
-}
-
-extension Matrix {
-
-    // TODO: Perhaps use an infix operator here...? What would the Haskell equivalent be...?
-    public func apply(_ closure: ([Scalar]) -> [Scalar]) -> Matrix<Scalar> {
-        return Matrix<Scalar>(size: size, elements: closure(elements))
-    }
-//
-//    public func apply(_ argument: Matrix<Scalar>) -> (([Scalar]) -> [Scalar]) -> Matrix<Scalar> {
-//        return { closure in
-//
-//        }
-//    }
-
-}
- */
-
 extension Matrix: ExpressibleByIntegerLiteral where Scalar == IntegerLiteralType {
     
     public init(integerLiteral value: Scalar) {
