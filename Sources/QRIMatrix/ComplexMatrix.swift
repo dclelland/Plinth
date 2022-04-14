@@ -13,10 +13,6 @@ public struct ComplexMatrix<Scalar: Numeric> {
     public var real: Matrix<Scalar>
     public var imaginary: Matrix<Scalar>
     
-    public var size: MatrixSize {
-        return real.size
-    }
-    
     public init(real: Matrix<Scalar>, imaginary: Matrix<Scalar>) {
         self.real = real
         self.imaginary = imaginary
@@ -80,10 +76,17 @@ extension ComplexMatrix {
     public var state: State {
         switch (real.state, imaginary.state) {
         case (.regular, .regular):
-            return real.size == imaginary.size && real.count == imaginary.count ? .regular : .malformed
+            return real.size == imaginary.size ? .regular : .malformed
         default:
             return .malformed
         }
+    }
+    
+    public var size: MatrixSize {
+        return MatrixSize(
+            rows: Swift.min(real.size.rows, imaginary.size.rows),
+            columns: Swift.min(real.size.columns, imaginary.size.columns)
+        )
     }
     
 }
@@ -161,7 +164,7 @@ extension ComplexMatrix: ExpressibleByArrayLiteral {
 extension ComplexMatrix: CustomStringConvertible {
     
     public var description: String {
-        return "\(type(of: self))(size: \(size), count: \(count))"
+        return "\(type(of: self))(real: \(real), imaginary: \(imaginary))"
     }
     
 }
@@ -210,7 +213,7 @@ extension ComplexMatrix: Collection {
     }
 
     public var endIndex: Index {
-        return size.count
+        return Swift.min(real.count, imaginary.count)
     }
     
     public func index(after index: Index) -> Index {
