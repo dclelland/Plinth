@@ -7,7 +7,7 @@
 
 import Foundation
     
-public struct MatrixSize {
+public struct MatrixSize: Codable {
     
     public var rows: Int
     public var columns: Int
@@ -16,12 +16,18 @@ public struct MatrixSize {
         return rows * columns
     }
     
-    public init(rows: Int = 1, columns: Int = 1) {
-        precondition(rows > 0)
-        precondition(columns > 0)
+    public init(rows: Int, columns: Int) {
+        precondition(rows >= 0)
+        precondition(columns >= 0)
         self.rows = rows
         self.columns = columns
     }
+    
+}
+
+extension MatrixSize {
+    
+    public static let empty = MatrixSize(rows: 0, columns: 0)
     
 }
 

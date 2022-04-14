@@ -13,10 +13,14 @@ public struct ComplexMatrix<Scalar: Numeric> {
     public var real: Matrix<Scalar>
     public var imaginary: Matrix<Scalar>
     
+    public var size: MatrixSize {
+        return real.size
+    }
+    
     public init(real: Matrix<Scalar>, imaginary: Matrix<Scalar>) {
-        precondition(real.size == imaginary.size)
         self.real = real
         self.imaginary = imaginary
+        precondition(self.state == .regular)
     }
     
 }
@@ -24,9 +28,7 @@ public struct ComplexMatrix<Scalar: Numeric> {
 extension ComplexMatrix {
     
     public init(size: MatrixSize, elements: [Complex<Scalar>]) {
-        precondition(size.count == elements.count)
-        self.real = .init(size: size, elements: elements.map { $0.real })
-        self.imaginary = .init(size: size, elements: elements.map { $0.imaginary })
+        self.init(real: .init(size: size, elements: elements.map { $0.real }), imaginary: .init(size: size, elements: elements.map { $0.imaginary }))
     }
     
     public init(size: MatrixSize, _ closure: (_ row: Int, _ column: Int) throws -> Complex<Scalar>) rethrows {
@@ -45,24 +47,20 @@ extension ComplexMatrix {
 extension ComplexMatrix {
     
     public init(_ element: Complex<Scalar>) {
-        self.init(size: .init(), elements: [element])
+        self.init(size: .init(rows: 1, columns: 1), elements: [element])
     }
     
     public init(_ elements: [Complex<Scalar>]) {
-        self.init(size: .init(columns: elements.count), elements: elements)
+        self.init(size: .init(rows: 1, columns: elements.count), elements: elements)
     }
     
 }
 
 extension ComplexMatrix {
     
-    public var size: MatrixSize {
-        return real.size
+    public static var empty: ComplexMatrix {
+        return .init(size: .empty, elements: [])
     }
-    
-}
-
-extension ComplexMatrix {
     
     public static func zeros(size: MatrixSize) -> ComplexMatrix {
         return .init(real: .zeros(size: size), imaginary: .zeros(size: size))
@@ -72,11 +70,33 @@ extension ComplexMatrix {
 
 extension ComplexMatrix {
     
+    public enum State {
+        
+        case regular
+        case malformed
+        
+    }
+    
+    public var state: State {
+        switch (real.state, imaginary.state) {
+        case (.regular, .regular):
+            return real.size == imaginary.size && real.count == imaginary.count ? .regular : .malformed
+        default:
+            return .malformed
+        }
+    }
+    
+}
+
+extension ComplexMatrix {
+    
     public subscript(row: Int, column: Int) -> Complex<Scalar> {
         get {
+            precondition(size.contains(row: row, column: column))
             return Complex<Scalar>(real: real[row, column], imaginary: imaginary[row, column])
         }
         set {
+            precondition(size.contains(row: row, column: column))
             real[row, column] = newValue.real
             imaginary[row, column] = newValue.imaginary
         }
@@ -84,11 +104,14 @@ extension ComplexMatrix {
 
     public subscript(row row: Int) -> [Complex<Scalar>] {
         get {
+            precondition(size.contains(row: row))
             return zip(real[row: row], imaginary[row: row]).map { real, imaginary in
                 return Complex<Scalar>(real: real, imaginary: imaginary)
             }
         }
         set {
+            precondition(size.contains(row: row))
+            precondition(size.columns == newValue.count)
             real[row: row] = newValue.map { $0.real }
             imaginary[row: row] = newValue.map { $0.imaginary }
         }
@@ -96,11 +119,14 @@ extension ComplexMatrix {
 
     public subscript(column column: Int) -> [Complex<Scalar>] {
         get {
+            precondition(size.contains(column: column))
             return zip(real[column: column], imaginary[column: column]).map { real, imaginary in
                 return Complex<Scalar>(real: real, imaginary: imaginary)
             }
         }
         set {
+            precondition(size.contains(column: column))
+            precondition(size.rows == newValue.count)
             real[column: column] = newValue.map { $0.real }
             imaginary[column: column] = newValue.map { $0.imaginary }
         }
@@ -135,7 +161,7 @@ extension ComplexMatrix: ExpressibleByArrayLiteral {
 extension ComplexMatrix: CustomStringConvertible {
     
     public var description: String {
-        return "\(type(of: self))(\(size))"
+        return "\(type(of: self))(size: \(size), count: \(count))"
     }
     
 }
@@ -155,6 +181,24 @@ extension ComplexMatrix: Hashable where Scalar: Hashable {
         hasher.combine(imaginary)
     }
     
+}
+
+extension ComplexMatrix: Codable where Scalar: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        case real
+        case imaginary
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.real = try container.decode(Matrix<Scalar>.self, forKey: .real)
+        self.imaginary = try container.decode(Matrix<Scalar>.self, forKey: .imaginary)
+        if self.state == .malformed {
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Malformed matrix: \(self)"))
+        }
+    }
+
 }
 
 extension ComplexMatrix: Collection {
