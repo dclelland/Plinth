@@ -17,14 +17,10 @@ Hardware-accelerated matrix library for Swift
 
 ## Todo
 
-- Make variables `internal(set)`
-- Arithmetic functions
-    - Infix operators
-        - Survey MATLAB 
-    - Where are the Surge infix operators used?
-- DSP functions
-- Random numbers
-- Complex numbers
-- MATLAB-esque subscripting
-    - Expanding mutation subscript
-- Pretty printing
+- Implement `Functor` typeclass for combining with vDSP operations
+    - Inlinable infix functions
+- vImage <-> Matrix helpers with debug Quick Look support
+    - https://developer.apple.com/library/archive/documentation/IDEs/Conceptual/CustomClassDisplay_in_QuickLook/CH01-quick_look_for_custom_objects/CH01-quick_look_for_custom_objects.html#//apple_ref/doc/uid/TP40014001-CH2-SW2
+- Add vDSP arithmetic helpers...?
+    - Also to complex numbers?
+- Put vDSP functions somewhere sensible
