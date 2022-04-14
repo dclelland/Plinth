@@ -67,6 +67,14 @@ extension MatrixSize {
     
 }
 
+extension MatrixSize: CustomStringConvertible {
+    
+    public var description: String {
+        return "\(rows)×\(columns)"
+    }
+    
+}
+
 extension MatrixSize: Equatable {
     
     public static func == (lhs: MatrixSize, rhs: MatrixSize) -> Bool {

@@ -35,6 +35,14 @@ extension Complex: ExpressibleByFloatLiteral where Scalar == FloatLiteralType {
 
 }
 
+extension Complex: CustomStringConvertible {
+    
+    public var description: String {
+        return "\(real) + \(imaginary)i"
+    }
+    
+}
+
 extension Complex: Equatable {
     
     public static func == <Scalar>(lhs: Complex<Scalar>, rhs: Complex<Scalar>) -> Bool {

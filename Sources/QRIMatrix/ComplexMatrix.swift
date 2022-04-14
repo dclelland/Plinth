@@ -132,6 +132,14 @@ extension ComplexMatrix: ExpressibleByArrayLiteral {
 
 }
 
+extension ComplexMatrix: CustomStringConvertible {
+    
+    public var description: String {
+        return "\(type(of: self))(\(size))"
+    }
+    
+}
+
 extension ComplexMatrix: Equatable {
     
     public static func == <Scalar>(lhs: ComplexMatrix<Scalar>, rhs: ComplexMatrix<Scalar>) -> Bool {
