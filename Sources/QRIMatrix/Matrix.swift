@@ -10,8 +10,9 @@ import Accelerate
 
 public struct Matrix<Scalar: Numeric> {
     
-    public internal(set) var size: MatrixSize
-    public internal(set) var elements: [Scalar]
+    public let size: MatrixSize
+    
+    @usableFromInline internal var elements: [Scalar]
     
     public init(size: MatrixSize, elements: [Scalar]) {
         self.size = size
@@ -205,7 +206,7 @@ extension Matrix: Collection {
 
 extension Matrix: AccelerateBuffer {
     
-    public func withUnsafeBufferPointer<R>(_ body: (UnsafeBufferPointer<Scalar>) throws -> R) rethrows -> R {
+    @inlinable public func withUnsafeBufferPointer<R>(_ body: (UnsafeBufferPointer<Scalar>) throws -> R) rethrows -> R {
         return try elements.withUnsafeBufferPointer(body)
     }
     
@@ -213,7 +214,7 @@ extension Matrix: AccelerateBuffer {
 
 extension Matrix: AccelerateMutableBuffer {
     
-    public mutating func withUnsafeMutableBufferPointer<R>(_ body: (inout UnsafeMutableBufferPointer<Scalar>) throws -> R) rethrows -> R {
+    @inlinable public mutating func withUnsafeMutableBufferPointer<R>(_ body: (inout UnsafeMutableBufferPointer<Scalar>) throws -> R) rethrows -> R {
         return try elements.withUnsafeMutableBufferPointer(body)
     }
     
