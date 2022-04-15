@@ -19,6 +19,18 @@ public struct Complex<Scalar> {
     
 }
 
+extension Complex where Scalar: Numeric {
+    
+    public static var zero: Complex {
+        return .init(real: .zero, imaginary: .zero)
+    }
+    
+    public static var i: Complex {
+        return .init(real: .zero, imaginary: 1)
+    }
+    
+}
+
 extension Complex: ExpressibleByIntegerLiteral where Scalar == IntegerLiteralType {
     
     public init(integerLiteral value: Scalar) {
