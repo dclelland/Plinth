@@ -37,7 +37,7 @@ input.withUnsafeMutableSplitComplexVector { inputVector in
 }
 
 let magnitudes: Matrix<Double> = output.withUnsafeMutableSplitComplexVector { outputVector in
-    var result: Matrix<Double> = .zeros(size: input.size)
+    var result: Matrix<Double> = .zeros(size: size)
     vDSP.squareMagnitudes(outputVector, result: &result)
     return result
 }
