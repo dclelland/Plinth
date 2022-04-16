@@ -1,6 +1,6 @@
 //
 //  Matrix.swift
-//  QRIMatrix
+//  Plinth
 //
 //  Created by Daniel Clelland on 30/03/22.
 //
@@ -12,7 +12,7 @@ public struct Matrix<Scalar> {
     
     public let size: MatrixSize
     
-    @usableFromInline internal var elements: [Scalar]
+    public var elements: [Scalar]
     
     public init(size: MatrixSize, elements: [Scalar]) {
         self.size = size
@@ -41,6 +41,10 @@ extension Matrix {
     
     public init(_ elements: [Scalar]) {
         self.init(size: .init(rows: 1, columns: elements.count), elements: elements)
+    }
+    
+    public init(_ elements: [[Scalar]]) {
+        self.init(size: .init(rows: elements.count, columns: elements.first?.count ?? 0), elements: Array(elements.joined()))
     }
     
 }
@@ -137,7 +141,7 @@ extension Matrix: ExpressibleByFloatLiteral where Scalar == FloatLiteralType {
 
 extension Matrix: ExpressibleByArrayLiteral {
     
-    public init(arrayLiteral elements: Scalar...) {
+    public init(arrayLiteral elements: [Scalar]...) {
         self.init(elements)
     }
     

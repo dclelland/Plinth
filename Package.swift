@@ -12,7 +12,15 @@ let package = Package(
     products: [
         .library(name: "QRIMatrix", targets: ["QRIMatrix"])
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-numerics", from: "1.0.0")
+    ],
     targets: [
-        .target(name: "QRIMatrix", dependencies: [])
+        .target(
+            name: "QRIMatrix",
+            dependencies: [
+                .product(name: "Numerics", package: "swift-numerics")
+            ]
+        )
     ]
 )

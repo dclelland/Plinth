@@ -1,14 +1,15 @@
 //
 //  ComplexMatrix.swift
-//  QRIMatrix
+//  Plinth
 //
 //  Created by Daniel Clelland on 13/04/22.
 //
 
 import Foundation
+import Numerics
 import Accelerate
 
-public struct ComplexMatrix<Scalar> {
+public struct ComplexMatrix<Scalar> where Scalar: Real {
     
     public var real: Matrix<Scalar>
     public var imaginary: Matrix<Scalar>
@@ -48,6 +49,10 @@ extension ComplexMatrix {
     
     public init(_ elements: [Complex<Scalar>]) {
         self.init(size: .init(rows: 1, columns: elements.count), elements: elements)
+    }
+    
+    public init(_ elements: [[Complex<Scalar>]]) {
+        self.init(size: .init(rows: elements.count, columns: elements.first?.count ?? 0), elements: Array(elements.joined()))
     }
     
 }
@@ -93,6 +98,10 @@ extension ComplexMatrix {
         )
     }
     
+    public var elements: [Complex<Scalar>] {
+        return Array(self)
+    }
+    
 }
 
 extension ComplexMatrix {
@@ -100,7 +109,7 @@ extension ComplexMatrix {
     public subscript(row: Int, column: Int) -> Complex<Scalar> {
         get {
             precondition(size.contains(row: row, column: column))
-            return Complex<Scalar>(real: real[row, column], imaginary: imaginary[row, column])
+            return Complex<Scalar>(real[row, column], imaginary[row, column])
         }
         set {
             precondition(size.contains(row: row, column: column))
@@ -113,7 +122,7 @@ extension ComplexMatrix {
         get {
             precondition(size.contains(row: row))
             return zip(real[row: row], imaginary[row: row]).map { real, imaginary in
-                return Complex<Scalar>(real: real, imaginary: imaginary)
+                return Complex<Scalar>(real, imaginary)
             }
         }
         set {
@@ -128,7 +137,7 @@ extension ComplexMatrix {
         get {
             precondition(size.contains(column: column))
             return zip(real[column: column], imaginary[column: column]).map { real, imaginary in
-                return Complex<Scalar>(real: real, imaginary: imaginary)
+                return Complex<Scalar>(real, imaginary)
             }
         }
         set {
@@ -141,25 +150,17 @@ extension ComplexMatrix {
     
 }
 
-extension ComplexMatrix: ExpressibleByIntegerLiteral where Scalar == IntegerLiteralType {
-
-    public init(integerLiteral value: Scalar) {
-        self.init(Complex<Scalar>(integerLiteral: value))
-    }
-
-}
-
 extension ComplexMatrix: ExpressibleByFloatLiteral where Scalar == FloatLiteralType {
 
     public init(floatLiteral value: Scalar) {
-        self.init(Complex<Scalar>(floatLiteral: value))
+        self.init(Complex<Scalar>(value))
     }
 
 }
 
 extension ComplexMatrix: ExpressibleByArrayLiteral {
 
-    public init(arrayLiteral elements: Complex<Scalar>...) {
+    public init(arrayLiteral elements: [Complex<Scalar>]...) {
         self.init(elements)
     }
 
@@ -225,7 +226,7 @@ extension ComplexMatrix: Collection {
     }
 
     public subscript(_ index: Index) -> Complex<Scalar> {
-        return Complex<Scalar>(real: real[index], imaginary: imaginary[index])
+        return Complex<Scalar>(real[index], imaginary[index])
     }
     
 }

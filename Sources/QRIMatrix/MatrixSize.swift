@@ -1,6 +1,6 @@
 //
 //  MatrixSize.swift
-//  QRIMatrix
+//  Plinth
 //
 //  Created by Daniel Clelland on 30/03/22.
 //
