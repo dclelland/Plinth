@@ -13,7 +13,6 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 
 - Implement `Functor` typeclass for combining with vDSP operations
     - Infix functions
-- Add vDSP arithmetic helpers
 
 ## Example
 
