@@ -17,4 +17,10 @@ extension Matrix {
         return Matrix<A>(shape: shape, elements: function(elements))
     }
     
+    @inlinable public func fmap<A>(_ function: ([Scalar], inout [A]) -> ()) -> Matrix<A> where A: Numeric {
+        var output = Matrix<A>.zeros(shape: shape)
+        function(elements, &output.elements)
+        return output
+    }
+    
 }
