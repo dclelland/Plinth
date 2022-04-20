@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Accelerate
 
 public struct Matrix<Scalar> {
     
@@ -208,22 +207,6 @@ extension Matrix: Collection {
 
     public subscript(_ index: Index) -> Scalar {
         return elements[index]
-    }
-    
-}
-
-extension Matrix: AccelerateBuffer {
-    
-    @inlinable public func withUnsafeBufferPointer<R>(_ body: (UnsafeBufferPointer<Scalar>) throws -> R) rethrows -> R {
-        return try elements.withUnsafeBufferPointer(body)
-    }
-    
-}
-
-extension Matrix: AccelerateMutableBuffer {
-    
-    @inlinable public mutating func withUnsafeMutableBufferPointer<R>(_ body: (inout UnsafeMutableBufferPointer<Scalar>) throws -> R) rethrows -> R {
-        return try elements.withUnsafeMutableBufferPointer(body)
     }
     
 }

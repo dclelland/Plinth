@@ -7,7 +7,6 @@
 
 import Foundation
 import Numerics
-import Accelerate
 
 public struct ComplexMatrix<Scalar> where Scalar: Real {
     
@@ -227,32 +226,6 @@ extension ComplexMatrix: Collection {
 
     public subscript(_ index: Index) -> Complex<Scalar> {
         return Complex<Scalar>(real[index], imaginary[index])
-    }
-    
-}
-
-extension ComplexMatrix where Scalar == Float {
-    
-    @inlinable public mutating func withUnsafeMutableSplitComplexVector<R>(_ body: (inout DSPSplitComplex) throws -> R) rethrows -> R {
-        return try real.withUnsafeMutableBufferPointer { realPointer in
-            return try imaginary.withUnsafeMutableBufferPointer { imaginaryPointer in
-                var split = DSPSplitComplex(realp: realPointer.baseAddress!, imagp: imaginaryPointer.baseAddress!)
-                return try body(&split)
-            }
-        }
-    }
-    
-}
-
-extension ComplexMatrix where Scalar == Double {
-    
-    @inlinable public mutating func withUnsafeMutableSplitComplexVector<R>(_ body: (inout DSPDoubleSplitComplex) throws -> R) rethrows -> R {
-        return try real.withUnsafeMutableBufferPointer { realPointer in
-            return try imaginary.withUnsafeMutableBufferPointer { imaginaryPointer in
-                var split = DSPDoubleSplitComplex(realp: realPointer.baseAddress!, imagp: imaginaryPointer.baseAddress!)
-                return try body(&split)
-            }
-        }
     }
     
 }
