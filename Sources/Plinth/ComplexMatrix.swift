@@ -10,10 +10,13 @@ import Numerics
 
 public struct ComplexMatrix<Scalar> where Scalar: Real {
     
-    public var real: Matrix<Scalar>
-    public var imaginary: Matrix<Scalar>
+    public typealias Matrix = Plinth.Matrix<Scalar>
+    public typealias Complex = Numerics.Complex<Scalar>
     
-    public init(real: Matrix<Scalar>, imaginary: Matrix<Scalar>) {
+    public var real: Matrix
+    public var imaginary: Matrix
+    
+    public init(real: Matrix, imaginary: Matrix) {
         self.real = real
         self.imaginary = imaginary
         precondition(self.state == .regular)
@@ -23,12 +26,12 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
 
 extension ComplexMatrix {
     
-    public init(size: MatrixSize, elements: [Complex<Scalar>]) {
+    public init(size: MatrixSize, elements: [Complex]) {
         self.init(real: .init(size: size, elements: elements.map { $0.real }), imaginary: .init(size: size, elements: elements.map { $0.imaginary }))
     }
     
-    public init(size: MatrixSize, _ closure: (_ row: Int, _ column: Int) throws -> Complex<Scalar>) rethrows {
-        var elements: [Complex<Scalar>] = []
+    public init(size: MatrixSize, _ closure: (_ row: Int, _ column: Int) throws -> Complex) rethrows {
+        var elements: [Complex] = []
         elements.reserveCapacity(size.count)
         for row in 0..<size.rows {
             for column in 0..<size.columns {
@@ -42,15 +45,15 @@ extension ComplexMatrix {
 
 extension ComplexMatrix {
     
-    public init(_ element: Complex<Scalar>) {
+    public init(_ element: Complex) {
         self.init(size: .init(rows: 1, columns: 1), elements: [element])
     }
     
-    public init(_ elements: [Complex<Scalar>]) {
+    public init(_ elements: [Complex]) {
         self.init(size: .init(rows: 1, columns: elements.count), elements: elements)
     }
     
-    public init(_ elements: [[Complex<Scalar>]]) {
+    public init(_ elements: [[Complex]]) {
         self.init(size: .init(rows: elements.count, columns: elements.first?.count ?? 0), elements: Array(elements.joined()))
     }
     
@@ -97,7 +100,7 @@ extension ComplexMatrix {
         )
     }
     
-    public var elements: [Complex<Scalar>] {
+    public var elements: [Complex] {
         return Array(self)
     }
     
@@ -105,10 +108,10 @@ extension ComplexMatrix {
 
 extension ComplexMatrix {
     
-    public subscript(row: Int, column: Int) -> Complex<Scalar> {
+    public subscript(row: Int, column: Int) -> Complex {
         get {
             precondition(size.contains(row: row, column: column))
-            return Complex<Scalar>(real[row, column], imaginary[row, column])
+            return Complex(real[row, column], imaginary[row, column])
         }
         set {
             precondition(size.contains(row: row, column: column))
@@ -117,11 +120,11 @@ extension ComplexMatrix {
         }
     }
 
-    public subscript(row row: Int) -> [Complex<Scalar>] {
+    public subscript(row row: Int) -> [Complex] {
         get {
             precondition(size.contains(row: row))
             return zip(real[row: row], imaginary[row: row]).map { real, imaginary in
-                return Complex<Scalar>(real, imaginary)
+                return Complex(real, imaginary)
             }
         }
         set {
@@ -132,11 +135,11 @@ extension ComplexMatrix {
         }
     }
 
-    public subscript(column column: Int) -> [Complex<Scalar>] {
+    public subscript(column column: Int) -> [Complex] {
         get {
             precondition(size.contains(column: column))
             return zip(real[column: column], imaginary[column: column]).map { real, imaginary in
-                return Complex<Scalar>(real, imaginary)
+                return Complex(real, imaginary)
             }
         }
         set {
@@ -152,14 +155,14 @@ extension ComplexMatrix {
 extension ComplexMatrix: ExpressibleByFloatLiteral where Scalar == FloatLiteralType {
 
     public init(floatLiteral value: Scalar) {
-        self.init(Complex<Scalar>(value))
+        self.init(Complex(value))
     }
 
 }
 
 extension ComplexMatrix: ExpressibleByArrayLiteral {
 
-    public init(arrayLiteral elements: [Complex<Scalar>]...) {
+    public init(arrayLiteral elements: [Complex]...) {
         self.init(elements)
     }
 
@@ -199,8 +202,8 @@ extension ComplexMatrix: Codable where Scalar: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.real = try container.decode(Matrix<Scalar>.self, forKey: .real)
-        self.imaginary = try container.decode(Matrix<Scalar>.self, forKey: .imaginary)
+        self.real = try container.decode(Matrix.self, forKey: .real)
+        self.imaginary = try container.decode(Matrix.self, forKey: .imaginary)
         if self.state == .malformed {
             throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Malformed matrix: \(self)"))
         }
@@ -224,8 +227,8 @@ extension ComplexMatrix: Collection {
         return index + 1
     }
 
-    public subscript(_ index: Index) -> Complex<Scalar> {
-        return Complex<Scalar>(real[index], imaginary[index])
+    public subscript(_ index: Index) -> Complex {
+        return Complex(real[index], imaginary[index])
     }
     
 }
