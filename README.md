@@ -11,8 +11,8 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 
 ## Todo list
 
-- Implement `Functor` typeclass for combining with vDSP operations
-    - Infix functions
+- Implement additional `Functor` methods on ComplexMatrix for mapping over split vectors
+- Infix functions for `fmap` calls
 
 ## Example
 

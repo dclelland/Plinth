@@ -15,62 +15,74 @@ extension Matrix where Scalar == Float {
     }
     
     @inlinable public static prefix func - (operand: Matrix) -> Matrix {
-        return Matrix(shape: operand.shape, elements: -operand.elements)
+        return operand.fmap { -$0 }
     }
+
+}
+
+extension Matrix where Scalar == Float {
     
     @inlinable public static func + (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements + right)
-    }
-    
-    @inlinable public static func + (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: left + right.elements)
-    }
-    
-    @inlinable public static func + (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements + right.elements)
+        return left.fmap { $0 + right }
     }
     
     @inlinable public static func - (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements - right)
-    }
-    
-    @inlinable public static func - (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: left - right.elements)
-    }
-    
-    @inlinable public static func - (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements - right.elements)
+        return left.fmap { $0 - right }
     }
     
     @inlinable public static func * (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements * right)
-    }
-    
-    @inlinable public static func * (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: left * right.elements)
-    }
-    
-    @inlinable public static func * (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements * right.elements)
+        return left.fmap { $0 * right }
     }
     
     @inlinable public static func / (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements / right)
+        return left.fmap { $0 / right }
+    }
+
+}
+
+extension Matrix where Scalar == Float {
+    
+    @inlinable public static func + (left: Scalar, right: Matrix) -> Matrix {
+        return right.fmap { left + $0 }
+    }
+    
+    @inlinable public static func - (left: Scalar, right: Matrix) -> Matrix {
+        return right.fmap { left - $0 }
+    }
+    
+    @inlinable public static func * (left: Scalar, right: Matrix) -> Matrix {
+        return right.fmap { left * $0 }
     }
     
     @inlinable public static func / (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: left / right.elements)
+        return right.fmap { left / $0 }
+    }
+
+}
+
+extension Matrix where Scalar == Float {
+    
+    @inlinable public static func + (left: Matrix, right: Matrix) -> Matrix {
+        return left.fmap { $0 + right.elements }
+    }
+    
+    @inlinable public static func - (left: Matrix, right: Matrix) -> Matrix {
+        return left.fmap { $0 - right.elements }
+    }
+    
+    @inlinable public static func * (left: Matrix, right: Matrix) -> Matrix {
+        return left.fmap { $0 * right.elements }
     }
     
     @inlinable public static func / (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements / right.elements)
+        return left.fmap { $0 / right.elements }
     }
+
+}
+
+extension Matrix where Scalar == Float {
     
     @inlinable public static func += (left: inout Matrix, right: Scalar) {
-        left = left + right
-    }
-    
-    @inlinable public static func += (left: inout Matrix, right: Matrix) {
         left = left + right
     }
     
@@ -78,26 +90,34 @@ extension Matrix where Scalar == Float {
         left = left - right
     }
     
-    @inlinable public static func -= (left: inout Matrix, right: Matrix) {
-        left = left - right
-    }
-    
     @inlinable public static func *= (left: inout Matrix, right: Scalar) {
-        left = left * right
-    }
-    
-    @inlinable public static func *= (left: inout Matrix, right: Matrix) {
         left = left * right
     }
     
     @inlinable public static func /= (left: inout Matrix, right: Scalar) {
         left = left / right
     }
+
+}
+
+extension Matrix where Scalar == Float {
+    
+    @inlinable public static func += (left: inout Matrix, right: Matrix) {
+        left = left + right
+    }
+    
+    @inlinable public static func -= (left: inout Matrix, right: Matrix) {
+        left = left - right
+    }
+    
+    @inlinable public static func *= (left: inout Matrix, right: Matrix) {
+        left = left * right
+    }
     
     @inlinable public static func /= (left: inout Matrix, right: Matrix) {
         left = left / right
     }
-    
+
 }
 
 extension Matrix where Scalar == Double {
@@ -107,62 +127,74 @@ extension Matrix where Scalar == Double {
     }
     
     @inlinable public static prefix func - (operand: Matrix) -> Matrix {
-        return Matrix(shape: operand.shape, elements: -operand.elements)
+        return operand.fmap { -$0 }
     }
+
+}
+
+extension Matrix where Scalar == Double {
     
     @inlinable public static func + (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements + right)
-    }
-    
-    @inlinable public static func + (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: left + right.elements)
-    }
-    
-    @inlinable public static func + (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements + right.elements)
+        return left.fmap { $0 + right }
     }
     
     @inlinable public static func - (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements - right)
-    }
-    
-    @inlinable public static func - (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: left - right.elements)
-    }
-    
-    @inlinable public static func - (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements - right.elements)
+        return left.fmap { $0 - right }
     }
     
     @inlinable public static func * (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements * right)
-    }
-    
-    @inlinable public static func * (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: left * right.elements)
-    }
-    
-    @inlinable public static func * (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements * right.elements)
+        return left.fmap { $0 * right }
     }
     
     @inlinable public static func / (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements / right)
+        return left.fmap { $0 / right }
+    }
+
+}
+
+extension Matrix where Scalar == Double {
+    
+    @inlinable public static func + (left: Scalar, right: Matrix) -> Matrix {
+        return right.fmap { left + $0 }
+    }
+    
+    @inlinable public static func - (left: Scalar, right: Matrix) -> Matrix {
+        return right.fmap { left - $0 }
+    }
+    
+    @inlinable public static func * (left: Scalar, right: Matrix) -> Matrix {
+        return right.fmap { left * $0 }
     }
     
     @inlinable public static func / (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: left / right.elements)
+        return right.fmap { left / $0 }
+    }
+
+}
+
+extension Matrix where Scalar == Double {
+    
+    @inlinable public static func + (left: Matrix, right: Matrix) -> Matrix {
+        return left.fmap { $0 + right.elements }
+    }
+    
+    @inlinable public static func - (left: Matrix, right: Matrix) -> Matrix {
+        return left.fmap { $0 - right.elements }
+    }
+    
+    @inlinable public static func * (left: Matrix, right: Matrix) -> Matrix {
+        return left.fmap { $0 * right.elements }
     }
     
     @inlinable public static func / (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: left.elements / right.elements)
+        return left.fmap { $0 / right.elements }
     }
+
+}
+
+extension Matrix where Scalar == Double {
     
     @inlinable public static func += (left: inout Matrix, right: Scalar) {
-        left = left + right
-    }
-    
-    @inlinable public static func += (left: inout Matrix, right: Matrix) {
         left = left + right
     }
     
@@ -170,24 +202,32 @@ extension Matrix where Scalar == Double {
         left = left - right
     }
     
-    @inlinable public static func -= (left: inout Matrix, right: Matrix) {
-        left = left - right
-    }
-    
     @inlinable public static func *= (left: inout Matrix, right: Scalar) {
-        left = left * right
-    }
-    
-    @inlinable public static func *= (left: inout Matrix, right: Matrix) {
         left = left * right
     }
     
     @inlinable public static func /= (left: inout Matrix, right: Scalar) {
         left = left / right
     }
+
+}
+
+extension Matrix where Scalar == Double {
+    
+    @inlinable public static func += (left: inout Matrix, right: Matrix) {
+        left = left + right
+    }
+    
+    @inlinable public static func -= (left: inout Matrix, right: Matrix) {
+        left = left - right
+    }
+    
+    @inlinable public static func *= (left: inout Matrix, right: Matrix) {
+        left = left * right
+    }
     
     @inlinable public static func /= (left: inout Matrix, right: Matrix) {
         left = left / right
     }
-    
+
 }
