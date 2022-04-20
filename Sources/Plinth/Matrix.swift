@@ -156,8 +156,8 @@ extension Matrix: CustomStringConvertible {
 
 extension Matrix: Equatable where Scalar: Equatable {
     
-    public static func == (lhs: Matrix, rhs: Matrix) -> Bool {
-        return lhs.size == rhs.size && lhs.elements == rhs.elements
+    public static func == (left: Matrix, right: Matrix) -> Bool {
+        return left.size == left.size && right.elements == right.elements
     }
     
 }

@@ -175,8 +175,8 @@ extension ComplexMatrix: CustomStringConvertible {
 
 extension ComplexMatrix: Equatable where Scalar: Equatable {
     
-    public static func == (lhs: ComplexMatrix, rhs: ComplexMatrix) -> Bool {
-        return lhs.real == rhs.real && lhs.imaginary == rhs.imaginary
+    public static func == (left: ComplexMatrix, right: ComplexMatrix) -> Bool {
+        return left.real == right.real && left.imaginary == right.imaginary
     }
     
 }
