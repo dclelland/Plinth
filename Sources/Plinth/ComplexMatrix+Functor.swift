@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Accelerate
 
 extension ComplexMatrix {
     
@@ -27,6 +28,54 @@ extension ComplexMatrix {
     
     @inlinable public func fmap<A>(real realFunction: ([Scalar], inout [A]) -> (), imaginary imaginaryFunction: ([Scalar], inout [A]) -> ()) -> ComplexMatrix<A> where A: Numeric {
         return ComplexMatrix<A>(real: real.fmap(realFunction), imaginary: imaginary.fmap(imaginaryFunction))
+    }
+    
+}
+
+extension ComplexMatrix where Scalar == Float {
+    
+    @inlinable public func fmap(_ function: (DSPSplitComplex, inout [Scalar]) -> ()) -> Matrix {
+        var input = self
+        var output = Matrix.zeros(shape: shape)
+        input.withUnsafeMutableSplitComplexVector { inputVector in
+            function(inputVector, &output.elements)
+        }
+        return output
+    }
+    
+    @inlinable public func fmap(_ function: (DSPSplitComplex, inout DSPSplitComplex) -> ()) -> ComplexMatrix {
+        var input = self
+        var output = ComplexMatrix.zeros(shape: shape)
+        input.withUnsafeMutableSplitComplexVector { inputVector in
+            output.withUnsafeMutableSplitComplexVector { outputVector in
+                function(inputVector, &outputVector)
+            }
+        }
+        return output
+    }
+    
+}
+
+extension ComplexMatrix where Scalar == Double {
+    
+    @inlinable public func fmap(_ function: (DSPDoubleSplitComplex, inout [Scalar]) -> ()) -> Matrix {
+        var input = self
+        var output = Matrix.zeros(shape: shape)
+        input.withUnsafeMutableSplitComplexVector { inputVector in
+            function(inputVector, &output.elements)
+        }
+        return output
+    }
+    
+    @inlinable public func fmap(_ function: (DSPDoubleSplitComplex, inout DSPDoubleSplitComplex) -> ()) -> ComplexMatrix {
+        var input = self
+        var output = ComplexMatrix.zeros(shape: shape)
+        input.withUnsafeMutableSplitComplexVector { inputVector in
+            output.withUnsafeMutableSplitComplexVector { outputVector in
+                function(inputVector, &outputVector)
+            }
+        }
+        return output
     }
     
 }
