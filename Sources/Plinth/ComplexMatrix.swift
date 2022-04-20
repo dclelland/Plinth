@@ -26,19 +26,19 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
 
 extension ComplexMatrix {
     
-    public init(size: MatrixSize, elements: [Complex]) {
-        self.init(real: .init(size: size, elements: elements.map { $0.real }), imaginary: .init(size: size, elements: elements.map { $0.imaginary }))
+    public init(shape: Shape, elements: [Complex]) {
+        self.init(real: .init(shape: shape, elements: elements.map { $0.real }), imaginary: .init(shape: shape, elements: elements.map { $0.imaginary }))
     }
     
-    public init(size: MatrixSize, _ closure: (_ row: Int, _ column: Int) throws -> Complex) rethrows {
+    public init(shape: Shape, _ closure: (_ row: Int, _ column: Int) throws -> Complex) rethrows {
         var elements: [Complex] = []
-        elements.reserveCapacity(size.count)
-        for row in 0..<size.rows {
-            for column in 0..<size.columns {
+        elements.reserveCapacity(shape.count)
+        for row in 0..<shape.rows {
+            for column in 0..<shape.columns {
                 elements.append(try closure(row, column))
             }
         }
-        self.init(size: size, elements: elements)
+        self.init(shape: shape, elements: elements)
     }
     
 }
@@ -46,15 +46,15 @@ extension ComplexMatrix {
 extension ComplexMatrix {
     
     public init(_ element: Complex) {
-        self.init(size: .init(rows: 1, columns: 1), elements: [element])
+        self.init(shape: .init(rows: 1, columns: 1), elements: [element])
     }
     
     public init(_ elements: [Complex]) {
-        self.init(size: .init(rows: 1, columns: elements.count), elements: elements)
+        self.init(shape: .init(rows: 1, columns: elements.count), elements: elements)
     }
     
     public init(_ elements: [[Complex]]) {
-        self.init(size: .init(rows: elements.count, columns: elements.first?.count ?? 0), elements: Array(elements.joined()))
+        self.init(shape: .init(rows: elements.count, columns: elements.first?.count ?? 0), elements: Array(elements.joined()))
     }
     
 }
@@ -62,15 +62,15 @@ extension ComplexMatrix {
 extension ComplexMatrix {
     
     public static var empty: ComplexMatrix {
-        return .init(size: .empty, elements: [])
+        return .init(shape: .empty, elements: [])
     }
     
 }
 
 extension ComplexMatrix where Scalar: Numeric {
     
-    public static func zeros(size: MatrixSize) -> ComplexMatrix {
-        return .init(real: .zeros(size: size), imaginary: .zeros(size: size))
+    public static func zeros(shape: Shape) -> ComplexMatrix {
+        return .init(real: .zeros(shape: shape), imaginary: .zeros(shape: shape))
     }
     
 }
@@ -87,16 +87,16 @@ extension ComplexMatrix {
     public var state: State {
         switch (real.state, imaginary.state) {
         case (.regular, .regular):
-            return real.size == imaginary.size ? .regular : .malformed
+            return real.shape == imaginary.shape ? .regular : .malformed
         default:
             return .malformed
         }
     }
     
-    public var size: MatrixSize {
-        return MatrixSize(
-            rows: Swift.min(real.size.rows, imaginary.size.rows),
-            columns: Swift.min(real.size.columns, imaginary.size.columns)
+    public var shape: Shape {
+        return Shape(
+            rows: Swift.min(real.shape.rows, imaginary.shape.rows),
+            columns: Swift.min(real.shape.columns, imaginary.shape.columns)
         )
     }
     
@@ -110,11 +110,11 @@ extension ComplexMatrix {
     
     public subscript(row: Int, column: Int) -> Complex {
         get {
-            precondition(size.contains(row: row, column: column))
+            precondition(shape.contains(row: row, column: column))
             return Complex(real[row, column], imaginary[row, column])
         }
         set {
-            precondition(size.contains(row: row, column: column))
+            precondition(shape.contains(row: row, column: column))
             real[row, column] = newValue.real
             imaginary[row, column] = newValue.imaginary
         }
@@ -122,14 +122,14 @@ extension ComplexMatrix {
 
     public subscript(row row: Int) -> [Complex] {
         get {
-            precondition(size.contains(row: row))
+            precondition(shape.contains(row: row))
             return zip(real[row: row], imaginary[row: row]).map { real, imaginary in
                 return Complex(real, imaginary)
             }
         }
         set {
-            precondition(size.contains(row: row))
-            precondition(size.columns == newValue.count)
+            precondition(shape.contains(row: row))
+            precondition(shape.columns == newValue.count)
             real[row: row] = newValue.map { $0.real }
             imaginary[row: row] = newValue.map { $0.imaginary }
         }
@@ -137,14 +137,14 @@ extension ComplexMatrix {
 
     public subscript(column column: Int) -> [Complex] {
         get {
-            precondition(size.contains(column: column))
+            precondition(shape.contains(column: column))
             return zip(real[column: column], imaginary[column: column]).map { real, imaginary in
                 return Complex(real, imaginary)
             }
         }
         set {
-            precondition(size.contains(column: column))
-            precondition(size.rows == newValue.count)
+            precondition(shape.contains(column: column))
+            precondition(shape.rows == newValue.count)
             real[column: column] = newValue.map { $0.real }
             imaginary[column: column] = newValue.map { $0.imaginary }
         }

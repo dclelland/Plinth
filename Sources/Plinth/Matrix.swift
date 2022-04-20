@@ -9,25 +9,25 @@ import Foundation
 
 public struct Matrix<Scalar> {
     
-    public let size: MatrixSize
+    public let shape: Shape
     
     public var elements: [Scalar]
     
-    public init(size: MatrixSize, elements: [Scalar]) {
-        self.size = size
+    public init(shape: Shape, elements: [Scalar]) {
+        self.shape = shape
         self.elements = elements
         precondition(self.state == .regular)
     }
     
-    public init(size: MatrixSize, _ closure: (_ row: Int, _ column: Int) throws -> Scalar) rethrows {
+    public init(shape: Shape, _ closure: (_ row: Int, _ column: Int) throws -> Scalar) rethrows {
         var elements: [Scalar] = []
-        elements.reserveCapacity(size.count)
-        for row in 0..<size.rows {
-            for column in 0..<size.columns {
+        elements.reserveCapacity(shape.count)
+        for row in 0..<shape.rows {
+            for column in 0..<shape.columns {
                 elements.append(try closure(row, column))
             }
         }
-        self.init(size: size, elements: elements)
+        self.init(shape: shape, elements: elements)
     }
 
 }
@@ -35,15 +35,15 @@ public struct Matrix<Scalar> {
 extension Matrix {
     
     public init(_ element: Scalar) {
-        self.init(size: .init(rows: 1, columns: 1), elements: [element])
+        self.init(shape: .init(rows: 1, columns: 1), elements: [element])
     }
     
     public init(_ elements: [Scalar]) {
-        self.init(size: .init(rows: 1, columns: elements.count), elements: elements)
+        self.init(shape: .init(rows: 1, columns: elements.count), elements: elements)
     }
     
     public init(_ elements: [[Scalar]]) {
-        self.init(size: .init(rows: elements.count, columns: elements.first?.count ?? 0), elements: Array(elements.joined()))
+        self.init(shape: .init(rows: elements.count, columns: elements.first?.count ?? 0), elements: Array(elements.joined()))
     }
     
 }
@@ -51,15 +51,15 @@ extension Matrix {
 extension Matrix {
     
     public static var empty: Matrix {
-        return .init(size: .empty, elements: [])
+        return .init(shape: .empty, elements: [])
     }
     
 }
     
 extension Matrix where Scalar: Numeric {
     
-    public static func zeros(size: MatrixSize) -> Matrix {
-        return .init(size: size, elements: Array(repeating: .zero, count: size.count))
+    public static func zeros(shape: Shape) -> Matrix {
+        return .init(shape: shape, elements: Array(repeating: .zero, count: shape.count))
     }
     
 }
@@ -74,7 +74,7 @@ extension Matrix {
     }
     
     public var state: State {
-        return size.count == elements.count ? .regular : .malformed
+        return shape.count == elements.count ? .regular : .malformed
     }
     
 }
@@ -83,39 +83,39 @@ extension Matrix {
 
     public subscript(row: Int, column: Int) -> Scalar {
         get {
-            precondition(size.contains(row: row, column: column))
-            return elements[size.indexFor(row: row, column: column)]
+            precondition(shape.contains(row: row, column: column))
+            return elements[shape.indexFor(row: row, column: column)]
         }
         set {
-            precondition(size.contains(row: row, column: column))
-            elements[size.indexFor(row: row, column: column)] = newValue
+            precondition(shape.contains(row: row, column: column))
+            elements[shape.indexFor(row: row, column: column)] = newValue
         }
     }
 
     public subscript(row row: Int) -> [Scalar] {
         get {
-            precondition(size.contains(row: row))
-            return Array(elements[size.indicesFor(row: row)])
+            precondition(shape.contains(row: row))
+            return Array(elements[shape.indicesFor(row: row)])
         }
         set {
-            precondition(size.contains(row: row))
-            precondition(size.columns == newValue.count)
-            elements.replaceSubrange(size.indicesFor(row: row), with: newValue)
+            precondition(shape.contains(row: row))
+            precondition(shape.columns == newValue.count)
+            elements.replaceSubrange(shape.indicesFor(row: row), with: newValue)
         }
     }
 
     public subscript(column column: Int) -> [Scalar] {
         get {
-            precondition(size.contains(column: column))
-            return size.rowIndices.map { row in
-                return elements[size.indexFor(row: row, column: column)]
+            precondition(shape.contains(column: column))
+            return shape.rowIndices.map { row in
+                return elements[shape.indexFor(row: row, column: column)]
             }
         }
         set {
-            precondition(size.contains(column: column))
-            precondition(size.rows == newValue.count)
-            for row in size.rowIndices {
-                elements[size.indexFor(row: row, column: column)] = newValue[row]
+            precondition(shape.contains(column: column))
+            precondition(shape.rows == newValue.count)
+            for row in shape.rowIndices {
+                elements[shape.indexFor(row: row, column: column)] = newValue[row]
             }
         }
     }
@@ -149,7 +149,7 @@ extension Matrix: ExpressibleByArrayLiteral {
 extension Matrix: CustomStringConvertible {
     
     public var description: String {
-        return "\(type(of: self))(size: \(size), count: \(count))"
+        return "\(type(of: self))(shape: \(shape), count: \(count))"
     }
     
 }
@@ -157,7 +157,7 @@ extension Matrix: CustomStringConvertible {
 extension Matrix: Equatable where Scalar: Equatable {
     
     public static func == (left: Matrix, right: Matrix) -> Bool {
-        return left.size == left.size && right.elements == right.elements
+        return left.shape == right.shape && left.elements == right.elements
     }
     
 }
@@ -165,7 +165,7 @@ extension Matrix: Equatable where Scalar: Equatable {
 extension Matrix: Hashable where Scalar: Hashable {
     
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(size)
+        hasher.combine(shape)
         hasher.combine(elements)
     }
     
@@ -174,13 +174,13 @@ extension Matrix: Hashable where Scalar: Hashable {
 extension Matrix: Codable where Scalar: Codable {
     
     enum CodingKeys: String, CodingKey {
-        case size
+        case shape
         case elements
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.size = try container.decode(MatrixSize.self, forKey: .size)
+        self.shape = try container.decode(Shape.self, forKey: .shape)
         self.elements = try container.decode([Scalar].self, forKey: .elements)
         if self.state == .malformed {
             throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Malformed matrix: \(self)"))

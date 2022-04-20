@@ -1,5 +1,5 @@
 //
-//  MatrixSize.swift
+//  Shape.swift
 //  Plinth
 //
 //  Created by Daniel Clelland on 30/03/22.
@@ -7,7 +7,7 @@
 
 import Foundation
     
-public struct MatrixSize: Codable {
+public struct Shape: Codable {
     
     public var rows: Int
     public var columns: Int
@@ -25,13 +25,13 @@ public struct MatrixSize: Codable {
     
 }
 
-extension MatrixSize {
+extension Shape {
     
-    public static let empty = MatrixSize(rows: 0, columns: 0)
+    public static let empty = Shape(rows: 0, columns: 0)
     
 }
 
-extension MatrixSize {
+extension Shape {
     
     @inlinable internal var rowIndices: ClosedRange<Int> {
         return 0...(rows - 1)
@@ -43,7 +43,7 @@ extension MatrixSize {
     
 }
 
-extension MatrixSize {
+extension Shape {
     
     @inlinable internal func indexFor(row: Int, column: Int) -> Int {
         return row * columns + column
@@ -57,7 +57,7 @@ extension MatrixSize {
     
 }
 
-extension MatrixSize {
+extension Shape {
     
     @inlinable internal func contains(row: Int) -> Bool {
         return rowIndices.contains(row)
@@ -73,7 +73,7 @@ extension MatrixSize {
     
 }
 
-extension MatrixSize: CustomStringConvertible {
+extension Shape: CustomStringConvertible {
     
     public var description: String {
         return "\(rows)×\(columns)"
@@ -81,15 +81,15 @@ extension MatrixSize: CustomStringConvertible {
     
 }
 
-extension MatrixSize: Equatable {
+extension Shape: Equatable {
     
-    public static func == (lhs: MatrixSize, rhs: MatrixSize) -> Bool {
-        return lhs.rows == rhs.rows && lhs.columns == rhs.columns
+    public static func == (left: Shape, right: Shape) -> Bool {
+        return left.rows == right.rows && left.columns == right.columns
     }
     
 }
 
-extension MatrixSize: Hashable {
+extension Shape: Hashable {
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(rows)
