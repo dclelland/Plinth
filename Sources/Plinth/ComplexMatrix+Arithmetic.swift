@@ -9,12 +9,12 @@ import Foundation
 
 extension ComplexMatrix where Scalar == Float {
     
-    public static prefix func + (right: ComplexMatrix) -> ComplexMatrix {
-        return right
+    public static prefix func + (operand: ComplexMatrix) -> ComplexMatrix {
+        return operand
     }
     
-    public static prefix func - (right: ComplexMatrix) -> ComplexMatrix {
-        return ComplexMatrix(real: -right.real, imaginary: -right.imaginary)
+    public static prefix func - (operand: ComplexMatrix) -> ComplexMatrix {
+        return ComplexMatrix(real: -operand.real, imaginary: -operand.imaginary)
     }
     
     public static func + (left: ComplexMatrix, right: Scalar) -> ComplexMatrix {
@@ -197,12 +197,12 @@ extension ComplexMatrix where Scalar == Float {
 
 extension ComplexMatrix where Scalar == Double {
     
-    public static prefix func + (right: ComplexMatrix) -> ComplexMatrix {
-        return right
+    public static prefix func + (operand: ComplexMatrix) -> ComplexMatrix {
+        return operand
     }
     
-    public static prefix func - (right: ComplexMatrix) -> ComplexMatrix {
-        return ComplexMatrix(real: -right.real, imaginary: -right.imaginary)
+    public static prefix func - (operand: ComplexMatrix) -> ComplexMatrix {
+        return ComplexMatrix(real: -operand.real, imaginary: -operand.imaginary)
     }
     
     public static func + (left: ComplexMatrix, right: Scalar) -> ComplexMatrix {

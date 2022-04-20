@@ -10,12 +10,12 @@ import Accelerate
 
 extension Matrix where Scalar == Float {
     
-    public static prefix func + (right: Matrix) -> Matrix {
-        return right
+    public static prefix func + (operand: Matrix) -> Matrix {
+        return operand
     }
     
-    public static prefix func - (right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: vDSP.negative(right))
+    public static prefix func - (operand: Matrix) -> Matrix {
+        return Matrix(shape: operand.shape, elements: vDSP.negative(operand))
     }
     
     public static func + (left: Matrix, right: Scalar) -> Matrix {
@@ -102,12 +102,12 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Double {
     
-    public static prefix func + (right: Matrix) -> Matrix {
-        return right
+    public static prefix func + (operand: Matrix) -> Matrix {
+        return operand
     }
     
-    public static prefix func - (right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: vDSP.negative(right))
+    public static prefix func - (operand: Matrix) -> Matrix {
+        return Matrix(shape: operand.shape, elements: vDSP.negative(operand))
     }
     
     public static func + (left: Matrix, right: Scalar) -> Matrix {
