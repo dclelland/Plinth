@@ -43,6 +43,18 @@ extension ComplexMatrix where Scalar == Float {
         return output
     }
     
+}
+
+extension ComplexMatrix where Scalar == Float {
+    
+    @inlinable public func fmap(_ function: (inout DSPSplitComplex) -> ()) -> ComplexMatrix {
+        var input = self
+        input.withUnsafeMutableSplitComplexVector { inputVector in
+            function(&inputVector)
+        }
+        return input
+    }
+    
     @inlinable public func fmap(_ function: (DSPSplitComplex, inout DSPSplitComplex) -> ()) -> ComplexMatrix {
         var input = self
         var output = ComplexMatrix.zeros(shape: shape)
@@ -65,6 +77,18 @@ extension ComplexMatrix where Scalar == Double {
             function(inputVector, &output.elements)
         }
         return output
+    }
+    
+}
+
+extension ComplexMatrix where Scalar == Double {
+    
+    @inlinable public func fmap(_ function: (inout DSPDoubleSplitComplex) -> ()) -> ComplexMatrix {
+        var input = self
+        input.withUnsafeMutableSplitComplexVector { inputVector in
+            function(&inputVector)
+        }
+        return input
     }
     
     @inlinable public func fmap(_ function: (DSPDoubleSplitComplex, inout DSPDoubleSplitComplex) -> ()) -> ComplexMatrix {
