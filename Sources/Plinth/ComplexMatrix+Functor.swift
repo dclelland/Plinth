@@ -30,32 +30,3 @@ extension ComplexMatrix {
     }
     
 }
-
-/*
-extension ComplexMatrix where Scalar == Double {
-    
-    // TODO: Review type signatures in vDSP
-    
-    @inlinable public func fmap<A>(_ function: (DSPSplitComplex) -> A) -> ComplexMatrix<A> {
-        var input = self
-        return input.withUnsafeMutableSplitComplexVector { inputVector in
-            return function(inputVector)
-        }
-    }
-    
-    @inlinable public func fmap<A>(_ function: (DSPSplitComplex) -> [A]) -> Matrix<A> {
-        var input = self
-        return input.withUnsafeMutableSplitComplexVector { inputVector in
-            return function(inputVector)
-        }
-    }
-    
-    @inlinable public func fmap<A>(_ function: (DSPSplitComplex) -> [A]) -> ComplexMatrix<A> {
-        var input = self
-        return input.withUnsafeMutableSplitComplexVector { inputVector in
-            return function(inputVector)
-        }
-    }
-    
-}
- */
