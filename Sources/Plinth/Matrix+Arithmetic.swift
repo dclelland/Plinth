@@ -15,55 +15,55 @@ extension Matrix where Scalar == Float {
     }
     
     @inlinable public static prefix func - (operand: Matrix) -> Matrix {
-        return Matrix(shape: operand.shape, elements: vDSP.negative(operand))
+        return Matrix(shape: operand.shape, elements: -operand.elements)
     }
     
     @inlinable public static func + (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.add(right, left))
+        return Matrix(shape: left.shape, elements: left.elements + right)
     }
     
     @inlinable public static func + (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: vDSP.add(left, right))
+        return Matrix(shape: right.shape, elements: left + right.elements)
     }
     
     @inlinable public static func + (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.add(left, right))
+        return Matrix(shape: left.shape, elements: left.elements + right.elements)
     }
     
     @inlinable public static func - (left: Matrix, right: Scalar) -> Matrix {
-        return -right + left
+        return Matrix(shape: left.shape, elements: left.elements - right)
     }
     
     @inlinable public static func - (left: Scalar, right: Matrix) -> Matrix {
-        return -right + left
+        return Matrix(shape: right.shape, elements: left - right.elements)
     }
     
     @inlinable public static func - (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.subtract(left, right))
+        return Matrix(shape: left.shape, elements: left.elements - right.elements)
     }
     
     @inlinable public static func * (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.multiply(right, left))
+        return Matrix(shape: left.shape, elements: left.elements * right)
     }
     
     @inlinable public static func * (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: vDSP.multiply(left, right))
+        return Matrix(shape: right.shape, elements: left * right.elements)
     }
     
     @inlinable public static func * (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.multiply(left, right))
+        return Matrix(shape: left.shape, elements: left.elements * right.elements)
     }
     
     @inlinable public static func / (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.divide(left, right))
+        return Matrix(shape: left.shape, elements: left.elements / right)
     }
     
     @inlinable public static func / (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: vDSP.divide(left, right))
+        return Matrix(shape: right.shape, elements: left / right.elements)
     }
     
     @inlinable public static func / (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.divide(left, right))
+        return Matrix(shape: left.shape, elements: left.elements / right.elements)
     }
     
     @inlinable public static func += (left: inout Matrix, right: Scalar) {
@@ -107,55 +107,55 @@ extension Matrix where Scalar == Double {
     }
     
     @inlinable public static prefix func - (operand: Matrix) -> Matrix {
-        return Matrix(shape: operand.shape, elements: vDSP.negative(operand))
+        return Matrix(shape: operand.shape, elements: -operand.elements)
     }
     
     @inlinable public static func + (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.add(right, left))
+        return Matrix(shape: left.shape, elements: left.elements + right)
     }
     
     @inlinable public static func + (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: vDSP.add(left, right))
+        return Matrix(shape: right.shape, elements: left + right.elements)
     }
     
     @inlinable public static func + (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.add(left, right))
+        return Matrix(shape: left.shape, elements: left.elements + right.elements)
     }
     
     @inlinable public static func - (left: Matrix, right: Scalar) -> Matrix {
-        return -right + left
+        return Matrix(shape: left.shape, elements: left.elements - right)
     }
     
     @inlinable public static func - (left: Scalar, right: Matrix) -> Matrix {
-        return -right + left
+        return Matrix(shape: right.shape, elements: left - right.elements)
     }
     
     @inlinable public static func - (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.subtract(left, right))
+        return Matrix(shape: left.shape, elements: left.elements - right.elements)
     }
     
     @inlinable public static func * (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.multiply(right, left))
+        return Matrix(shape: left.shape, elements: left.elements * right)
     }
     
     @inlinable public static func * (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: vDSP.multiply(left, right))
+        return Matrix(shape: right.shape, elements: left * right.elements)
     }
     
     @inlinable public static func * (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.multiply(left, right))
+        return Matrix(shape: left.shape, elements: left.elements * right.elements)
     }
     
     @inlinable public static func / (left: Matrix, right: Scalar) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.divide(left, right))
+        return Matrix(shape: left.shape, elements: left.elements / right)
     }
     
     @inlinable public static func / (left: Scalar, right: Matrix) -> Matrix {
-        return Matrix(shape: right.shape, elements: vDSP.divide(left, right))
+        return Matrix(shape: right.shape, elements: left / right.elements)
     }
     
     @inlinable public static func / (left: Matrix, right: Matrix) -> Matrix {
-        return Matrix(shape: left.shape, elements: vDSP.divide(left, right))
+        return Matrix(shape: left.shape, elements: left.elements / right.elements)
     }
     
     @inlinable public static func += (left: inout Matrix, right: Scalar) {
