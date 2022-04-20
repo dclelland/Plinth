@@ -1,5 +1,5 @@
 //
-//  ComplexMatrix+Arithmetic.swift
+//  ComplexMatrix+Accelerate.swift
 //  Plinth
 //
 //  Created by Daniel Clelland on 20/04/22.
@@ -7,7 +7,6 @@
 
 import Foundation
 import Accelerate
-import Numerics
 
 extension ComplexMatrix where Scalar == Float {
     
@@ -24,7 +23,7 @@ extension ComplexMatrix where Scalar == Float {
 
 extension ComplexMatrix where Scalar == Double {
     
-    @inlinable public mutating func withUnsafeMutableSplitComplexVector<R>(_ body: (inout DSPDoubleSplitComplex) throws -> Result) rethrows -> Result {
+    @inlinable public mutating func withUnsafeMutableSplitComplexVector<Result>(_ body: (inout DSPDoubleSplitComplex) throws -> Result) rethrows -> Result {
         return try real.withUnsafeMutableBufferPointer { realPointer in
             return try imaginary.withUnsafeMutableBufferPointer { imaginaryPointer in
                 var split = DSPDoubleSplitComplex(realp: realPointer.baseAddress!, imagp: imaginaryPointer.baseAddress!)
