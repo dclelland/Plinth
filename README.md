@@ -9,36 +9,23 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 - https://github.com/stsievert/swix
 - https://github.com/cgarciae/NDArray
 
-## Todo list
-
-- Infix functions for `fmap` calls
-
 ## Example
 
 ```swift
-var input: ComplexMatrix<Double> = [[ .one,  .i],
+let input: ComplexMatrix<Double> = [[ .one,  .i],
                                     [-.one, -.i]]
 
-var output: ComplexMatrix<Double> = .zeros(size: input.size)
+let phase = input.fmap(vDSP.phase)
 
-let size = input.size
-
-input.withUnsafeMutableSplitComplexVector { inputVector in
-    output.withUnsafeMutableSplitComplexVector { outputVector in
-        let log2N = vDSP_Length(log2(Double(size.count)))
-        let log2N0 = vDSP_Length(log2(Double(size.columns)))
-        let log2N1 = vDSP_Length(log2(Double(size.rows)))
-        let setup = vDSP_create_fftsetupD(log2N, FFTRadix(kFFTRadix2))!
-        vDSP_fft2d_zopD(setup, &inputVector, 1, 0, &outputVector, 1, 0, log2N0, log2N1, .forward)
-        vDSP_destroy_fftsetupD(setup)
-    }
+let frequencies = input.fmap { inputVector in
+    let log2N = vDSP_Length(log2(Double(input.shape.count)))
+    let log2N0 = vDSP_Length(log2(Double(input.shape.columns)))
+    let log2N1 = vDSP_Length(log2(Double(input.shape.rows)))
+    let setup = vDSP_create_fftsetupD(log2N, FFTRadix(kFFTRadix2))!
+    vDSP_fft2d_zipD(setup, &inputVector, 1, 0, log2N0, log2N1, FFTDirection(kFFTDirection_Forward))
+    vDSP_destroy_fftsetupD(setup)
 }
 
-let magnitudes: Matrix<Double> = output.withUnsafeMutableSplitComplexVector { outputVector in
-    var result: Matrix<Double> = .zeros(size: size)
-    vDSP.squareMagnitudes(outputVector, result: &result)
-    return result
-}
-
-print(magnitudes.elements) // [0.0, 0.0, 8.0, 8.0]
+print(phase.elements) // [0.0, 1.5707963267948966, 3.141592653589793, -1.5707963267948966]
+print(frequencies.elements) // [Complex<Double>(0.0, 0.0), Complex<Double>(0.0, 0.0), Complex<Double>(2.0, 2.0), Complex<Double>(2.0, -2.0)]
 ```
