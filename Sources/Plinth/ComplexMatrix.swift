@@ -69,6 +69,10 @@ extension ComplexMatrix {
 
 extension ComplexMatrix where Scalar: Numeric {
     
+    public init(real: Matrix) {
+        self.init(real: real, imaginary: .zeros(shape: real.shape))
+    }
+    
     public static func zeros(shape: Shape) -> ComplexMatrix {
         return .init(real: .zeros(shape: shape), imaginary: .zeros(shape: shape))
     }
