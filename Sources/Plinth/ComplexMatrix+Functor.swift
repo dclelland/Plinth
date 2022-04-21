@@ -10,18 +10,6 @@ import Accelerate
 
 extension ComplexMatrix {
     
-    @inlinable public func fmap<A>(_ function: ([Scalar]) -> [A]) -> ComplexMatrix<A> {
-        return ComplexMatrix<A>(real: real.fmap(function), imaginary: imaginary.fmap(function))
-    }
-    
-    @inlinable public func fmap<A>(_ function: ([Scalar], inout [A]) -> ()) -> ComplexMatrix<A> where A: Numeric {
-        return ComplexMatrix<A>(real: real.fmap(function), imaginary: imaginary.fmap(function))
-    }
-    
-}
-
-extension ComplexMatrix {
-    
     @inlinable public func fmap<A>(real realFunction: ([Scalar]) -> [A], imaginary imaginaryFunction: ([Scalar]) -> [A]) -> ComplexMatrix<A> {
         return ComplexMatrix<A>(real: real.fmap(realFunction), imaginary: imaginary.fmap(imaginaryFunction))
     }

@@ -22,9 +22,9 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
         precondition(self.state == .regular)
     }
     
-}
-
-extension ComplexMatrix {
+    public init(shape: Shape, repeating complex: Complex) {
+        self.init(real: .init(shape: shape, repeating: complex.real), imaginary: .init(shape: shape, repeating: complex.imaginary))
+    }
     
     public init(shape: Shape, elements: [Complex]) {
         self.init(real: .init(shape: shape, elements: elements.map { $0.real }), imaginary: .init(shape: shape, elements: elements.map { $0.imaginary }))
@@ -74,7 +74,7 @@ extension ComplexMatrix where Scalar: Numeric {
     }
     
     public static func zeros(shape: Shape) -> ComplexMatrix {
-        return .init(real: .zeros(shape: shape), imaginary: .zeros(shape: shape))
+        return .init(shape: shape, repeating: .zero)
     }
     
 }

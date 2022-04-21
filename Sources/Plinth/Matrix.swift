@@ -19,6 +19,10 @@ public struct Matrix<Scalar> {
         precondition(self.state == .regular)
     }
     
+    public init(shape: Shape, repeating scalar: Scalar) {
+        self.init(shape: shape, elements: [Scalar](repeating: scalar, count: shape.count))
+    }
+    
     public init(shape: Shape, _ closure: (_ row: Int, _ column: Int) throws -> Scalar) rethrows {
         var elements: [Scalar] = []
         elements.reserveCapacity(shape.count)
@@ -59,7 +63,7 @@ extension Matrix {
 extension Matrix where Scalar: Numeric {
     
     public static func zeros(shape: Shape) -> Matrix {
-        return .init(shape: shape, elements: Array(repeating: .zero, count: shape.count))
+        return .init(shape: shape, repeating: .zero)
     }
     
 }
