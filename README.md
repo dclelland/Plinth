@@ -9,10 +9,6 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 - https://github.com/stsievert/swix
 - https://github.com/cgarciae/NDArray
 
-## Todo
-
-- Implement `Matrix` and `ComplexMatrix` setters on `subscript[:]`, `subscript[rows:]`, `subscript[columns:]`
-
 ## Example
 
 ```swift

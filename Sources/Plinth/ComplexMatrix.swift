@@ -123,61 +123,6 @@ extension ComplexMatrix {
             imaginary[row, column] = newValue.imaginary
         }
     }
-
-    public subscript(row row: Int) -> [Complex] {
-        get {
-            precondition(shape.contains(row: row))
-            return zip(real[row: row], imaginary[row: row]).map { real, imaginary in
-                return Complex(real, imaginary)
-            }
-        }
-        set {
-            precondition(shape.contains(row: row))
-            precondition(shape.columns == newValue.count)
-            real[row: row] = newValue.map { $0.real }
-            imaginary[row: row] = newValue.map { $0.imaginary }
-        }
-    }
-
-    public subscript(column column: Int) -> [Complex] {
-        get {
-            precondition(shape.contains(column: column))
-            return zip(real[column: column], imaginary[column: column]).map { real, imaginary in
-                return Complex(real, imaginary)
-            }
-        }
-        set {
-            precondition(shape.contains(column: column))
-            precondition(shape.rows == newValue.count)
-            real[column: column] = newValue.map { $0.real }
-            imaginary[column: column] = newValue.map { $0.imaginary }
-        }
-    }
-    
-}
-
-extension ComplexMatrix {
-    
-    public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> ComplexMatrix {
-        get {
-            precondition(shape.contains(rows: rows, columns: columns))
-            return ComplexMatrix(real: real[rows, columns], imaginary: imaginary[rows, columns])
-        }
-    }
-    
-    public subscript(rows rows: ClosedRange<Int>) -> ComplexMatrix {
-        get {
-            precondition(shape.contains(rows: rows))
-            return ComplexMatrix(real: real[rows: rows], imaginary: imaginary[rows: rows])
-        }
-    }
-    
-    public subscript(columns columns: ClosedRange<Int>) -> ComplexMatrix {
-        get {
-            precondition(shape.contains(columns: columns))
-            return ComplexMatrix(real: real[columns: columns], imaginary: imaginary[columns: columns])
-        }
-    }
     
 }
 
