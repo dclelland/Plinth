@@ -126,6 +126,52 @@ extension Matrix {
     
 }
 
+extension Matrix {
+    
+    public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix {
+        get {
+            precondition(shape.contains(rows: rows, columns: columns))
+            return Matrix(
+                shape: Shape(rows: rows.count, columns: columns.count),
+                elements: Array(
+                    rows.map { row in
+                        elements[shape.indicesFor(row: row, columns: columns)]
+                    }.joined()
+                )
+            )
+        }
+    }
+    
+    public subscript(rows rows: ClosedRange<Int>) -> Matrix {
+        get {
+            precondition(shape.contains(rows: rows))
+            return Matrix(
+                shape: Shape(rows: rows.count, columns: shape.columns),
+                elements: Array(
+                    rows.map { row in
+                        elements[shape.indicesFor(row: row)]
+                    }.joined()
+                )
+            )
+        }
+    }
+    
+    public subscript(columns columns: ClosedRange<Int>) -> Matrix {
+        get {
+            precondition(shape.contains(columns: columns))
+            return Matrix(
+                shape: Shape(rows: shape.rows, columns: columns.count),
+                elements: Array(
+                    shape.rowIndices.map { row in
+                        elements[shape.indicesFor(row: row, columns: columns)]
+                    }.joined()
+                )
+            )
+        }
+    }
+    
+}
+
 extension Matrix: ExpressibleByIntegerLiteral where Scalar == IntegerLiteralType {
     
     public init(integerLiteral value: Scalar) {

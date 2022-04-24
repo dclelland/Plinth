@@ -156,6 +156,31 @@ extension ComplexMatrix {
     
 }
 
+extension ComplexMatrix {
+    
+    public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> ComplexMatrix {
+        get {
+            precondition(shape.contains(rows: rows, columns: columns))
+            return ComplexMatrix(real: real[rows, columns], imaginary: imaginary[rows, columns])
+        }
+    }
+    
+    public subscript(rows rows: ClosedRange<Int>) -> ComplexMatrix {
+        get {
+            precondition(shape.contains(rows: rows))
+            return ComplexMatrix(real: real[rows: rows], imaginary: imaginary[rows: rows])
+        }
+    }
+    
+    public subscript(columns columns: ClosedRange<Int>) -> ComplexMatrix {
+        get {
+            precondition(shape.contains(columns: columns))
+            return ComplexMatrix(real: real[columns: columns], imaginary: imaginary[columns: columns])
+        }
+    }
+    
+}
+
 extension ComplexMatrix: ExpressibleByFloatLiteral where Scalar == FloatLiteralType {
 
     public init(floatLiteral value: Scalar) {
