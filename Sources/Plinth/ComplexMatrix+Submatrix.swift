@@ -43,6 +43,22 @@ extension ComplexMatrix where Scalar == Float {
         }
     }
     
+}
+
+extension ComplexMatrix where Scalar == Float {
+    
+    public subscript(row: Int, columns: ClosedRange<Int>) -> ComplexMatrix {
+        get {
+            return submatrix(rows: row...row, columns: columns)
+        }
+    }
+    
+    public subscript(rows: ClosedRange<Int>, column: Int) -> ComplexMatrix {
+        get {
+            return submatrix(rows: rows, columns: column...column)
+        }
+    }
+    
     public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> ComplexMatrix {
         get {
             return submatrix(rows: rows, columns: columns)
@@ -83,6 +99,22 @@ extension ComplexMatrix where Scalar == Double {
     public subscript(columns columns: ClosedRange<Int>) -> ComplexMatrix {
         get {
             return submatrix(rows: shape.rowIndices, columns: columns)
+        }
+    }
+    
+}
+
+extension ComplexMatrix where Scalar == Double {
+    
+    public subscript(row: Int, columns: ClosedRange<Int>) -> ComplexMatrix {
+        get {
+            return submatrix(rows: row...row, columns: columns)
+        }
+    }
+    
+    public subscript(rows: ClosedRange<Int>, column: Int) -> ComplexMatrix {
+        get {
+            return submatrix(rows: rows, columns: column...column)
         }
     }
     

@@ -49,6 +49,22 @@ extension Matrix where Scalar == Float {
         }
     }
     
+}
+
+extension Matrix where Scalar == Float {
+    
+    public subscript(row: Int, columns: ClosedRange<Int>) -> Matrix {
+        get {
+            return submatrix(rows: row...row, columns: columns)
+        }
+    }
+    
+    public subscript(rows: ClosedRange<Int>, column: Int) -> Matrix {
+        get {
+            return submatrix(rows: rows, columns: column...column)
+        }
+    }
+    
     public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix {
         get {
             return submatrix(rows: rows, columns: columns)
@@ -95,6 +111,22 @@ extension Matrix where Scalar == Double {
     public subscript(columns columns: ClosedRange<Int>) -> Matrix {
         get {
             return submatrix(rows: shape.rowIndices, columns: columns)
+        }
+    }
+    
+}
+
+extension Matrix where Scalar == Double {
+    
+    public subscript(row: Int, columns: ClosedRange<Int>) -> Matrix {
+        get {
+            return submatrix(rows: row...row, columns: columns)
+        }
+    }
+    
+    public subscript(rows: ClosedRange<Int>, column: Int) -> Matrix {
+        get {
+            return submatrix(rows: rows, columns: column...column)
         }
     }
     
