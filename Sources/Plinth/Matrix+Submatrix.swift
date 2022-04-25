@@ -12,13 +12,24 @@ extension Matrix where Scalar == Float {
     
     public func submatrix(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix {
         precondition(shape.contains(rows: rows, columns: columns))
-        var output: Matrix = .zeros(shape: .init(rows: rows.count, columns: columns.count))
+        let matrix = self
+        var submatrix: Matrix = .zeros(shape: .init(rows: rows.count, columns: columns.count))
         withUnsafeBufferPointer { pointer in
-            let startIndex = shape.indexFor(row: rows.lowerBound, column: columns.lowerBound)
-            let startPointer = UnsafePointer(pointer.baseAddress! + startIndex)!
-            vDSP_mmov(startPointer, &output.elements, vDSP_Length(columns.count), vDSP_Length(rows.count), vDSP_Length(shape.columns), vDSP_Length(output.shape.columns))
+            let matrixIndex = matrix.shape.indexFor(row: rows.lowerBound, column: columns.lowerBound)
+            let matrixPointer = UnsafePointer(pointer.baseAddress! + matrixIndex)!
+            vDSP_mmov(matrixPointer, &submatrix.elements, vDSP_Length(columns.count), vDSP_Length(rows.count), vDSP_Length(matrix.shape.columns), vDSP_Length(submatrix.shape.columns))
         }
-        return output
+        return submatrix
+    }
+    
+    public mutating func setSubmatrix(_ submatrix: Matrix, rows: ClosedRange<Int>, columns: ClosedRange<Int>) {
+        precondition(shape.contains(rows: rows, columns: columns))
+        let matrix = self
+        withUnsafeMutableBufferPointer { pointer in
+            let matrixIndex = matrix.shape.indexFor(row: rows.lowerBound, column: columns.lowerBound)
+            let matrixPointer = UnsafeMutablePointer(pointer.baseAddress! + matrixIndex)!
+            vDSP_mmov(submatrix.elements, matrixPointer, vDSP_Length(columns.count), vDSP_Length(rows.count), vDSP_Length(submatrix.shape.columns), vDSP_Length(matrix.shape.columns))
+        }
     }
     
 }
@@ -77,13 +88,24 @@ extension Matrix where Scalar == Double {
     
     public func submatrix(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix {
         precondition(shape.contains(rows: rows, columns: columns))
-        var output: Matrix = .zeros(shape: .init(rows: rows.count, columns: columns.count))
+        let matrix = self
+        var submatrix: Matrix = .zeros(shape: .init(rows: rows.count, columns: columns.count))
         withUnsafeBufferPointer { pointer in
-            let startIndex = shape.indexFor(row: rows.lowerBound, column: columns.lowerBound)
-            let startPointer = UnsafePointer(pointer.baseAddress! + startIndex)!
-            vDSP_mmovD(startPointer, &output.elements, vDSP_Length(columns.count), vDSP_Length(rows.count), vDSP_Length(shape.columns), vDSP_Length(output.shape.columns))
+            let matrixIndex = matrix.shape.indexFor(row: rows.lowerBound, column: columns.lowerBound)
+            let matrixPointer = UnsafePointer(pointer.baseAddress! + matrixIndex)!
+            vDSP_mmovD(matrixPointer, &submatrix.elements, vDSP_Length(columns.count), vDSP_Length(rows.count), vDSP_Length(matrix.shape.columns), vDSP_Length(submatrix.shape.columns))
         }
-        return output
+        return submatrix
+    }
+    
+    public mutating func setSubmatrix(_ submatrix: Matrix, rows: ClosedRange<Int>, columns: ClosedRange<Int>) {
+        precondition(shape.contains(rows: rows, columns: columns))
+        let matrix = self
+        withUnsafeMutableBufferPointer { pointer in
+            let matrixIndex = matrix.shape.indexFor(row: rows.lowerBound, column: columns.lowerBound)
+            let matrixPointer = UnsafeMutablePointer(pointer.baseAddress! + matrixIndex)!
+            vDSP_mmovD(submatrix.elements, matrixPointer, vDSP_Length(columns.count), vDSP_Length(rows.count), vDSP_Length(submatrix.shape.columns), vDSP_Length(matrix.shape.columns))
+        }
     }
     
 }
