@@ -1,5 +1,5 @@
 //
-//  Matrix+Functor.swift
+//  Matrix+Functors.swift
 //  Plinth
 //
 //  Created by Daniel Clelland on 20/04/22.

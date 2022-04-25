@@ -1,5 +1,5 @@
 //
-//  ComplexMatrix+Submatrix.swift
+//  ComplexMatrix+Submatrices.swift
 //  Plinth
 //
 //  Created by Daniel Clelland on 24/04/22.
