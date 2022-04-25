@@ -40,11 +40,17 @@ extension Matrix where Scalar == Float {
         get {
             return submatrix(rows: row...row, columns: shape.columnIndices)
         }
+        set {
+            setSubmatrix(newValue, rows: row...row, columns: shape.columnIndices)
+        }
     }
     
     public subscript(column column: Int) -> Matrix {
         get {
             return submatrix(rows: shape.columnIndices, columns: column...column)
+        }
+        set {
+            setSubmatrix(newValue, rows: shape.columnIndices, columns: column...column)
         }
     }
     
@@ -52,11 +58,17 @@ extension Matrix where Scalar == Float {
         get {
             return submatrix(rows: rows, columns: shape.columnIndices)
         }
+        set {
+            setSubmatrix(newValue, rows: rows, columns: shape.columnIndices)
+        }
     }
     
     public subscript(columns columns: ClosedRange<Int>) -> Matrix {
         get {
             return submatrix(rows: shape.rowIndices, columns: columns)
+        }
+        set {
+            setSubmatrix(newValue, rows: shape.rowIndices, columns: columns)
         }
     }
     
@@ -68,17 +80,26 @@ extension Matrix where Scalar == Float {
         get {
             return submatrix(rows: row...row, columns: columns)
         }
+        set {
+            setSubmatrix(newValue, rows: row...row, columns: columns)
+        }
     }
     
     public subscript(rows: ClosedRange<Int>, column: Int) -> Matrix {
         get {
             return submatrix(rows: rows, columns: column...column)
         }
+        set {
+            setSubmatrix(newValue, rows: rows, columns: column...column)
+        }
     }
     
     public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix {
         get {
             return submatrix(rows: rows, columns: columns)
+        }
+        set {
+            setSubmatrix(newValue, rows: rows, columns: columns)
         }
     }
     
@@ -116,11 +137,17 @@ extension Matrix where Scalar == Double {
         get {
             return submatrix(rows: row...row, columns: shape.columnIndices)
         }
+        set {
+            setSubmatrix(newValue, rows: row...row, columns: shape.columnIndices)
+        }
     }
     
     public subscript(column column: Int) -> Matrix {
         get {
             return submatrix(rows: shape.columnIndices, columns: column...column)
+        }
+        set {
+            setSubmatrix(newValue, rows: shape.columnIndices, columns: column...column)
         }
     }
     
@@ -128,11 +155,17 @@ extension Matrix where Scalar == Double {
         get {
             return submatrix(rows: rows, columns: shape.columnIndices)
         }
+        set {
+            setSubmatrix(newValue, rows: rows, columns: shape.columnIndices)
+        }
     }
     
     public subscript(columns columns: ClosedRange<Int>) -> Matrix {
         get {
             return submatrix(rows: shape.rowIndices, columns: columns)
+        }
+        set {
+            setSubmatrix(newValue, rows: shape.rowIndices, columns: columns)
         }
     }
     
@@ -144,17 +177,26 @@ extension Matrix where Scalar == Double {
         get {
             return submatrix(rows: row...row, columns: columns)
         }
+        set {
+            setSubmatrix(newValue, rows: row...row, columns: columns)
+        }
     }
     
     public subscript(rows: ClosedRange<Int>, column: Int) -> Matrix {
         get {
             return submatrix(rows: rows, columns: column...column)
         }
+        set {
+            setSubmatrix(newValue, rows: rows, columns: column...column)
+        }
     }
     
     public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix {
         get {
             return submatrix(rows: rows, columns: columns)
+        }
+        set {
+            setSubmatrix(newValue, rows: rows, columns: columns)
         }
     }
     
