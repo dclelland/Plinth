@@ -36,7 +36,7 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Float {
     
-    public subscript(row row: Int) -> Matrix {
+    public subscript(row row: Int) -> Matrix<Float> {
         get {
             return submatrix(rows: row...row, columns: shape.columnIndices)
         }
@@ -45,7 +45,7 @@ extension Matrix where Scalar == Float {
         }
     }
     
-    public subscript(column column: Int) -> Matrix {
+    public subscript(column column: Int) -> Matrix<Float> {
         get {
             return submatrix(rows: shape.columnIndices, columns: column...column)
         }
@@ -54,7 +54,7 @@ extension Matrix where Scalar == Float {
         }
     }
     
-    public subscript(rows rows: ClosedRange<Int>) -> Matrix {
+    public subscript(rows rows: ClosedRange<Int>) -> Matrix<Float> {
         get {
             return submatrix(rows: rows, columns: shape.columnIndices)
         }
@@ -63,7 +63,7 @@ extension Matrix where Scalar == Float {
         }
     }
     
-    public subscript(columns columns: ClosedRange<Int>) -> Matrix {
+    public subscript(columns columns: ClosedRange<Int>) -> Matrix<Float> {
         get {
             return submatrix(rows: shape.rowIndices, columns: columns)
         }
@@ -76,7 +76,7 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Float {
     
-    public subscript(row: Int, columns: ClosedRange<Int>) -> Matrix {
+    public subscript(row: Int, columns: ClosedRange<Int>) -> Matrix<Float> {
         get {
             return submatrix(rows: row...row, columns: columns)
         }
@@ -85,7 +85,7 @@ extension Matrix where Scalar == Float {
         }
     }
     
-    public subscript(rows: ClosedRange<Int>, column: Int) -> Matrix {
+    public subscript(rows: ClosedRange<Int>, column: Int) -> Matrix<Float> {
         get {
             return submatrix(rows: rows, columns: column...column)
         }
@@ -94,7 +94,7 @@ extension Matrix where Scalar == Float {
         }
     }
     
-    public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix {
+    public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix<Float> {
         get {
             return submatrix(rows: rows, columns: columns)
         }
@@ -133,7 +133,7 @@ extension Matrix where Scalar == Double {
 
 extension Matrix where Scalar == Double {
     
-    public subscript(row row: Int) -> Matrix {
+    public subscript(row row: Int) -> Matrix<Double> {
         get {
             return submatrix(rows: row...row, columns: shape.columnIndices)
         }
@@ -142,7 +142,7 @@ extension Matrix where Scalar == Double {
         }
     }
     
-    public subscript(column column: Int) -> Matrix {
+    public subscript(column column: Int) -> Matrix<Double> {
         get {
             return submatrix(rows: shape.columnIndices, columns: column...column)
         }
@@ -151,7 +151,7 @@ extension Matrix where Scalar == Double {
         }
     }
     
-    public subscript(rows rows: ClosedRange<Int>) -> Matrix {
+    public subscript(rows rows: ClosedRange<Int>) -> Matrix<Double> {
         get {
             return submatrix(rows: rows, columns: shape.columnIndices)
         }
@@ -160,7 +160,7 @@ extension Matrix where Scalar == Double {
         }
     }
     
-    public subscript(columns columns: ClosedRange<Int>) -> Matrix {
+    public subscript(columns columns: ClosedRange<Int>) -> Matrix<Double> {
         get {
             return submatrix(rows: shape.rowIndices, columns: columns)
         }
@@ -173,7 +173,7 @@ extension Matrix where Scalar == Double {
 
 extension Matrix where Scalar == Double {
     
-    public subscript(row: Int, columns: ClosedRange<Int>) -> Matrix {
+    public subscript(row: Int, columns: ClosedRange<Int>) -> Matrix<Double> {
         get {
             return submatrix(rows: row...row, columns: columns)
         }
@@ -182,7 +182,7 @@ extension Matrix where Scalar == Double {
         }
     }
     
-    public subscript(rows: ClosedRange<Int>, column: Int) -> Matrix {
+    public subscript(rows: ClosedRange<Int>, column: Int) -> Matrix<Double> {
         get {
             return submatrix(rows: rows, columns: column...column)
         }
@@ -191,7 +191,7 @@ extension Matrix where Scalar == Double {
         }
     }
     
-    public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix {
+    public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix<Double> {
         get {
             return submatrix(rows: rows, columns: columns)
         }
