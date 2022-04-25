@@ -33,6 +33,18 @@ extension Shape {
 
 extension Shape {
     
+    public var length: Int {
+        return max(rows, columns)
+    }
+    
+    public var breadth: Int {
+        return min(rows, columns)
+    }
+    
+}
+
+extension Shape {
+    
     @inlinable internal var rowIndices: ClosedRange<Int> {
         return 0...(rows - 1)
     }
