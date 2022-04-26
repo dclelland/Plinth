@@ -1,5 +1,5 @@
 //
-//  Functors.swift
+//  Functor.swift
 //  Plinth
 //
 //  Created by Daniel Clelland on 20/04/22.

@@ -1,5 +1,5 @@
 //
-//  Submatrices.swift
+//  Submatrix.swift
 //  Plinth
 //
 //  Created by Daniel Clelland on 24/04/22.

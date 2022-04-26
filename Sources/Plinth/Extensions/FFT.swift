@@ -1,5 +1,5 @@
 //
-//  FourierTransforms.swift
+//  FFT.swift
 //  Plinth
 //
 //  Created by Daniel Clelland on 26/04/22.
