@@ -24,6 +24,10 @@ extension ComplexMatrix where Scalar == Float {
         return ComplexMatrix(real: real.transposed(), imaginary: imaginary.transposed())
     }
     
+    public func conjugateTransposed() -> ComplexMatrix {
+        return ComplexMatrix(real: real.transposed(), imaginary: -imaginary.transposed())
+    }
+    
 }
 
 extension Matrix where Scalar == Double {
@@ -40,6 +44,10 @@ extension ComplexMatrix where Scalar == Double {
     
     public func transposed() -> ComplexMatrix {
         return ComplexMatrix(real: real.transposed(), imaginary: imaginary.transposed())
+    }
+    
+    public func conjugateTransposed() -> ComplexMatrix {
+        return ComplexMatrix(real: real.transposed(), imaginary: -imaginary.transposed())
     }
     
 }
