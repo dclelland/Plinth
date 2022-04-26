@@ -55,11 +55,11 @@ extension ComplexMatrix where Scalar == Float {
     }
     
     public func ifft() -> ComplexMatrix {
-        return fftShifted().fft(direction: .inverse) / Scalar(shape.length)
+        return fftShifted().fft(direction: .inverse) / Scalar(shape.count)
     }
     
     public func ifft(setup: FFTSetup) -> ComplexMatrix {
-        return fftShifted().fft(setup: setup, direction: .inverse) / Scalar(shape.length)
+        return fftShifted().fft(setup: setup, direction: .inverse) / Scalar(shape.count)
     }
     
 }
@@ -131,11 +131,11 @@ extension ComplexMatrix where Scalar == Double {
     }
     
     public func ifft() -> ComplexMatrix {
-        return fftShifted().fft(direction: .inverse) / Scalar(shape.length)
+        return fftShifted().fft(direction: .inverse) / Scalar(shape.count)
     }
     
     public func ifft(setup: FFTSetupD) -> ComplexMatrix {
-        return fftShifted().fft(setup: setup, direction: .inverse) / Scalar(shape.length)
+        return fftShifted().fft(setup: setup, direction: .inverse) / Scalar(shape.count)
     }
     
 }
