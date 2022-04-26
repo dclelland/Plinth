@@ -33,6 +33,18 @@ extension Shape {
 
 extension Shape {
     
+    public static func square(length: Int) -> Shape {
+        return .init(rows: length, columns: length)
+    }
+    
+    public var isSquare: Bool {
+        return rows == columns
+    }
+    
+}
+
+extension Shape {
+    
     public var length: Int {
         return max(rows, columns)
     }
