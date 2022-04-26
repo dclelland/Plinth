@@ -59,19 +59,19 @@ extension Matrix where Scalar == Float {
 extension ComplexMatrix where Scalar == Float {
     
     public func fft() -> ComplexMatrix {
-        return fft(direction: .forward).fftShifted()
+        return fft(direction: .forward)
     }
     
     public func fft(setup: FFTSetup) -> ComplexMatrix {
-        return fft(setup: setup, direction: .forward).fftShifted()
+        return fft(setup: setup, direction: .forward)
     }
     
     public func ifft() -> ComplexMatrix {
-        return fftShifted().fft(direction: .inverse) / Scalar(shape.count)
+        return fft(direction: .inverse) / Scalar(shape.count)
     }
     
     public func ifft(setup: FFTSetup) -> ComplexMatrix {
-        return fftShifted().fft(setup: setup, direction: .inverse) / Scalar(shape.count)
+        return fft(setup: setup, direction: .inverse) / Scalar(shape.count)
     }
     
 }
@@ -147,19 +147,19 @@ extension Matrix where Scalar == Double {
 extension ComplexMatrix where Scalar == Double {
     
     public func fft() -> ComplexMatrix {
-        return fft(direction: .forward).fftShifted()
+        return fft(direction: .forward)
     }
     
     public func fft(setup: FFTSetupD) -> ComplexMatrix {
-        return fft(setup: setup, direction: .forward).fftShifted()
+        return fft(setup: setup, direction: .forward)
     }
     
     public func ifft() -> ComplexMatrix {
-        return fftShifted().fft(direction: .inverse) / Scalar(shape.count)
+        return fft(direction: .inverse) / Scalar(shape.count)
     }
     
     public func ifft(setup: FFTSetupD) -> ComplexMatrix {
-        return fftShifted().fft(setup: setup, direction: .inverse) / Scalar(shape.count)
+        return fft(setup: setup, direction: .inverse) / Scalar(shape.count)
     }
     
 }
