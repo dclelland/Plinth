@@ -40,19 +40,6 @@ extension ComplexMatrix {
 
 extension ComplexMatrix where Scalar == Float {
     
-    @inlinable public mutating func withUnsafeMutableSplitComplexVector<Result>(_ body: (inout DSPSplitComplex) throws -> Result) rethrows -> Result {
-        return try real.withUnsafeMutableBufferPointer { realPointer in
-            return try imaginary.withUnsafeMutableBufferPointer { imaginaryPointer in
-                var split = DSPSplitComplex(realp: realPointer.baseAddress!, imagp: imaginaryPointer.baseAddress!)
-                return try body(&split)
-            }
-        }
-    }
-    
-}
-
-extension ComplexMatrix where Scalar == Float {
-    
     @inlinable public func fmap(_ function: (DSPSplitComplex, inout [Scalar]) -> ()) -> Matrix {
         var input = self
         var output = Matrix.zeros(shape: shape)
@@ -87,12 +74,12 @@ extension ComplexMatrix where Scalar == Float {
     
 }
 
-extension ComplexMatrix where Scalar == Double {
+extension ComplexMatrix where Scalar == Float {
     
-    @inlinable public mutating func withUnsafeMutableSplitComplexVector<Result>(_ body: (inout DSPDoubleSplitComplex) throws -> Result) rethrows -> Result {
+    @inlinable public mutating func withUnsafeMutableSplitComplexVector<Result>(_ body: (inout DSPSplitComplex) throws -> Result) rethrows -> Result {
         return try real.withUnsafeMutableBufferPointer { realPointer in
             return try imaginary.withUnsafeMutableBufferPointer { imaginaryPointer in
-                var split = DSPDoubleSplitComplex(realp: realPointer.baseAddress!, imagp: imaginaryPointer.baseAddress!)
+                var split = DSPSplitComplex(realp: realPointer.baseAddress!, imagp: imaginaryPointer.baseAddress!)
                 return try body(&split)
             }
         }
@@ -132,6 +119,19 @@ extension ComplexMatrix where Scalar == Double {
             }
         }
         return output
+    }
+    
+}
+
+extension ComplexMatrix where Scalar == Double {
+    
+    @inlinable public mutating func withUnsafeMutableSplitComplexVector<Result>(_ body: (inout DSPDoubleSplitComplex) throws -> Result) rethrows -> Result {
+        return try real.withUnsafeMutableBufferPointer { realPointer in
+            return try imaginary.withUnsafeMutableBufferPointer { imaginaryPointer in
+                var split = DSPDoubleSplitComplex(realp: realPointer.baseAddress!, imagp: imaginaryPointer.baseAddress!)
+                return try body(&split)
+            }
+        }
     }
     
 }
