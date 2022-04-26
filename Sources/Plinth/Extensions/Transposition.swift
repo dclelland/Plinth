@@ -1,5 +1,5 @@
 //
-//  Transpose.swift
+//  Transposition.swift
 //  Plinth
 //
 //  Created by Daniel Clelland on 25/04/22.
