@@ -1,5 +1,5 @@
 //
-//  Array+Arithmetic.swift
+//  Arithmetic.swift
 //  Plinth
 //
 //  Created by Daniel Clelland on 20/04/22.
