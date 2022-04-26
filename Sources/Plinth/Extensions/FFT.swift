@@ -38,6 +38,18 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Float {
     
+    public func fft(direction: FFTDirection) -> ComplexMatrix<Scalar> {
+        return ComplexMatrix(real: self).fft(direction: direction)
+    }
+    
+    public func fft(setup: FFTSetup, direction: FFTDirection) -> ComplexMatrix<Scalar> {
+        return ComplexMatrix(real: self).fft(setup: setup, direction: direction)
+    }
+    
+}
+
+extension Matrix where Scalar == Float {
+    
     public func fftShifted() -> Matrix {
         return shifted(rows: shape.rows / 2, columns: shape.columns / 2)
     }
@@ -66,14 +78,6 @@ extension ComplexMatrix where Scalar == Float {
 
 extension ComplexMatrix where Scalar == Float {
     
-    public func fftShifted() -> ComplexMatrix {
-        return ComplexMatrix(real: real.fftShifted(), imaginary: imaginary.fftShifted())
-    }
-    
-}
-
-extension ComplexMatrix where Scalar == Float {
-    
     public func fft(direction: FFTDirection) -> ComplexMatrix {
         let log2N = vDSP_Length(log2(Double(shape.length)))
         let setup = vDSP_create_fftsetup(log2N, FFTRadix(kFFTRadix2))!
@@ -88,6 +92,14 @@ extension ComplexMatrix where Scalar == Float {
         return fmap { inputVector in
             vDSP_fft2d_zip(setup, &inputVector, 1, 0, log2N0, log2N1, direction)
         }
+    }
+    
+}
+
+extension ComplexMatrix where Scalar == Float {
+    
+    public func fftShifted() -> ComplexMatrix {
+        return ComplexMatrix(real: real.fftShifted(), imaginary: imaginary.fftShifted())
     }
     
 }
@@ -108,6 +120,18 @@ extension Matrix where Scalar == Double {
     
     public func ifft(setup: FFTSetupD) -> ComplexMatrix<Scalar> {
         return ComplexMatrix(real: self).ifft(setup: setup)
+    }
+    
+}
+
+extension Matrix where Scalar == Double {
+    
+    public func fft(direction: FFTDirection) -> ComplexMatrix<Scalar> {
+        return ComplexMatrix(real: self).fft(direction: direction)
+    }
+    
+    public func fft(setup: FFTSetupD, direction: FFTDirection) -> ComplexMatrix<Scalar> {
+        return ComplexMatrix(real: self).fft(setup: setup, direction: direction)
     }
     
 }
@@ -142,14 +166,6 @@ extension ComplexMatrix where Scalar == Double {
 
 extension ComplexMatrix where Scalar == Double {
     
-    public func fftShifted() -> ComplexMatrix {
-        return ComplexMatrix(real: real.fftShifted(), imaginary: imaginary.fftShifted())
-    }
-    
-}
-
-extension ComplexMatrix where Scalar == Double {
-    
     public func fft(direction: FFTDirection) -> ComplexMatrix {
         let log2N = vDSP_Length(log2(Double(shape.length)))
         let setup = vDSP_create_fftsetupD(log2N, FFTRadix(kFFTRadix2))!
@@ -164,6 +180,14 @@ extension ComplexMatrix where Scalar == Double {
         return fmap { inputVector in
             vDSP_fft2d_zipD(setup, &inputVector, 1, 0, log2N0, log2N1, direction)
         }
+    }
+    
+}
+
+extension ComplexMatrix where Scalar == Double {
+    
+    public func fftShifted() -> ComplexMatrix {
+        return ComplexMatrix(real: real.fftShifted(), imaginary: imaginary.fftShifted())
     }
     
 }
