@@ -73,6 +73,14 @@ extension Span {
     
 }
 
+extension Span {
+    
+    public func reversed() -> Span {
+        return endIndex..startIndex
+    }
+    
+}
+
 extension Span: CustomStringConvertible {
     
     public var description: String {
