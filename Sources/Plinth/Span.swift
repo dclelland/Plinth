@@ -55,6 +55,10 @@ extension Span {
         }
     }
     
+}
+
+extension Span {
+    
     public var lowerBound: Int {
         return min(startIndex, endIndex)
     }
