@@ -8,6 +8,24 @@
 import Foundation
 import Accelerate
 
+public func createFFTSetup(shape: Shape) -> FFTSetup {
+    let log2N = vDSP_Length(log2(Float(shape.length)))
+    return vDSP_create_fftsetup(log2N, FFTRadix(kFFTRadix2))!
+}
+
+public func destroyFFTSetup(_ setup: FFTSetup) {
+    vDSP_destroy_fftsetup(setup)
+}
+
+public func createFFTSetupD(shape: Shape) -> FFTSetupD {
+    let log2N = vDSP_Length(log2(Double(shape.length)))
+    return vDSP_create_fftsetupD(log2N, FFTRadix(kFFTRadix2))!
+}
+    
+public func destroyFFTSetupD(_ setup: FFTSetupD) {
+    vDSP_destroy_fftsetupD(setup)
+}
+
 extension FFTDirection {
     
     public static let forward = FFTDirection(kFFTDirection_Forward)
@@ -79,10 +97,9 @@ extension ComplexMatrix where Scalar == Float {
 extension ComplexMatrix where Scalar == Float {
     
     public func fft(direction: FFTDirection) -> ComplexMatrix {
-        let log2N = vDSP_Length(log2(Double(shape.length)))
-        let setup = vDSP_create_fftsetup(log2N, FFTRadix(kFFTRadix2))!
+        let setup = createFFTSetup(shape: shape)
         let output = fft(setup: setup, direction: direction)
-        vDSP_destroy_fftsetup(setup)
+        destroyFFTSetup(setup)
         return output
     }
     
@@ -167,10 +184,9 @@ extension ComplexMatrix where Scalar == Double {
 extension ComplexMatrix where Scalar == Double {
     
     public func fft(direction: FFTDirection) -> ComplexMatrix {
-        let log2N = vDSP_Length(log2(Double(shape.length)))
-        let setup = vDSP_create_fftsetupD(log2N, FFTRadix(kFFTRadix2))!
+        let setup = createFFTSetupD(shape: shape)
         let output = fft(setup: setup, direction: direction)
-        vDSP_destroy_fftsetupD(setup)
+        destroyFFTSetupD(setup)
         return output
     }
     
