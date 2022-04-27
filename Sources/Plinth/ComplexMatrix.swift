@@ -22,8 +22,8 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
         precondition(self.state == .regular)
     }
     
-    public init(shape: Shape, repeating complex: Complex) {
-        self.init(real: .init(shape: shape, repeating: complex.real), imaginary: .init(shape: shape, repeating: complex.imaginary))
+    public init(shape: Shape, repeating element: Complex) {
+        self.init(real: .init(shape: shape, repeating: element.real), imaginary: .init(shape: shape, repeating: element.imaginary))
     }
     
     public init(shape: Shape, elements: [Complex]) {

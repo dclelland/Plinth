@@ -20,8 +20,8 @@ public struct Matrix<Scalar> {
         precondition(self.state == .regular)
     }
     
-    public init(shape: Shape, repeating scalar: Scalar) {
-        self.init(shape: shape, elements: [Scalar](repeating: scalar, count: shape.count))
+    public init(shape: Shape, repeating element: Scalar) {
+        self.init(shape: shape, elements: [Scalar](repeating: element, count: shape.count))
     }
     
     public init(shape: Shape, _ closure: (_ row: Int, _ column: Int) throws -> Scalar) rethrows {
