@@ -142,12 +142,16 @@ extension ComplexMatrix: ExpressibleByArrayLiteral {
 
 }
 
-extension ComplexMatrix: CustomStringConvertible {
-    
+extension ComplexMatrix: CustomStringConvertible where Scalar: CustomStringConvertible {
+
     public var description: String {
-        return "\(type(of: self))(real: \(real), imaginary: \(imaginary))"
+        return "[[" + shape.rowIndices.map { row in
+            return shape.columnIndices.map { column in
+                return self[row, column].description
+            }.joined(separator: ", ")
+        }.joined(separator: "],\n [") + "]]"
     }
-    
+
 }
 
 extension ComplexMatrix: Equatable where Scalar: Equatable {

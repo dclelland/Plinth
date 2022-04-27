@@ -123,10 +123,14 @@ extension Matrix: ExpressibleByArrayLiteral {
     
 }
 
-extension Matrix: CustomStringConvertible {
+extension Matrix: CustomStringConvertible where Scalar: CustomStringConvertible {
     
     public var description: String {
-        return "\(type(of: self))(shape: \(shape), count: \(count))"
+        return "[[" + shape.rowIndices.map { row in
+            return shape.columnIndices.map { column in
+                return self[row, column].description
+            }.joined(separator: ", ")
+        }.joined(separator: "],\n [") + "]]"
     }
     
 }
