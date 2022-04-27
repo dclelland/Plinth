@@ -206,3 +206,15 @@ extension ComplexMatrix: Collection {
     }
     
 }
+
+extension ComplexMatrix: BidirectionalCollection {
+    
+    public func index(before index: Index) -> Index {
+        return index - 1
+    }
+    
+    public func reversed() -> ComplexMatrix {
+        return ComplexMatrix(real: real.reversed(), imaginary: imaginary.reversed())
+    }
+    
+}

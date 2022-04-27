@@ -188,6 +188,18 @@ extension Matrix: Collection {
     
 }
 
+extension Matrix: BidirectionalCollection {
+    
+    public func index(before index: Index) -> Index {
+        return index - 1
+    }
+    
+    public func reversed() -> Matrix {
+        return fmap { $0.reversed() }
+    }
+    
+}
+
 extension Matrix: AccelerateBuffer {
     
     @inlinable public func withUnsafeBufferPointer<Result>(_ body: (UnsafeBufferPointer<Scalar>) throws -> Result) rethrows -> Result {
