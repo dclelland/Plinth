@@ -10,25 +10,25 @@ import Accelerate
 
 extension Matrix where Scalar == Float {
     
-    public func submatrix(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix {
+    public func submatrix(rows: Span, columns: Span) -> Matrix {
         precondition(shape.contains(rows: rows, columns: columns))
         let matrix = self
         var submatrix: Matrix = .zeros(shape: .init(rows: rows.count, columns: columns.count))
         withUnsafeBufferPointer { pointer in
-            let matrixIndex = matrix.shape.indexFor(row: rows.lowerBound, column: columns.lowerBound)
+            let matrixIndex = matrix.shape.indexFor(row: rows.startIndex, column: columns.startIndex)
             let matrixPointer = UnsafePointer(pointer.baseAddress! + matrixIndex)!
-            vDSP_mmov(matrixPointer, &submatrix.elements, vDSP_Length(columns.count), vDSP_Length(rows.count), vDSP_Length(matrix.shape.columns), vDSP_Length(submatrix.shape.columns))
+            vDSP_mmov(matrixPointer, &submatrix.elements, vDSP_Length(columns.length), vDSP_Length(rows.length), vDSP_Length(matrix.shape.columns), vDSP_Length(submatrix.shape.columns))
         }
         return submatrix
     }
     
-    public mutating func setSubmatrix(_ submatrix: Matrix, rows: ClosedRange<Int>, columns: ClosedRange<Int>) {
+    public mutating func setSubmatrix(_ submatrix: Matrix, rows: Span, columns: Span) {
         precondition(shape.contains(rows: rows, columns: columns))
         let matrix = self
         withUnsafeMutableBufferPointer { pointer in
-            let matrixIndex = matrix.shape.indexFor(row: rows.lowerBound, column: columns.lowerBound)
+            let matrixIndex = matrix.shape.indexFor(row: rows.startIndex, column: columns.startIndex)
             let matrixPointer = UnsafeMutablePointer(pointer.baseAddress! + matrixIndex)!
-            vDSP_mmov(submatrix.elements, matrixPointer, vDSP_Length(columns.count), vDSP_Length(rows.count), vDSP_Length(submatrix.shape.columns), vDSP_Length(matrix.shape.columns))
+            vDSP_mmov(submatrix.elements, matrixPointer, vDSP_Length(columns.length), vDSP_Length(rows.length), vDSP_Length(submatrix.shape.columns), vDSP_Length(matrix.shape.columns))
         }
     }
     
@@ -38,37 +38,37 @@ extension Matrix where Scalar == Float {
     
     public subscript(row row: Int) -> Matrix<Float> {
         get {
-            return submatrix(rows: row...row, columns: shape.columnIndices)
+            return submatrix(rows: row..row, columns: shape.columnBounds)
         }
         set {
-            setSubmatrix(newValue, rows: row...row, columns: shape.columnIndices)
+            setSubmatrix(newValue, rows: row..row, columns: shape.columnBounds)
         }
     }
     
     public subscript(column column: Int) -> Matrix<Float> {
         get {
-            return submatrix(rows: shape.columnIndices, columns: column...column)
+            return submatrix(rows: shape.columnBounds, columns: column..column)
         }
         set {
-            setSubmatrix(newValue, rows: shape.columnIndices, columns: column...column)
+            setSubmatrix(newValue, rows: shape.columnBounds, columns: column..column)
         }
     }
     
-    public subscript(rows rows: ClosedRange<Int>) -> Matrix<Float> {
+    public subscript(rows rows: Span) -> Matrix<Float> {
         get {
-            return submatrix(rows: rows, columns: shape.columnIndices)
+            return submatrix(rows: rows, columns: shape.columnBounds)
         }
         set {
-            setSubmatrix(newValue, rows: rows, columns: shape.columnIndices)
+            setSubmatrix(newValue, rows: rows, columns: shape.columnBounds)
         }
     }
     
-    public subscript(columns columns: ClosedRange<Int>) -> Matrix<Float> {
+    public subscript(columns columns: Span) -> Matrix<Float> {
         get {
-            return submatrix(rows: shape.rowIndices, columns: columns)
+            return submatrix(rows: shape.rowBounds, columns: columns)
         }
         set {
-            setSubmatrix(newValue, rows: shape.rowIndices, columns: columns)
+            setSubmatrix(newValue, rows: shape.rowBounds, columns: columns)
         }
     }
     
@@ -76,25 +76,25 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Float {
     
-    public subscript(row: Int, columns: ClosedRange<Int>) -> Matrix<Float> {
+    public subscript(row: Int, columns: Span) -> Matrix<Float> {
         get {
-            return submatrix(rows: row...row, columns: columns)
+            return submatrix(rows: row..row, columns: columns)
         }
         set {
-            setSubmatrix(newValue, rows: row...row, columns: columns)
+            setSubmatrix(newValue, rows: row..row, columns: columns)
         }
     }
     
-    public subscript(rows: ClosedRange<Int>, column: Int) -> Matrix<Float> {
+    public subscript(rows: Span, column: Int) -> Matrix<Float> {
         get {
-            return submatrix(rows: rows, columns: column...column)
+            return submatrix(rows: rows, columns: column..column)
         }
         set {
-            setSubmatrix(newValue, rows: rows, columns: column...column)
+            setSubmatrix(newValue, rows: rows, columns: column..column)
         }
     }
     
-    public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix<Float> {
+    public subscript(rows: Span, columns: Span) -> Matrix<Float> {
         get {
             return submatrix(rows: rows, columns: columns)
         }
@@ -107,12 +107,12 @@ extension Matrix where Scalar == Float {
 
 extension ComplexMatrix where Scalar == Float {
     
-    public func submatrix(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> ComplexMatrix {
+    public func submatrix(rows: Span, columns: Span) -> ComplexMatrix {
         precondition(shape.contains(rows: rows, columns: columns))
         return ComplexMatrix(real: real.submatrix(rows: rows, columns: columns), imaginary: imaginary.submatrix(rows: rows, columns: columns))
     }
     
-    public mutating func setSubmatrix(_ submatrix: ComplexMatrix, rows: ClosedRange<Int>, columns: ClosedRange<Int>) {
+    public mutating func setSubmatrix(_ submatrix: ComplexMatrix, rows: Span, columns: Span) {
         precondition(shape.contains(rows: rows, columns: columns))
         real.setSubmatrix(submatrix.real, rows: rows, columns: columns)
         imaginary.setSubmatrix(submatrix.imaginary, rows: rows, columns: columns)
@@ -124,37 +124,37 @@ extension ComplexMatrix where Scalar == Float {
     
     public subscript(row row: Int) -> ComplexMatrix<Float> {
         get {
-            return submatrix(rows: row...row, columns: shape.columnIndices)
+            return submatrix(rows: row..row, columns: shape.columnBounds)
         }
         set {
-            setSubmatrix(newValue, rows: row...row, columns: shape.columnIndices)
+            setSubmatrix(newValue, rows: row..row, columns: shape.columnBounds)
         }
     }
     
     public subscript(column column: Int) -> ComplexMatrix<Float> {
         get {
-            return submatrix(rows: shape.columnIndices, columns: column...column)
+            return submatrix(rows: shape.columnBounds, columns: column..column)
         }
         set {
-            setSubmatrix(newValue, rows: shape.columnIndices, columns: column...column)
+            setSubmatrix(newValue, rows: shape.columnBounds, columns: column..column)
         }
     }
     
-    public subscript(rows rows: ClosedRange<Int>) -> ComplexMatrix<Float> {
+    public subscript(rows rows: Span) -> ComplexMatrix<Float> {
         get {
-            return submatrix(rows: rows, columns: shape.columnIndices)
+            return submatrix(rows: rows, columns: shape.columnBounds)
         }
         set {
-            setSubmatrix(newValue, rows: rows, columns: shape.columnIndices)
+            setSubmatrix(newValue, rows: rows, columns: shape.columnBounds)
         }
     }
     
-    public subscript(columns columns: ClosedRange<Int>) -> ComplexMatrix<Float> {
+    public subscript(columns columns: Span) -> ComplexMatrix<Float> {
         get {
-            return submatrix(rows: shape.rowIndices, columns: columns)
+            return submatrix(rows: shape.rowBounds, columns: columns)
         }
         set {
-            setSubmatrix(newValue, rows: shape.rowIndices, columns: columns)
+            setSubmatrix(newValue, rows: shape.rowBounds, columns: columns)
         }
     }
     
@@ -162,25 +162,25 @@ extension ComplexMatrix where Scalar == Float {
 
 extension ComplexMatrix where Scalar == Float {
     
-    public subscript(row: Int, columns: ClosedRange<Int>) -> ComplexMatrix<Float> {
+    public subscript(row: Int, columns: Span) -> ComplexMatrix<Float> {
         get {
-            return submatrix(rows: row...row, columns: columns)
+            return submatrix(rows: row..row, columns: columns)
         }
         set {
-            setSubmatrix(newValue, rows: row...row, columns: columns)
+            setSubmatrix(newValue, rows: row..row, columns: columns)
         }
     }
     
-    public subscript(rows: ClosedRange<Int>, column: Int) -> ComplexMatrix<Float> {
+    public subscript(rows: Span, column: Int) -> ComplexMatrix<Float> {
         get {
-            return submatrix(rows: rows, columns: column...column)
+            return submatrix(rows: rows, columns: column..column)
         }
         set {
-            setSubmatrix(newValue, rows: rows, columns: column...column)
+            setSubmatrix(newValue, rows: rows, columns: column..column)
         }
     }
     
-    public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> ComplexMatrix<Float> {
+    public subscript(rows: Span, columns: Span) -> ComplexMatrix<Float> {
         get {
             return submatrix(rows: rows, columns: columns)
         }
@@ -193,25 +193,25 @@ extension ComplexMatrix where Scalar == Float {
 
 extension Matrix where Scalar == Double {
     
-    public func submatrix(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix {
+    public func submatrix(rows: Span, columns: Span) -> Matrix {
         precondition(shape.contains(rows: rows, columns: columns))
         let matrix = self
         var submatrix: Matrix = .zeros(shape: .init(rows: rows.count, columns: columns.count))
         withUnsafeBufferPointer { pointer in
-            let matrixIndex = matrix.shape.indexFor(row: rows.lowerBound, column: columns.lowerBound)
+            let matrixIndex = matrix.shape.indexFor(row: rows.startIndex, column: columns.startIndex)
             let matrixPointer = UnsafePointer(pointer.baseAddress! + matrixIndex)!
-            vDSP_mmovD(matrixPointer, &submatrix.elements, vDSP_Length(columns.count), vDSP_Length(rows.count), vDSP_Length(matrix.shape.columns), vDSP_Length(submatrix.shape.columns))
+            vDSP_mmovD(matrixPointer, &submatrix.elements, vDSP_Length(columns.length), vDSP_Length(rows.length), vDSP_Length(matrix.shape.columns), vDSP_Length(submatrix.shape.columns))
         }
         return submatrix
     }
     
-    public mutating func setSubmatrix(_ submatrix: Matrix, rows: ClosedRange<Int>, columns: ClosedRange<Int>) {
+    public mutating func setSubmatrix(_ submatrix: Matrix, rows: Span, columns: Span) {
         precondition(shape.contains(rows: rows, columns: columns))
         let matrix = self
         withUnsafeMutableBufferPointer { pointer in
-            let matrixIndex = matrix.shape.indexFor(row: rows.lowerBound, column: columns.lowerBound)
+            let matrixIndex = matrix.shape.indexFor(row: rows.startIndex, column: columns.startIndex)
             let matrixPointer = UnsafeMutablePointer(pointer.baseAddress! + matrixIndex)!
-            vDSP_mmovD(submatrix.elements, matrixPointer, vDSP_Length(columns.count), vDSP_Length(rows.count), vDSP_Length(submatrix.shape.columns), vDSP_Length(matrix.shape.columns))
+            vDSP_mmovD(submatrix.elements, matrixPointer, vDSP_Length(columns.length), vDSP_Length(rows.length), vDSP_Length(submatrix.shape.columns), vDSP_Length(matrix.shape.columns))
         }
     }
     
@@ -221,37 +221,37 @@ extension Matrix where Scalar == Double {
     
     public subscript(row row: Int) -> Matrix<Double> {
         get {
-            return submatrix(rows: row...row, columns: shape.columnIndices)
+            return submatrix(rows: row..row, columns: shape.columnBounds)
         }
         set {
-            setSubmatrix(newValue, rows: row...row, columns: shape.columnIndices)
+            setSubmatrix(newValue, rows: row..row, columns: shape.columnBounds)
         }
     }
     
     public subscript(column column: Int) -> Matrix<Double> {
         get {
-            return submatrix(rows: shape.columnIndices, columns: column...column)
+            return submatrix(rows: shape.columnBounds, columns: column..column)
         }
         set {
-            setSubmatrix(newValue, rows: shape.columnIndices, columns: column...column)
+            setSubmatrix(newValue, rows: shape.columnBounds, columns: column..column)
         }
     }
     
-    public subscript(rows rows: ClosedRange<Int>) -> Matrix<Double> {
+    public subscript(rows rows: Span) -> Matrix<Double> {
         get {
-            return submatrix(rows: rows, columns: shape.columnIndices)
+            return submatrix(rows: rows, columns: shape.columnBounds)
         }
         set {
-            setSubmatrix(newValue, rows: rows, columns: shape.columnIndices)
+            setSubmatrix(newValue, rows: rows, columns: shape.columnBounds)
         }
     }
     
-    public subscript(columns columns: ClosedRange<Int>) -> Matrix<Double> {
+    public subscript(columns columns: Span) -> Matrix<Double> {
         get {
-            return submatrix(rows: shape.rowIndices, columns: columns)
+            return submatrix(rows: shape.rowBounds, columns: columns)
         }
         set {
-            setSubmatrix(newValue, rows: shape.rowIndices, columns: columns)
+            setSubmatrix(newValue, rows: shape.rowBounds, columns: columns)
         }
     }
     
@@ -259,25 +259,25 @@ extension Matrix where Scalar == Double {
 
 extension Matrix where Scalar == Double {
     
-    public subscript(row: Int, columns: ClosedRange<Int>) -> Matrix<Double> {
+    public subscript(row: Int, columns: Span) -> Matrix<Double> {
         get {
-            return submatrix(rows: row...row, columns: columns)
+            return submatrix(rows: row..row, columns: columns)
         }
         set {
-            setSubmatrix(newValue, rows: row...row, columns: columns)
+            setSubmatrix(newValue, rows: row..row, columns: columns)
         }
     }
     
-    public subscript(rows: ClosedRange<Int>, column: Int) -> Matrix<Double> {
+    public subscript(rows: Span, column: Int) -> Matrix<Double> {
         get {
-            return submatrix(rows: rows, columns: column...column)
+            return submatrix(rows: rows, columns: column..column)
         }
         set {
-            setSubmatrix(newValue, rows: rows, columns: column...column)
+            setSubmatrix(newValue, rows: rows, columns: column..column)
         }
     }
     
-    public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Matrix<Double> {
+    public subscript(rows: Span, columns: Span) -> Matrix<Double> {
         get {
             return submatrix(rows: rows, columns: columns)
         }
@@ -290,12 +290,12 @@ extension Matrix where Scalar == Double {
 
 extension ComplexMatrix where Scalar == Double {
     
-    public func submatrix(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> ComplexMatrix {
+    public func submatrix(rows: Span, columns: Span) -> ComplexMatrix {
         precondition(shape.contains(rows: rows, columns: columns))
         return ComplexMatrix(real: real.submatrix(rows: rows, columns: columns), imaginary: imaginary.submatrix(rows: rows, columns: columns))
     }
     
-    public mutating func setSubmatrix(_ submatrix: ComplexMatrix, rows: ClosedRange<Int>, columns: ClosedRange<Int>) {
+    public mutating func setSubmatrix(_ submatrix: ComplexMatrix, rows: Span, columns: Span) {
         precondition(shape.contains(rows: rows, columns: columns))
         real.setSubmatrix(submatrix.real, rows: rows, columns: columns)
         imaginary.setSubmatrix(submatrix.imaginary, rows: rows, columns: columns)
@@ -307,37 +307,37 @@ extension ComplexMatrix where Scalar == Double {
     
     public subscript(row row: Int) -> ComplexMatrix<Double> {
         get {
-            return submatrix(rows: row...row, columns: shape.columnIndices)
+            return submatrix(rows: row..row, columns: shape.columnBounds)
         }
         set {
-            setSubmatrix(newValue, rows: row...row, columns: shape.columnIndices)
+            setSubmatrix(newValue, rows: row..row, columns: shape.columnBounds)
         }
     }
     
     public subscript(column column: Int) -> ComplexMatrix<Double> {
         get {
-            return submatrix(rows: shape.columnIndices, columns: column...column)
+            return submatrix(rows: shape.columnBounds, columns: column..column)
         }
         set {
-            setSubmatrix(newValue, rows: shape.columnIndices, columns: column...column)
+            setSubmatrix(newValue, rows: shape.columnBounds, columns: column..column)
         }
     }
     
-    public subscript(rows rows: ClosedRange<Int>) -> ComplexMatrix<Double> {
+    public subscript(rows rows: Span) -> ComplexMatrix<Double> {
         get {
-            return submatrix(rows: rows, columns: shape.columnIndices)
+            return submatrix(rows: rows, columns: shape.columnBounds)
         }
         set {
-            setSubmatrix(newValue, rows: rows, columns: shape.columnIndices)
+            setSubmatrix(newValue, rows: rows, columns: shape.columnBounds)
         }
     }
     
-    public subscript(columns columns: ClosedRange<Int>) -> ComplexMatrix<Double> {
+    public subscript(columns columns: Span) -> ComplexMatrix<Double> {
         get {
-            return submatrix(rows: shape.rowIndices, columns: columns)
+            return submatrix(rows: shape.rowBounds, columns: columns)
         }
         set {
-            setSubmatrix(newValue, rows: shape.rowIndices, columns: columns)
+            setSubmatrix(newValue, rows: shape.rowBounds, columns: columns)
         }
     }
     
@@ -345,25 +345,25 @@ extension ComplexMatrix where Scalar == Double {
 
 extension ComplexMatrix where Scalar == Double {
     
-    public subscript(row: Int, columns: ClosedRange<Int>) -> ComplexMatrix<Double> {
+    public subscript(row: Int, columns: Span) -> ComplexMatrix<Double> {
         get {
-            return submatrix(rows: row...row, columns: columns)
+            return submatrix(rows: row..row, columns: columns)
         }
         set {
-            setSubmatrix(newValue, rows: row...row, columns: columns)
+            setSubmatrix(newValue, rows: row..row, columns: columns)
         }
     }
     
-    public subscript(rows: ClosedRange<Int>, column: Int) -> ComplexMatrix<Double> {
+    public subscript(rows: Span, column: Int) -> ComplexMatrix<Double> {
         get {
-            return submatrix(rows: rows, columns: column...column)
+            return submatrix(rows: rows, columns: column..column)
         }
         set {
-            setSubmatrix(newValue, rows: rows, columns: column...column)
+            setSubmatrix(newValue, rows: rows, columns: column..column)
         }
     }
     
-    public subscript(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> ComplexMatrix<Double> {
+    public subscript(rows: Span, columns: Span) -> ComplexMatrix<Double> {
         get {
             return submatrix(rows: rows, columns: columns)
         }

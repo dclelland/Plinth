@@ -57,12 +57,12 @@ extension Shape {
 
 extension Shape {
     
-    @inlinable internal var rowIndices: ClosedRange<Int> {
-        return 0...(rows - 1)
+    @inlinable internal var rowBounds: Span {
+        return 0..(rows - 1)
     }
     
-    @inlinable internal var columnIndices: ClosedRange<Int> {
-        return 0...(columns - 1)
+    @inlinable internal var columnBounds: Span {
+        return 0..(columns - 1)
     }
     
 }
@@ -78,11 +78,11 @@ extension Shape {
 extension Shape {
     
     @inlinable internal func contains(row: Int, column: Int) -> Bool {
-        return rowIndices.contains(row) && columnIndices.contains(column)
+        return rowBounds ~= row && columnBounds ~= column
     }
     
-    @inlinable internal func contains(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Bool {
-        return rowIndices.contains(rows.lowerBound) && rowIndices.contains(rows.upperBound) && columnIndices.contains(columns.lowerBound) && columnIndices.contains(columns.upperBound)
+    @inlinable internal func contains(rows: Span, columns: Span) -> Bool {
+        return rowBounds ~= rows.startIndex && rowBounds ~= rows.endIndex && columnBounds ~= columns.startIndex && columnBounds ~= columns.endIndex
     }
     
 }

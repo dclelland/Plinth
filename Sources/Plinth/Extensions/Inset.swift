@@ -39,8 +39,8 @@ extension Matrix where Scalar == Float {
     }
     
     public func inset(top: Int = 0, left: Int = 0, bottom: Int = 0, right: Int = 0) -> Matrix {
-        let rows = (top)...(shape.rows - bottom - 1)
-        let columns = (left)...(shape.columns - right - 1)
+        let rows = top..(shape.rows - bottom - 1)
+        let columns = left..(shape.columns - right - 1)
         return self[rows, columns]
     }
     
@@ -69,8 +69,8 @@ extension Matrix where Scalar == Double {
     }
     
     public func inset(top: Int = 0, left: Int = 0, bottom: Int = 0, right: Int = 0) -> Matrix {
-        let rows = (top)...(shape.rows - bottom - 1)
-        let columns = (left)...(shape.columns - right - 1)
+        let rows = top..(shape.rows - bottom - 1)
+        let columns = left..(shape.columns - right - 1)
         return self[rows, columns]
     }
     
