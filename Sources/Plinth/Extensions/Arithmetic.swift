@@ -7,6 +7,7 @@
 
 import Foundation
 import Accelerate
+import Numerics
 
 extension Array where Element == Float {
     
@@ -168,6 +169,46 @@ extension Matrix where Scalar == Float {
     
     @inlinable public static func / (left: Scalar, right: Matrix) -> Matrix {
         return right.fmap { left / $0 }
+    }
+
+}
+
+extension Matrix where Scalar == Float {
+    
+    @inlinable public static func + (left: Matrix, right: Complex<Scalar>) -> ComplexMatrix<Scalar> {
+        return ComplexMatrix(real: left) + right
+    }
+    
+    @inlinable public static func - (left: Matrix, right: Complex<Scalar>) -> ComplexMatrix<Scalar> {
+        return ComplexMatrix(real: left) - right
+    }
+    
+    @inlinable public static func * (left: Matrix, right: Complex<Scalar>) -> ComplexMatrix<Scalar> {
+        return ComplexMatrix(real: left) * right
+    }
+    
+    @inlinable public static func / (left: Matrix, right: Complex<Scalar>) -> ComplexMatrix<Scalar> {
+        return ComplexMatrix(real: left) / right
+    }
+
+}
+
+extension Matrix where Scalar == Float {
+    
+    @inlinable public static func + (left: Complex<Scalar>, right: Matrix) -> ComplexMatrix<Scalar> {
+        return left + ComplexMatrix(real: right)
+    }
+    
+    @inlinable public static func - (left: Complex<Scalar>, right: Matrix) -> ComplexMatrix<Scalar> {
+        return left - ComplexMatrix(real: right)
+    }
+    
+    @inlinable public static func * (left: Complex<Scalar>, right: Matrix) -> ComplexMatrix<Scalar> {
+        return left * ComplexMatrix(real: right)
+    }
+    
+    @inlinable public static func / (left: Complex<Scalar>, right: Matrix) -> ComplexMatrix<Scalar> {
+        return left / ComplexMatrix(real: right)
     }
 
 }
@@ -753,6 +794,46 @@ extension Matrix where Scalar == Double {
     
     @inlinable public static func /= (left: inout Matrix, right: Scalar) {
         left = left / right
+    }
+
+}
+
+extension Matrix where Scalar == Double {
+    
+    @inlinable public static func + (left: Matrix, right: Complex<Scalar>) -> ComplexMatrix<Scalar> {
+        return ComplexMatrix(real: left) + right
+    }
+    
+    @inlinable public static func - (left: Matrix, right: Complex<Scalar>) -> ComplexMatrix<Scalar> {
+        return ComplexMatrix(real: left) - right
+    }
+    
+    @inlinable public static func * (left: Matrix, right: Complex<Scalar>) -> ComplexMatrix<Scalar> {
+        return ComplexMatrix(real: left) * right
+    }
+    
+    @inlinable public static func / (left: Matrix, right: Complex<Scalar>) -> ComplexMatrix<Scalar> {
+        return ComplexMatrix(real: left) / right
+    }
+
+}
+
+extension Matrix where Scalar == Double {
+    
+    @inlinable public static func + (left: Complex<Scalar>, right: Matrix) -> ComplexMatrix<Scalar> {
+        return left + ComplexMatrix(real: right)
+    }
+    
+    @inlinable public static func - (left: Complex<Scalar>, right: Matrix) -> ComplexMatrix<Scalar> {
+        return left - ComplexMatrix(real: right)
+    }
+    
+    @inlinable public static func * (left: Complex<Scalar>, right: Matrix) -> ComplexMatrix<Scalar> {
+        return left * ComplexMatrix(real: right)
+    }
+    
+    @inlinable public static func / (left: Complex<Scalar>, right: Matrix) -> ComplexMatrix<Scalar> {
+        return left / ComplexMatrix(real: right)
     }
 
 }
