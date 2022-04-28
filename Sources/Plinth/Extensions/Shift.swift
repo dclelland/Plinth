@@ -65,9 +65,9 @@ extension Matrix where Scalar == Float {
         switch (rows, columns) {
         case (0, 0):
             return self
-        case (0, _):
-            return shifted(rows: rows)
         case (_, 0):
+            return shifted(rows: rows)
+        case (0, _):
             return shifted(columns: columns)
         case (_, _):
             break
@@ -163,9 +163,9 @@ extension Matrix where Scalar == Double {
         switch (rows, columns) {
         case (0, 0):
             return self
-        case (0, _):
-            return shifted(rows: rows)
         case (_, 0):
+            return shifted(rows: rows)
+        case (0, _):
             return shifted(columns: columns)
         case (_, _):
             break
