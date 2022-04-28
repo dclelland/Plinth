@@ -7,18 +7,81 @@
 
 import Foundation
 
+infix operator %%: MultiplicationPrecedence
+
+private func %% <T: BinaryInteger>(left: T, right: T) -> T {
+    let remainder = left % right
+    return remainder >= 0 ? remainder : remainder + right
+}
+
 extension Matrix where Scalar == Float {
     
-    public func shifted(rows: Int, columns: Int) -> Matrix {
-        let inputTop = 0...(rows - 1)
-        let inputLeft = 0...(columns - 1)
-        let inputBottom = (rows)...(shape.rows - 1)
-        let inputRight = (columns)...(shape.columns - 1)
+    public func shifted(rows: Int) -> Matrix {
+        let rows = rows %% shape.rows
         
-        let outputTop = 0...(shape.rows - rows - 1)
-        let outputLeft = 0...(shape.columns - columns - 1)
-        let outputBottom = (shape.rows - rows)...(shape.rows - 1)
-        let outputRight = (shape.rows - rows)...(shape.columns - 1)
+        guard rows != 0 else {
+            return self
+        }
+        
+        let inputTop = 0...(shape.rows - rows - 1)
+        let inputBottom = (shape.rows - rows)...(shape.rows - 1)
+        
+        let outputTop = 0...(rows - 1)
+        let outputBottom = (rows)...(shape.rows - 1)
+        
+        var output: Matrix = .zeros(shape: shape)
+        
+        output[rows: outputTop] = self[rows: inputBottom]
+        output[rows: outputBottom] = self[rows: inputTop]
+        
+        return output
+    }
+    
+    public func shifted(columns: Int) -> Matrix {
+        let columns = columns %% shape.rows
+        
+        guard columns != 0 else {
+            return self
+        }
+        
+        let inputLeft = 0...(shape.columns - columns - 1)
+        let inputRight = (shape.columns - columns)...(shape.columns - 1)
+        
+        let outputLeft = 0...(columns - 1)
+        let outputRight = (columns)...(shape.columns - 1)
+        
+        var output: Matrix = .zeros(shape: shape)
+        
+        output[columns: outputLeft] = self[columns: inputRight]
+        output[columns: outputRight] = self[columns: inputLeft]
+        
+        return output
+    }
+    
+    public func shifted(rows: Int, columns: Int) -> Matrix {
+        let rows = rows %% shape.rows
+        let columns = columns %% shape.rows
+        
+        switch (rows, columns) {
+        case (0, 0):
+            return self
+        case (0, _):
+            return shifted(rows: rows)
+        case (_, 0):
+            return shifted(columns: columns)
+        case (_, _):
+            break
+        }
+        
+        let inputTop = 0...(shape.rows - rows - 1)
+        let inputLeft = 0...(shape.columns - columns - 1)
+        let inputBottom = (shape.rows - rows)...(shape.rows - 1)
+        let inputRight = (shape.columns - columns)...(shape.columns - 1)
+        
+        let outputTop = 0...(rows - 1)
+        let outputLeft = 0...(columns - 1)
+        let outputBottom = (rows)...(shape.rows - 1)
+        let outputRight = (columns)...(shape.columns - 1)
         
         var output: Matrix = .zeros(shape: shape)
         
@@ -34,27 +97,89 @@ extension Matrix where Scalar == Float {
 
 extension ComplexMatrix where Scalar == Float {
     
+    public func shifted(rows: Int) -> ComplexMatrix {
+        return ComplexMatrix(real: real.shifted(rows: rows), imaginary: imaginary.shifted(rows: rows))
+    }
+    
+    public func shifted(columns: Int) -> ComplexMatrix {
+        return ComplexMatrix(real: real.shifted(columns: columns), imaginary: imaginary.shifted(columns: columns))
+    }
+    
     public func shifted(rows: Int, columns: Int) -> ComplexMatrix {
-        return ComplexMatrix(
-            real: real.shifted(rows: rows, columns: columns),
-            imaginary: imaginary.shifted(rows: rows, columns: columns)
-        )
+        return ComplexMatrix(real: real.shifted(rows: rows, columns: columns), imaginary: imaginary.shifted(rows: rows, columns: columns))
     }
     
 }
 
+
 extension Matrix where Scalar == Double {
     
-    public func shifted(rows: Int, columns: Int) -> Matrix {
-        let inputTop = 0...(rows - 1)
-        let inputLeft = 0...(columns - 1)
-        let inputBottom = (rows)...(shape.rows - 1)
-        let inputRight = (columns)...(shape.columns - 1)
+    public func shifted(rows: Int) -> Matrix {
+        let rows = rows %% shape.rows
         
-        let outputTop = 0...(shape.rows - rows - 1)
-        let outputLeft = 0...(shape.columns - columns - 1)
-        let outputBottom = (shape.rows - rows)...(shape.rows - 1)
-        let outputRight = (shape.rows - rows)...(shape.columns - 1)
+        guard rows != 0 else {
+            return self
+        }
+        
+        let inputTop = 0...(shape.rows - rows - 1)
+        let inputBottom = (shape.rows - rows)...(shape.rows - 1)
+        
+        let outputTop = 0...(rows - 1)
+        let outputBottom = (rows)...(shape.rows - 1)
+        
+        var output: Matrix = .zeros(shape: shape)
+        
+        output[rows: outputTop] = self[rows: inputBottom]
+        output[rows: outputBottom] = self[rows: inputTop]
+        
+        return output
+    }
+    
+    public func shifted(columns: Int) -> Matrix {
+        let columns = columns %% shape.rows
+        
+        guard columns != 0 else {
+            return self
+        }
+        
+        let inputLeft = 0...(shape.columns - columns - 1)
+        let inputRight = (shape.columns - columns)...(shape.columns - 1)
+        
+        let outputLeft = 0...(columns - 1)
+        let outputRight = (columns)...(shape.columns - 1)
+        
+        var output: Matrix = .zeros(shape: shape)
+        
+        output[columns: outputLeft] = self[columns: inputRight]
+        output[columns: outputRight] = self[columns: inputLeft]
+        
+        return output
+    }
+    
+    public func shifted(rows: Int, columns: Int) -> Matrix {
+        let rows = rows %% shape.rows
+        let columns = columns %% shape.rows
+        
+        switch (rows, columns) {
+        case (0, 0):
+            return self
+        case (0, _):
+            return shifted(rows: rows)
+        case (_, 0):
+            return shifted(columns: columns)
+        case (_, _):
+            break
+        }
+        
+        let inputTop = 0...(shape.rows - rows - 1)
+        let inputLeft = 0...(shape.columns - columns - 1)
+        let inputBottom = (shape.rows - rows)...(shape.rows - 1)
+        let inputRight = (shape.columns - columns)...(shape.columns - 1)
+        
+        let outputTop = 0...(rows - 1)
+        let outputLeft = 0...(columns - 1)
+        let outputBottom = (rows)...(shape.rows - 1)
+        let outputRight = (columns)...(shape.columns - 1)
         
         var output: Matrix = .zeros(shape: shape)
         
@@ -70,11 +195,16 @@ extension Matrix where Scalar == Double {
 
 extension ComplexMatrix where Scalar == Double {
     
+    public func shifted(rows: Int) -> ComplexMatrix {
+        return ComplexMatrix(real: real.shifted(rows: rows), imaginary: imaginary.shifted(rows: rows))
+    }
+    
+    public func shifted(columns: Int) -> ComplexMatrix {
+        return ComplexMatrix(real: real.shifted(columns: columns), imaginary: imaginary.shifted(columns: columns))
+    }
+    
     public func shifted(rows: Int, columns: Int) -> ComplexMatrix {
-        return ComplexMatrix(
-            real: real.shifted(rows: rows, columns: columns),
-            imaginary: imaginary.shifted(rows: rows, columns: columns)
-        )
+        return ComplexMatrix(real: real.shifted(rows: rows, columns: columns), imaginary: imaginary.shifted(rows: rows, columns: columns))
     }
     
 }
