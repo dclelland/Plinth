@@ -9,6 +9,10 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 - https://github.com/stsievert/swix
 - https://github.com/cgarciae/NDArray
 
+## Todo
+
+- Complex matrix multiplication and inner/outer products with `vDSP_zmmul`
+
 ## Example
 
 ```swift
