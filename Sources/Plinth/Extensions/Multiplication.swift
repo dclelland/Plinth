@@ -23,8 +23,9 @@ extension Matrix where Scalar == Float {
     }
     
     public func multiplied(by multiplicand: Matrix) -> Matrix {
+        precondition(shape.columns == multiplicand.shape.rows)
         var output: Matrix = .zeros(shape: .init(rows: shape.rows, columns: multiplicand.shape.columns))
-        vDSP_mmulD(elements, 1, multiplicand.elements, 1, &output.elements, 1, vDSP_Length(shape.rows), vDSP_Length(multiplicand.shape.columns), vDSP_Length(shape.columns))
+        vDSP_mmul(elements, 1, multiplicand.elements, 1, &output.elements, 1, vDSP_Length(shape.rows), vDSP_Length(multiplicand.shape.columns), vDSP_Length(shape.columns))
         return output
     }
     
@@ -41,6 +42,7 @@ extension Matrix where Scalar == Double {
     }
     
     public func multiplied(by multiplicand: Matrix) -> Matrix {
+        precondition(shape.columns == multiplicand.shape.rows)
         var output: Matrix = .zeros(shape: .init(rows: shape.rows, columns: multiplicand.shape.columns))
         vDSP_mmulD(elements, 1, multiplicand.elements, 1, &output.elements, 1, vDSP_Length(shape.rows), vDSP_Length(multiplicand.shape.columns), vDSP_Length(shape.columns))
         return output
