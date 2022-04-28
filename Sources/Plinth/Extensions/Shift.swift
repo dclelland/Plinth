@@ -9,9 +9,13 @@ import Foundation
 
 infix operator %%: MultiplicationPrecedence
 
-private func %% <T: BinaryInteger>(left: T, right: T) -> T {
-    let remainder = left % right
-    return remainder >= 0 ? remainder : remainder + right
+extension BinaryInteger {
+ 
+    internal static func %% (left: Self, right: Self) -> Self {
+        let remainder = left % right
+        return remainder >= 0 ? remainder : remainder + right
+    }
+    
 }
 
 extension Matrix where Scalar == Float {
