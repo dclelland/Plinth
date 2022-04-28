@@ -112,7 +112,7 @@ extension Matrix where Scalar == Float {
         let standardDeviation = standardDeviation(mean: mean)
         let difference = self - mean
         let cubic = difference * difference * difference
-        return cubic.mean / pow(standardDeviation, 3)
+        return cubic.mean / pow(standardDeviation, 3.0)
     }
     
 }
@@ -236,7 +236,7 @@ extension Matrix where Scalar == Double {
         let standardDeviation = standardDeviation(mean: mean)
         let difference = self - mean
         let cubic = difference * difference * difference
-        return cubic.mean / pow(standardDeviation, 3)
+        return cubic.mean / pow(standardDeviation, 3.0)
     }
     
 }
