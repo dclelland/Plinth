@@ -10,31 +10,31 @@ import Accelerate
 
 extension Matrix where Scalar == Float {
     
-    public var minimum: Scalar {
+    public func minimum() -> Scalar {
         return fmap(vDSP.minimum)
     }
     
-    public var maximum: Scalar {
+    public func maximum() -> Scalar {
         return fmap(vDSP.maximum)
     }
     
-    public var maximumMagnitude: Scalar {
+    public func maximumMagnitude() -> Scalar {
         return fmap(vDSP.maximumMagnitude)
     }
     
-    public var sum: Scalar {
+    public func sum() -> Scalar {
         return fmap(vDSP.sum)
     }
     
-    public var sumOfSquares: Scalar {
+    public func sumOfSquares() -> Scalar {
         return fmap(vDSP.sumOfSquares)
     }
     
-    public var sumAndSumOfSquares: (elementsSum: Scalar, squaresSum: Scalar) {
+    public func sumAndSumOfSquares() -> (elementsSum: Scalar, squaresSum: Scalar) {
         return fmap(vDSP.sumAndSumOfSquares)
     }
     
-    public var sumOfMagnitudes: Scalar {
+    public func sumOfMagnitudes() -> Scalar {
         return fmap(vDSP.sumOfMagnitudes)
     }
     
@@ -42,15 +42,15 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Float {
     
-    public var indexOfMinimum: (UInt, Scalar) {
+    public func indexOfMinimum() -> (UInt, Scalar) {
         return fmap(vDSP.indexOfMinimum)
     }
     
-    public var indexOfMaximum: (UInt, Scalar) {
+    public func indexOfMaximum() -> (UInt, Scalar) {
         return fmap(vDSP.indexOfMaximum)
     }
     
-    public var indexOfMaximumMagnitude: (UInt, Scalar) {
+    public func indexOfMaximumMagnitude() -> (UInt, Scalar) {
         return fmap(vDSP.indexOfMaximumMagnitude)
     }
     
@@ -58,19 +58,19 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Float {
     
-    public var mean: Scalar {
+    public func mean() -> Scalar {
         return fmap(vDSP.mean)
     }
     
-    public var meanMagnitude: Scalar {
+    public func meanMagnitude() -> Scalar {
         return fmap(vDSP.meanMagnitude)
     }
     
-    public var meanSquare: Scalar {
+    public func meanSquare() -> Scalar {
         return fmap(vDSP.meanSquare)
     }
     
-    public var rootMeanSquare: Scalar {
+    public func rootMeanSquare() -> Scalar {
         return fmap(vDSP.rootMeanSquare)
     }
     
@@ -78,87 +78,87 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Float {
     
-    public var variance: Scalar {
-        return variance(mean: mean)
+    public func variance() -> Scalar {
+        return variance(mean: mean())
     }
     
     public func variance(mean: Scalar) -> Scalar {
         let difference = self - mean
-        return difference.meanSquare
+        return difference.meanSquare()
     }
     
 }
 
 extension Matrix where Scalar == Float {
     
-    public var standardDeviation: Scalar {
-        return standardDeviation(mean: mean)
+    public func standardDeviation() -> Scalar {
+        return standardDeviation(mean: mean())
     }
     
     public func standardDeviation(mean: Scalar) -> Scalar {
         let difference = self - mean
-        return difference.rootMeanSquare
+        return difference.rootMeanSquare()
     }
     
 }
 
 extension Matrix where Scalar == Float {
     
-    public var skewness: Scalar {
-        return skewness(mean: mean)
+    public func skewness() -> Scalar {
+        return skewness(mean: mean())
     }
     
     public func skewness(mean: Scalar) -> Scalar {
         let standardDeviation = standardDeviation(mean: mean)
         let difference = self - mean
         let cubic = difference * difference * difference
-        return cubic.mean / pow(standardDeviation, 3.0)
+        return cubic.mean() / pow(standardDeviation, 3.0)
     }
     
 }
 
 extension Matrix where Scalar == Float {
     
-    public var kurtosis: Scalar {
-        return kurtosis(mean: mean)
+    public func kurtosis() -> Scalar {
+        return kurtosis(mean: mean())
     }
     
     public func kurtosis(mean: Scalar) -> Scalar {
         let difference = self - mean
         let quartic = difference * difference * difference * difference
         let quadratic = difference * difference
-        return quartic.mean / pow(quadratic.mean, 2.0)
+        return quartic.mean() / pow(quadratic.mean(), 2.0)
     }
     
 }
 
 extension Matrix where Scalar == Double {
     
-    public var minimum: Scalar {
+    public func minimum() -> Scalar {
         return fmap(vDSP.minimum)
     }
     
-    public var maximum: Scalar {
+    public func maximum() -> Scalar {
         return fmap(vDSP.maximum)
     }
     
-    public var maximumMagnitude: Scalar {
+    public func maximumMagnitude() -> Scalar {
         return fmap(vDSP.maximumMagnitude)
     }
     
-    public var sum: Scalar {
+    public func sum() -> Scalar {
         return fmap(vDSP.sum)
     }
     
-    public var sumOfSquares: Scalar {
+    public func sumOfSquares() -> Scalar {
         return fmap(vDSP.sumOfSquares)
     }
     
-    public var sumAndSumOfSquares: (elementsSum: Scalar, squaresSum: Scalar) {
+    public func sumAndSumOfSquares() -> (elementsSum: Scalar, squaresSum: Scalar) {
         return fmap(vDSP.sumAndSumOfSquares)
     }
     
-    public var sumOfMagnitudes: Scalar {
+    public func sumOfMagnitudes() -> Scalar {
         return fmap(vDSP.sumOfMagnitudes)
     }
     
@@ -166,15 +166,15 @@ extension Matrix where Scalar == Double {
 
 extension Matrix where Scalar == Double {
     
-    public var indexOfMinimum: (UInt, Scalar) {
+    public func indexOfMinimum() -> (UInt, Scalar) {
         return fmap(vDSP.indexOfMinimum)
     }
     
-    public var indexOfMaximum: (UInt, Scalar) {
+    public func indexOfMaximum() -> (UInt, Scalar) {
         return fmap(vDSP.indexOfMaximum)
     }
     
-    public var indexOfMaximumMagnitude: (UInt, Scalar) {
+    public func indexOfMaximumMagnitude() -> (UInt, Scalar) {
         return fmap(vDSP.indexOfMaximumMagnitude)
     }
     
@@ -182,19 +182,19 @@ extension Matrix where Scalar == Double {
 
 extension Matrix where Scalar == Double {
     
-    public var mean: Scalar {
+    public func mean() -> Scalar {
         return fmap(vDSP.mean)
     }
     
-    public var meanMagnitude: Scalar {
+    public func meanMagnitude() -> Scalar {
         return fmap(vDSP.meanMagnitude)
     }
     
-    public var meanSquare: Scalar {
+    public func meanSquare() -> Scalar {
         return fmap(vDSP.meanSquare)
     }
     
-    public var rootMeanSquare: Scalar {
+    public func rootMeanSquare() -> Scalar {
         return fmap(vDSP.rootMeanSquare)
     }
     
@@ -202,56 +202,56 @@ extension Matrix where Scalar == Double {
 
 extension Matrix where Scalar == Double {
     
-    public var variance: Scalar {
-        return variance(mean: mean)
+    public func variance() -> Scalar {
+        return variance(mean: mean())
     }
     
     public func variance(mean: Scalar) -> Scalar {
         let difference = self - mean
-        return difference.meanSquare
+        return difference.meanSquare()
     }
     
 }
 
 extension Matrix where Scalar == Double {
     
-    public var standardDeviation: Scalar {
-        return standardDeviation(mean: mean)
+    public func standardDeviation() -> Scalar {
+        return standardDeviation(mean: mean())
     }
     
     public func standardDeviation(mean: Scalar) -> Scalar {
         let difference = self - mean
-        return difference.rootMeanSquare
+        return difference.rootMeanSquare()
     }
     
 }
 
 extension Matrix where Scalar == Double {
     
-    public var skewness: Scalar {
-        return skewness(mean: mean)
+    public func skewness() -> Scalar {
+        return skewness(mean: mean())
     }
     
     public func skewness(mean: Scalar) -> Scalar {
         let standardDeviation = standardDeviation(mean: mean)
         let difference = self - mean
         let cubic = difference * difference * difference
-        return cubic.mean / pow(standardDeviation, 3.0)
+        return cubic.mean() / pow(standardDeviation, 3.0)
     }
     
 }
 
 extension Matrix where Scalar == Double {
     
-    public var kurtosis: Scalar {
-        return kurtosis(mean: mean)
+    public func kurtosis() -> Scalar {
+        return kurtosis(mean: mean())
     }
     
     public func kurtosis(mean: Scalar) -> Scalar {
         let difference = self - mean
         let quartic = difference * difference * difference * difference
         let quadratic = difference * difference
-        return quartic.mean / pow(quadratic.mean, 2.0)
+        return quartic.mean() / pow(quadratic.mean(), 2.0)
     }
     
 }
