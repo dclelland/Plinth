@@ -27,7 +27,7 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
     }
     
     public init(shape: Shape, elements: [Complex]) {
-        self.init(real: .init(shape: shape, elements: elements.map { $0.real }), imaginary: .init(shape: shape, elements: elements.map { $0.imaginary }))
+        self.init(real: .init(shape: shape, elements: elements.map(\.real)), imaginary: .init(shape: shape, elements: elements.map(\.imaginary)))
     }
     
     public init(shape: Shape, _ closure: (_ row: Int, _ column: Int) throws -> Complex) rethrows {
