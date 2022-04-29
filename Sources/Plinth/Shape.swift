@@ -57,6 +57,14 @@ extension Shape {
 
 extension Shape {
     
+    public var aspectRatio: Double {
+        return Double(rows) / Double(columns)
+    }
+    
+}
+
+extension Shape {
+    
     public func upscaled(by factor: Int = 1) -> Shape {
         let multiplicand = Int(pow(2.0, Double(factor)))
         return Shape(rows: rows * multiplicand, columns: columns * multiplicand)
