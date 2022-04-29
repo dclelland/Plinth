@@ -33,6 +33,18 @@ extension Shape {
 
 extension Shape {
     
+    public var length: Int {
+        return max(rows, columns)
+    }
+    
+    public var breadth: Int {
+        return min(rows, columns)
+    }
+    
+}
+
+extension Shape {
+    
     public static func square(length: Int) -> Shape {
         return .init(rows: length, columns: length)
     }
@@ -45,12 +57,14 @@ extension Shape {
 
 extension Shape {
     
-    public var length: Int {
-        return max(rows, columns)
+    public func upscaled(by factor: Int = 1) -> Shape {
+        let multiplicand = Int(pow(2.0, Double(factor)))
+        return Shape(rows: rows * multiplicand, columns: columns * multiplicand)
     }
     
-    public var breadth: Int {
-        return min(rows, columns)
+    public func downscaled(by factor: Int = 1) -> Shape {
+        let dividend = Int(pow(2.0, Double(factor)))
+        return Shape(rows: rows / dividend, columns: columns / dividend)
     }
     
 }
