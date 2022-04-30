@@ -11,7 +11,12 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 
 ## Todo
 
-- Complex matrix multiplication and inner/outer products with `vDSP_zmmul`
+- Add documentation on architecture and API to this readme file
+- Add wrappers:
+    - Convolution with `vDSP.convolve`
+    - Complex matrix multiplication with `vDSP_zmmul`
+- Add cross correlation functions (see MATLAB `xcorr`, `xcorr2`)
+- Add upsampling functions
 
 ## Example
 
