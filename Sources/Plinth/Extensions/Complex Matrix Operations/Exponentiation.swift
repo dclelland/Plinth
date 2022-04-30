@@ -11,7 +11,7 @@ import Accelerate
 extension ComplexMatrix where Scalar == Float {
     
     public func exp() -> ComplexMatrix {
-        return real.fmap(vForce.exp) * ComplexMatrix(real: imaginary.fmap(vForce.cos), imaginary: imaginary.fmap(vForce.sin))
+        return real.exp() * ComplexMatrix(real: imaginary.cos(), imaginary: imaginary.sin())
     }
     
 }
@@ -19,7 +19,7 @@ extension ComplexMatrix where Scalar == Float {
 extension ComplexMatrix where Scalar == Double {
     
     public func exp() -> ComplexMatrix {
-        return real.fmap(vForce.exp) * ComplexMatrix(real: imaginary.fmap(vForce.cos), imaginary: imaginary.fmap(vForce.sin))
+        return real.exp() * ComplexMatrix(real: imaginary.cos(), imaginary: imaginary.sin())
     }
     
 }
