@@ -10,7 +10,7 @@ import Accelerate
 
 extension Matrix where Scalar == Float {
     
-    public func autocorrelated(setup: FFTSetup? = nil) -> ComplexMatrix<Scalar> {
+    public func autocorrelated(setup: Accelerate.FFTSetup? = nil) -> ComplexMatrix<Scalar> {
         return fft(setup: setup).squareMagnitudes().ifft(setup: setup) / Scalar(shape.count)
     }
     
@@ -18,7 +18,7 @@ extension Matrix where Scalar == Float {
 
 extension ComplexMatrix where Scalar == Float {
     
-    public func autocorrelated(setup: FFTSetup? = nil) -> ComplexMatrix {
+    public func autocorrelated(setup: Accelerate.FFTSetup? = nil) -> ComplexMatrix {
         return fft(setup: setup).squareMagnitudes().ifft(setup: setup) / Scalar(shape.count)
     }
     
@@ -26,7 +26,7 @@ extension ComplexMatrix where Scalar == Float {
 
 extension Matrix where Scalar == Double {
     
-    public func autocorrelated(setup: FFTSetupD? = nil) -> ComplexMatrix<Scalar> {
+    public func autocorrelated(setup: Accelerate.FFTSetupD? = nil) -> ComplexMatrix<Scalar> {
         return fft(setup: setup).squareMagnitudes().ifft(setup: setup) / Scalar(shape.count)
     }
     
@@ -34,7 +34,7 @@ extension Matrix where Scalar == Double {
 
 extension ComplexMatrix where Scalar == Double {
     
-    public func autocorrelated(setup: FFTSetupD? = nil) -> ComplexMatrix {
+    public func autocorrelated(setup: Accelerate.FFTSetupD? = nil) -> ComplexMatrix {
         return fft(setup: setup).squareMagnitudes().ifft(setup: setup) / Scalar(shape.count)
     }
     
