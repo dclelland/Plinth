@@ -27,18 +27,22 @@ public struct Shape: Codable {
 
 extension Shape {
     
-    public static let empty = Shape(rows: 0, columns: 0)
-    
-}
-
-extension Shape {
-    
     public var length: Int {
         return max(rows, columns)
     }
     
     public var breadth: Int {
         return min(rows, columns)
+    }
+    
+}
+
+extension Shape {
+    
+    public static let empty = Shape(rows: .zero, columns: .zero)
+    
+    public var isEmpty: Bool {
+        return rows == .zero || columns == .zero
     }
     
 }
@@ -82,6 +86,10 @@ extension Shape {
 }
 
 extension Shape {
+    
+    @inlinable internal func indicesFor(row: Int) -> ClosedRange<Int> {
+        return indexFor(row: row, column: columnIndices.lowerBound)...indexFor(row: row, column: columnIndices.upperBound)
+    }
     
     @inlinable internal func indexFor(row: Int, column: Int) -> Int {
         return row * columns + column

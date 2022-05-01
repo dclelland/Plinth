@@ -17,7 +17,6 @@ public struct Matrix<Scalar> {
     public init(shape: Shape, elements: [Scalar]) {
         self.shape = shape
         self.elements = elements
-        precondition(self.state == .regular)
     }
     
     public init(shape: Shape, repeating element: Scalar) {
@@ -39,16 +38,20 @@ public struct Matrix<Scalar> {
 
 extension Matrix {
     
-    public init(_ element: Scalar) {
+    public init(element: Scalar) {
         self.init(shape: .init(rows: 1, columns: 1), elements: [element])
     }
     
-    public init(_ elements: [Scalar]) {
-        self.init(shape: .init(rows: 1, columns: elements.count), elements: elements)
+    public init(row: [Scalar]) {
+        self.init(shape: .init(rows: 1, columns: row.count), elements: row)
     }
     
-    public init(_ elements: [[Scalar]]) {
-        self.init(shape: .init(rows: elements.count, columns: elements.first?.count ?? 0), elements: Array(elements.joined()))
+    public init(column: [Scalar]) {
+        self.init(shape: .init(rows: column.count, columns: 1), elements: column)
+    }
+    
+    public init(grid: [[Scalar]]) {
+        self.init(shape: .init(rows: grid.count, columns: grid.first?.count ?? 0), elements: Array(grid.joined()))
     }
     
 }
@@ -74,12 +77,26 @@ extension Matrix {
     public enum State {
         
         case regular
-        case malformed
+        case malformed(_ description: String)
         
     }
     
     public var state: State {
-        return shape.count == elements.count ? .regular : .malformed
+        guard shape.isEmpty == false else {
+            return .malformed("Shape is empty; \(shape)")
+        }
+        
+        guard shape.count == elements.count else {
+            return .malformed("Mismatched shape and elements; \(shape) != \(elements.count)")
+        }
+        
+        return .regular
+    }
+    
+    public var grid: [[Scalar]] {
+        return shape.rowIndices.map { row in
+            return Array(elements[shape.indicesFor(row: row)])
+        }
     }
     
 }
@@ -102,7 +119,7 @@ extension Matrix {
 extension Matrix: ExpressibleByIntegerLiteral where Scalar == IntegerLiteralType {
     
     public init(integerLiteral value: Scalar) {
-        self.init(value)
+        self.init(element: value)
     }
     
 }
@@ -110,7 +127,7 @@ extension Matrix: ExpressibleByIntegerLiteral where Scalar == IntegerLiteralType
 extension Matrix: ExpressibleByFloatLiteral where Scalar == FloatLiteralType {
     
     public init(floatLiteral value: Scalar) {
-        self.init(value)
+        self.init(element: value)
     }
 
 }
@@ -118,7 +135,7 @@ extension Matrix: ExpressibleByFloatLiteral where Scalar == FloatLiteralType {
 extension Matrix: ExpressibleByArrayLiteral {
     
     public init(arrayLiteral elements: [Scalar]...) {
-        self.init(elements)
+        self.init(grid: elements)
     }
     
 }
@@ -126,11 +143,12 @@ extension Matrix: ExpressibleByArrayLiteral {
 extension Matrix: CustomStringConvertible where Scalar: CustomStringConvertible {
     
     public var description: String {
-        return "[[" + shape.rowIndices.map { row in
-            return shape.columnIndices.map { column in
-                return self[row, column].description
-            }.joined(separator: ", ")
-        }.joined(separator: "],\n [") + "]]"
+        switch state {
+        case .regular:
+            return "[[" + grid.map { $0.map(\.description).joined(separator: ", ") }.joined(separator: "],\n [") + "]]"
+        case .malformed(let description):
+            return "Malformed \(type(of: self)): \(description)"
+        }
     }
     
 }
@@ -154,18 +172,20 @@ extension Matrix: Hashable where Scalar: Hashable {
 
 extension Matrix: Codable where Scalar: Codable {
     
-    enum CodingKeys: String, CodingKey {
-        case shape
-        case elements
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.init(grid: try container.decode([[Scalar]].self))
+        if case .malformed(let description) = self.state {
+            throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "Malformed \(type(of: self)): \(description)"))
+        }
     }
     
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.shape = try container.decode(Shape.self, forKey: .shape)
-        self.elements = try container.decode([Scalar].self, forKey: .elements)
-        if self.state == .malformed {
-            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Malformed matrix: \(self)"))
+    public func encode(to encoder: Encoder) throws {
+        if case .malformed(let description) = self.state {
+            throw EncodingError.invalidValue(self, .init(codingPath: encoder.codingPath, debugDescription: "Malformed \(type(of: self)): \(description)"))
         }
+        var container = encoder.singleValueContainer()
+        try container.encode(grid)
     }
 
 }

@@ -19,7 +19,6 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
     public init(real: Matrix, imaginary: Matrix) {
         self.real = real
         self.imaginary = imaginary
-        precondition(self.state == .regular)
     }
     
     public init(shape: Shape, repeating element: Complex) {
@@ -45,16 +44,20 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
 
 extension ComplexMatrix {
     
-    public init(_ element: Complex) {
+    public init(element: Complex) {
         self.init(shape: .init(rows: 1, columns: 1), elements: [element])
     }
     
-    public init(_ elements: [Complex]) {
-        self.init(shape: .init(rows: 1, columns: elements.count), elements: elements)
+    public init(row: [Complex]) {
+        self.init(shape: .init(rows: 1, columns: row.count), elements: row)
     }
     
-    public init(_ elements: [[Complex]]) {
-        self.init(shape: .init(rows: elements.count, columns: elements.first?.count ?? 0), elements: Array(elements.joined()))
+    public init(column: [Complex]) {
+        self.init(shape: .init(rows: column.count, columns: 1), elements: column)
+    }
+    
+    public init(grid: [[Complex]]) {
+        self.init(shape: .init(rows: grid.count, columns: grid.first?.count ?? 0), elements: Array(grid.joined()))
     }
     
 }
@@ -84,16 +87,24 @@ extension ComplexMatrix {
     public enum State {
         
         case regular
-        case malformed
+        case malformed(_ description: String)
         
     }
     
     public var state: State {
         switch (real.state, imaginary.state) {
+        case (.malformed(let realDescription), .malformed(let imaginaryDescription)):
+            return .malformed("Malformed real component: \(realDescription); Malformed imaginary component: \(imaginaryDescription)")
+        case (.malformed(let description), .regular):
+            return .malformed("Malformed real component: \(description)")
+        case (.regular, .malformed(let description)):
+            return .malformed("Malformed imaginary component: \(description)")
         case (.regular, .regular):
-            return real.shape == imaginary.shape ? .regular : .malformed
-        default:
-            return .malformed
+            guard real.shape == imaginary.shape else {
+                return .malformed("Shape mismatch between real and imaginary components; \(real.shape) != \(imaginary.shape)")
+            }
+            
+            return .regular
         }
     }
     
@@ -106,6 +117,12 @@ extension ComplexMatrix {
     
     public var elements: [Complex] {
         return Array(self)
+    }
+    
+    public var grid: [[Complex]] {
+        return shape.rowIndices.map { row in
+            return Array(elements[shape.indicesFor(row: row)])
+        }
     }
     
 }
@@ -129,7 +146,7 @@ extension ComplexMatrix {
 extension ComplexMatrix: ExpressibleByFloatLiteral where Scalar == FloatLiteralType {
 
     public init(floatLiteral value: Scalar) {
-        self.init(Complex(value))
+        self.init(element: Complex(value))
     }
 
 }
@@ -137,7 +154,7 @@ extension ComplexMatrix: ExpressibleByFloatLiteral where Scalar == FloatLiteralT
 extension ComplexMatrix: ExpressibleByArrayLiteral {
 
     public init(arrayLiteral elements: [Complex]...) {
-        self.init(elements)
+        self.init(grid: elements)
     }
 
 }
@@ -145,11 +162,12 @@ extension ComplexMatrix: ExpressibleByArrayLiteral {
 extension ComplexMatrix: CustomStringConvertible where Scalar: CustomStringConvertible {
 
     public var description: String {
-        return "[[" + shape.rowIndices.map { row in
-            return shape.columnIndices.map { column in
-                return self[row, column].description
-            }.joined(separator: ", ")
-        }.joined(separator: "],\n [") + "]]"
+        switch state {
+        case .regular:
+            return "[[" + grid.map { $0.map(\.description).joined(separator: ", ") }.joined(separator: "],\n [") + "]]"
+        case .malformed(let description):
+            return "Malformed \(type(of: self)): \(description)"
+        }
     }
 
 }
@@ -182,9 +200,18 @@ extension ComplexMatrix: Codable where Scalar: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.real = try container.decode(Matrix.self, forKey: .real)
         self.imaginary = try container.decode(Matrix.self, forKey: .imaginary)
-        if self.state == .malformed {
-            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Malformed matrix: \(self)"))
+        if case .malformed(let description) = self.state {
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Malformed \(type(of: self)): \(description)"))
         }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        if case .malformed(let description) = self.state {
+            throw EncodingError.invalidValue(self, .init(codingPath: encoder.codingPath, debugDescription: "Malformed \(type(of: self)): \(description)"))
+        }
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(real, forKey: .real)
+        try container.encode(imaginary, forKey: .imaginary)
     }
 
 }
