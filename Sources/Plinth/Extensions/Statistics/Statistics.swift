@@ -43,7 +43,7 @@ extension Matrix where Scalar == Float {
     public func skewness(mean: Scalar) -> Scalar {
         let standardDeviation = standardDeviation(mean: mean)
         let difference = self - mean
-        let cubic = difference * difference * difference
+        let cubic = difference.pow(3)
         return cubic.mean() / Darwin.pow(standardDeviation, 3.0)
     }
     
@@ -57,8 +57,8 @@ extension Matrix where Scalar == Float {
     
     public func kurtosis(mean: Scalar) -> Scalar {
         let difference = self - mean
-        let quartic = difference * difference * difference * difference
-        let quadratic = difference * difference
+        let quartic = difference.pow(4)
+        let quadratic = difference.square()
         return quartic.mean() / Darwin.pow(quadratic.mean(), 2.0)
     }
     
@@ -99,7 +99,7 @@ extension Matrix where Scalar == Double {
     public func skewness(mean: Scalar) -> Scalar {
         let standardDeviation = standardDeviation(mean: mean)
         let difference = self - mean
-        let cubic = difference * difference * difference
+        let cubic = difference.pow(3)
         return cubic.mean() / Darwin.pow(standardDeviation, 3.0)
     }
     
@@ -113,8 +113,8 @@ extension Matrix where Scalar == Double {
     
     public func kurtosis(mean: Scalar) -> Scalar {
         let difference = self - mean
-        let quartic = difference * difference * difference * difference
-        let quadratic = difference * difference
+        let quartic = difference.pow(4)
+        let quadratic = difference.square()
         return quartic.mean() / Darwin.pow(quadratic.mean(), 2.0)
     }
     
