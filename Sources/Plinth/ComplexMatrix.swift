@@ -87,21 +87,43 @@ extension ComplexMatrix {
     public enum State {
         
         case regular
-        case malformed(_ description: String)
+        case malformed(_ malformation: Malformation)
+        
+    }
+    
+    public enum Malformation: CustomStringConvertible {
+        
+        case parts(_ real: Matrix.Malformation, _ imaginary: Matrix.Malformation)
+        case realPart(_ real: Matrix.Malformation)
+        case imaginaryPart(_ imaginary: Matrix.Malformation)
+        case shapeMismatch(_ real: Shape, _ imaginary: Shape)
+        
+        public var description: String {
+            switch self {
+            case .parts(let real, let imaginary):
+                return "Malformed real part: \(real); Malformed imaginary part: \(imaginary)"
+            case .realPart(let real):
+                return "Malformed real part: \(real)"
+            case .imaginaryPart(let imaginary):
+                return "Malformed imaginary part: \(imaginary)"
+            case .shapeMismatch(let real, let imaginary):
+                return "Shape mismatch between real and imaginary parts; \(real) != \(imaginary)"
+            }
+        }
         
     }
     
     public var state: State {
         switch (real.state, imaginary.state) {
-        case (.malformed(let realDescription), .malformed(let imaginaryDescription)):
-            return .malformed("Malformed real component: \(realDescription); Malformed imaginary component: \(imaginaryDescription)")
-        case (.malformed(let description), .regular):
-            return .malformed("Malformed real component: \(description)")
-        case (.regular, .malformed(let description)):
-            return .malformed("Malformed imaginary component: \(description)")
+        case (.malformed(let real), .malformed(let imaginary)):
+            return .malformed(.parts(real, imaginary))
+        case (.malformed(let real), .regular):
+            return .malformed(.realPart(real))
+        case (.regular, .malformed(let imaginary)):
+            return .malformed(.imaginaryPart(imaginary))
         case (.regular, .regular):
             guard real.shape == imaginary.shape else {
-                return .malformed("Shape mismatch between real and imaginary components; \(real.shape) != \(imaginary.shape)")
+                return .malformed(.shapeMismatch(real.shape, imaginary.shape))
             }
             
             return .regular
@@ -114,6 +136,10 @@ extension ComplexMatrix {
             columns: Swift.min(real.shape.columns, imaginary.shape.columns)
         )
     }
+    
+}
+
+extension ComplexMatrix {
     
     public var elements: [Complex] {
         return Array(self)
@@ -165,8 +191,8 @@ extension ComplexMatrix: CustomStringConvertible where Scalar: CustomStringConve
         switch state {
         case .regular:
             return "[[" + grid.map { $0.map(\.description).joined(separator: ", ") }.joined(separator: "],\n [") + "]]"
-        case .malformed(let description):
-            return "Malformed \(type(of: self)): \(description)"
+        case .malformed(let malformation):
+            return "Malformed \(type(of: self)): \(malformation)"
         }
     }
 
@@ -200,14 +226,14 @@ extension ComplexMatrix: Codable where Scalar: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.real = try container.decode(Matrix.self, forKey: .real)
         self.imaginary = try container.decode(Matrix.self, forKey: .imaginary)
-        if case .malformed(let description) = self.state {
-            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Malformed \(type(of: self)): \(description)"))
+        if case .malformed(let malformation) = self.state {
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Malformed \(type(of: self)): \(malformation)"))
         }
     }
     
     public func encode(to encoder: Encoder) throws {
-        if case .malformed(let description) = self.state {
-            throw EncodingError.invalidValue(self, .init(codingPath: encoder.codingPath, debugDescription: "Malformed \(type(of: self)): \(description)"))
+        if case .malformed(let malformation) = self.state {
+            throw EncodingError.invalidValue(self, .init(codingPath: encoder.codingPath, debugDescription: "Malformed \(type(of: self)): \(malformation)"))
         }
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(real, forKey: .real)

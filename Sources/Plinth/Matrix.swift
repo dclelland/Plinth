@@ -77,21 +77,41 @@ extension Matrix {
     public enum State {
         
         case regular
-        case malformed(_ description: String)
+        case malformed(_ malformation: Malformation)
+        
+    }
+    
+    public enum Malformation: CustomStringConvertible {
+        
+        case shapeIsEmpty
+        case shapeMismatch(shape: Shape, count: Int)
+        
+        public var description: String {
+            switch self {
+            case .shapeIsEmpty:
+                return "Shape is empty"
+            case .shapeMismatch(let shape, let count):
+                return "Mismatched shape and elements; \(shape) != \(count)"
+            }
+        }
         
     }
     
     public var state: State {
         guard shape.isEmpty == false else {
-            return .malformed("Shape is empty; \(shape)")
+            return .malformed(.shapeIsEmpty)
         }
         
         guard shape.count == elements.count else {
-            return .malformed("Mismatched shape and elements; \(shape) != \(elements.count)")
+            return .malformed(.shapeMismatch(shape: shape, count: elements.count))
         }
         
         return .regular
     }
+    
+}
+
+extension Matrix {
     
     public var grid: [[Scalar]] {
         return shape.rowIndices.map { row in
@@ -175,14 +195,14 @@ extension Matrix: Codable where Scalar: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         self.init(grid: try container.decode([[Scalar]].self))
-        if case .malformed(let description) = self.state {
-            throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "Malformed \(type(of: self)): \(description)"))
+        if case .malformed(let malformation) = self.state {
+            throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "Malformed \(type(of: self)): \(malformation)"))
         }
     }
     
     public func encode(to encoder: Encoder) throws {
-        if case .malformed(let description) = self.state {
-            throw EncodingError.invalidValue(self, .init(codingPath: encoder.codingPath, debugDescription: "Malformed \(type(of: self)): \(description)"))
+        if case .malformed(let malformation) = self.state {
+            throw EncodingError.invalidValue(self, .init(codingPath: encoder.codingPath, debugDescription: "Malformed \(type(of: self)): \(malformation)"))
         }
         var container = encoder.singleValueContainer()
         try container.encode(grid)
