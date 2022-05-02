@@ -8,7 +8,7 @@
 import Foundation
 import Accelerate
 
-public struct FFTSetup<Scalar> { }
+public enum FFTSetup<Scalar> { }
 
 extension FFTSetup where Scalar == Float {
     
