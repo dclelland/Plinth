@@ -29,6 +29,15 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
         self.init(real: .init(shape: shape, elements: elements.map(\.real)), imaginary: .init(shape: shape, elements: elements.map(\.imaginary)))
     }
     
+    public init(shape: Shape, _ closure: @autoclosure () throws -> Complex) rethrows {
+        var elements: [Complex] = []
+        elements.reserveCapacity(shape.count)
+        for _ in 0..<shape.count {
+            elements.append(try closure())
+        }
+        self.init(shape: shape, elements: elements)
+    }
+    
     public init(shape: Shape, _ closure: (_ row: Int, _ column: Int) throws -> Complex) rethrows {
         var elements: [Complex] = []
         elements.reserveCapacity(shape.count)

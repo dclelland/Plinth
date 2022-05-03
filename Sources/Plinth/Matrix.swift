@@ -23,6 +23,15 @@ public struct Matrix<Scalar> {
         self.init(shape: shape, elements: [Scalar](repeating: element, count: shape.count))
     }
     
+    public init(shape: Shape, _ closure: @autoclosure () throws -> Scalar) rethrows {
+        var elements: [Scalar] = []
+        elements.reserveCapacity(shape.count)
+        for _ in 0..<shape.count {
+            elements.append(try closure())
+        }
+        self.init(shape: shape, elements: elements)
+    }
+    
     public init(shape: Shape, _ closure: (_ row: Int, _ column: Int) throws -> Scalar) rethrows {
         var elements: [Scalar] = []
         elements.reserveCapacity(shape.count)
