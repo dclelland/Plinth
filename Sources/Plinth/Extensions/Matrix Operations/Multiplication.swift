@@ -21,6 +21,10 @@ extension Matrix where Scalar == Float {
         return output
     }
     
+}
+
+extension Matrix where Scalar == Float {
+    
     @inlinable public static func <*>= (left: inout Matrix, right: Matrix) {
         left = left <*> right
     }
@@ -35,6 +39,10 @@ extension Matrix where Scalar == Double {
         vDSP_mmulD(left.elements, 1, right.elements, 1, &output.elements, 1, vDSP_Length(left.shape.rows), vDSP_Length(right.shape.columns), vDSP_Length(left.shape.columns))
         return output
     }
+    
+}
+
+extension Matrix where Scalar == Double {
     
     @inlinable public static func <*>= (left: inout Matrix, right: Matrix) {
         left = left <*> right
