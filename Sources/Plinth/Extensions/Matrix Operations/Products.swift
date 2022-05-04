@@ -10,11 +10,11 @@ import Foundation
 extension Matrix where Scalar == Float {
     
     public func innerProduct() -> Matrix {
-        return transposed() ** self
+        return transposed() <*> self
     }
     
     public func outerProduct() -> Matrix {
-        return self ** transposed()
+        return self <*> transposed()
     }
     
 }
@@ -22,11 +22,11 @@ extension Matrix where Scalar == Float {
 extension Matrix where Scalar == Double {
     
     public func innerProduct() -> Matrix {
-        return transposed() ** self
+        return transposed() <*> self
     }
     
     public func outerProduct() -> Matrix {
-        return self ** transposed()
+        return self <*> transposed()
     }
     
 }
