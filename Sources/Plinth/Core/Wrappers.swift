@@ -10,31 +10,31 @@ import Accelerate
 
 extension Matrix where Scalar == Float {
 
-    public func maximum() -> Float {
+    public func maximum() -> Scalar {
         return fmap(vDSP.maximum)
     }
     
-    public func maximumMagnitude() -> Float {
+    public func maximumMagnitude() -> Scalar {
         return fmap(vDSP.maximumMagnitude)
     }
     
-    public func minimum() -> Float {
+    public func minimum() -> Scalar {
         return fmap(vDSP.minimum)
     }
     
-    public func sum() -> Float {
+    public func sum() -> Scalar {
         return fmap(vDSP.sum)
     }
     
-    public func sumOfSquares() -> Float {
+    public func sumOfSquares() -> Scalar {
         return fmap(vDSP.sumOfSquares)
     }
     
-    public func sumAndSumOfSquares() -> (elementsSum: Float, squaresSum: Float) {
+    public func sumAndSumOfSquares() -> (elementsSum: Scalar, squaresSum: Scalar) {
         return fmap(vDSP.sumAndSumOfSquares)
     }
     
-    public func sumOfMagnitudes() -> Float {
+    public func sumOfMagnitudes() -> Scalar {
         return fmap(vDSP.sumOfMagnitudes)
     }
 
@@ -58,19 +58,19 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Float {
 
-    public func meanSquare() -> Float {
+    public func meanSquare() -> Scalar {
         return fmap(vDSP.meanSquare)
     }
     
-    public func meanMagnitude() -> Float {
+    public func meanMagnitude() -> Scalar {
         return fmap(vDSP.meanMagnitude)
     }
     
-    public func mean() -> Float {
+    public func mean() -> Scalar {
         return fmap(vDSP.mean)
     }
     
-    public func rootMeanSquare() -> Float {
+    public func rootMeanSquare() -> Scalar {
         return fmap(vDSP.rootMeanSquare)
     }
 
@@ -86,11 +86,11 @@ extension Matrix where Scalar == Float {
         return fmap { vDSP.invertedClip($0, to: bounds) }
     }
     
-    public func threshold(to lowerBound: Float, with rule: vDSP.ThresholdRule<Float>) -> Matrix {
+    public func threshold(to lowerBound: Scalar, with rule: vDSP.ThresholdRule<Float>) -> Matrix {
         return fmap { vDSP.threshold($0, to: lowerBound, with: rule) }
     }
     
-    public func limit(_ limit: Float, withOutputConstant outputConstant: Float) -> Matrix {
+    public func limit(_ limit: Scalar, withOutputConstant outputConstant: Scalar) -> Matrix {
         return fmap { vDSP.limit($0, limit: limit, withOutputConstant: outputConstant) }
     }
 
@@ -98,7 +98,7 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Float {
 
-    public func dot(_ vector: Matrix) -> Float {
+    public func dot(_ vector: Matrix) -> Scalar {
         return fmap { vDSP.dot($0, vector) }
     }
     
@@ -110,15 +110,23 @@ extension Matrix where Scalar == Float {
         return fmap { vDSP.hypot(x0: $0, x1: x1, y0: y0, y1: y1) }
     }
     
-    public func distanceSquared(_ point: Matrix) -> Float {
+    public func distanceSquared(_ point: Matrix) -> Scalar {
         return fmap { vDSP.distanceSquared($0, point) }
     }
 
 }
 
 extension Matrix where Scalar == Float {
+    
+    public func evaluatePolynomial(usingCoefficients coefficients: [Scalar]) -> Matrix {
+        return fmap { vDSP.evaluatePolynomial(usingCoefficients: coefficients, withVariables: $0) }
+    }
+    
+}
 
-    public func linearInterpolate(_ vector: Matrix, using interpolationConstant: Float) -> Matrix {
+extension Matrix where Scalar == Float {
+
+    public func linearInterpolate(_ vector: Matrix, using interpolationConstant: Scalar) -> Matrix {
         return fmap { vDSP.linearInterpolate($0, vector, using: interpolationConstant) }
     }
     
@@ -381,31 +389,31 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Double {
 
-    public func maximum() -> Double {
+    public func maximum() -> Scalar {
         return fmap(vDSP.maximum)
     }
     
-    public func maximumMagnitude() -> Double {
+    public func maximumMagnitude() -> Scalar {
         return fmap(vDSP.maximumMagnitude)
     }
     
-    public func minimum() -> Double {
+    public func minimum() -> Scalar {
         return fmap(vDSP.minimum)
     }
     
-    public func sum() -> Double {
+    public func sum() -> Scalar {
         return fmap(vDSP.sum)
     }
     
-    public func sumOfSquares() -> Double {
+    public func sumOfSquares() -> Scalar {
         return fmap(vDSP.sumOfSquares)
     }
     
-    public func sumAndSumOfSquares() -> (elementsSum: Double, squaresSum: Double) {
+    public func sumAndSumOfSquares() -> (elementsSum: Scalar, squaresSum: Scalar) {
         return fmap(vDSP.sumAndSumOfSquares)
     }
     
-    public func sumOfMagnitudes() -> Double {
+    public func sumOfMagnitudes() -> Scalar {
         return fmap(vDSP.sumOfMagnitudes)
     }
 
@@ -429,19 +437,19 @@ extension Matrix where Scalar == Double {
 
 extension Matrix where Scalar == Double {
 
-    public func meanSquare() -> Double {
+    public func meanSquare() -> Scalar {
         return fmap(vDSP.meanSquare)
     }
     
-    public func meanMagnitude() -> Double {
+    public func meanMagnitude() -> Scalar {
         return fmap(vDSP.meanMagnitude)
     }
     
-    public func mean() -> Double {
+    public func mean() -> Scalar {
         return fmap(vDSP.mean)
     }
     
-    public func rootMeanSquare() -> Double {
+    public func rootMeanSquare() -> Scalar {
         return fmap(vDSP.rootMeanSquare)
     }
 
@@ -457,11 +465,11 @@ extension Matrix where Scalar == Double {
         return fmap { vDSP.invertedClip($0, to: bounds) }
     }
     
-    public func threshold(to lowerBound: Double, with rule: vDSP.ThresholdRule<Double>) -> Matrix {
+    public func threshold(to lowerBound: Scalar, with rule: vDSP.ThresholdRule<Double>) -> Matrix {
         return fmap { vDSP.threshold($0, to: lowerBound, with: rule) }
     }
     
-    public func limit(_ limit: Double, withOutputConstant outputConstant: Double) -> Matrix {
+    public func limit(_ limit: Scalar, withOutputConstant outputConstant: Scalar) -> Matrix {
         return fmap { vDSP.limit($0, limit: limit, withOutputConstant: outputConstant) }
     }
 
@@ -469,7 +477,7 @@ extension Matrix where Scalar == Double {
 
 extension Matrix where Scalar == Double {
 
-    public func dot(_ vector: Matrix) -> Double {
+    public func dot(_ vector: Matrix) -> Scalar {
         return fmap { vDSP.dot($0, vector) }
     }
     
@@ -481,15 +489,23 @@ extension Matrix where Scalar == Double {
         return fmap { vDSP.hypot(x0: $0, x1: x1, y0: y0, y1: y1) }
     }
     
-    public func distanceSquared(_ point: Matrix) -> Double {
+    public func distanceSquared(_ point: Matrix) -> Scalar {
         return fmap { vDSP.distanceSquared($0, point) }
     }
 
 }
 
 extension Matrix where Scalar == Double {
+    
+    public func evaluatePolynomial(usingCoefficients coefficients: [Scalar]) -> Matrix {
+        return fmap { vDSP.evaluatePolynomial(usingCoefficients: coefficients, withVariables: $0) }
+    }
+    
+}
 
-    public func linearInterpolate(_ vector: Matrix, using interpolationConstant: Double) -> Matrix {
+extension Matrix where Scalar == Double {
+
+    public func linearInterpolate(_ vector: Matrix, using interpolationConstant: Scalar) -> Matrix {
         return fmap { vDSP.linearInterpolate($0, vector, using: interpolationConstant) }
     }
     
