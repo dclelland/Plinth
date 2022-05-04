@@ -39,18 +39,34 @@ extension Shape {
 
 extension Shape {
     
-    public static let empty = Shape(rows: .zero, columns: .zero)
+    public static let empty = Shape(rows: 0, columns: 0)
     
     public var isEmpty: Bool {
-        return rows == .zero || columns == .zero
+        return rows == 0 || columns == 0
     }
     
 }
 
 extension Shape {
     
+    public static func row(length: Int) -> Shape {
+        return .init(rows: 1, columns: length)
+    }
+    
+    public static func column(length: Int) -> Shape {
+        return .init(rows: length, columns: 1)
+    }
+    
     public static func square(length: Int) -> Shape {
         return .init(rows: length, columns: length)
+    }
+    
+    public var isRow: Bool {
+        return rows == 1
+    }
+    
+    public var isColumn: Bool {
+        return columns == 1
     }
     
     public var isSquare: Bool {

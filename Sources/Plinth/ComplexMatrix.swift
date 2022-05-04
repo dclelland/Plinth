@@ -54,15 +54,15 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
 extension ComplexMatrix {
     
     public init(element: Complex) {
-        self.init(shape: .init(rows: 1, columns: 1), elements: [element])
+        self.init(shape: .square(length: 1), elements: [element])
     }
     
     public init(row: [Complex]) {
-        self.init(shape: .init(rows: 1, columns: row.count), elements: row)
+        self.init(shape: .row(length: row.count), elements: row)
     }
     
     public init(column: [Complex]) {
-        self.init(shape: .init(rows: column.count, columns: 1), elements: column)
+        self.init(shape: .column(length: column.count), elements: column)
     }
     
     public init(grid: [[Complex]]) {
