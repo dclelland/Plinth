@@ -83,8 +83,8 @@ extension Shape {
     }
     
     public func downscaled(by factor: Int = 1) -> Shape {
-        let dividend = Int(pow(2.0, Double(factor)))
-        return Shape(rows: rows / dividend, columns: columns / dividend)
+        let divisor = Int(pow(2.0, Double(factor)))
+        return Shape(rows: rows / divisor, columns: columns / divisor)
     }
     
 }
