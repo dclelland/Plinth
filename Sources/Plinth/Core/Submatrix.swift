@@ -23,6 +23,7 @@ extension Matrix where Scalar == Float {
     }
     
     public mutating func setSubmatrix(_ submatrix: Matrix, rows: ClosedRange<Int>, columns: ClosedRange<Int>) {
+        precondition(submatrix.shape == .init(rows: rows.count, columns: columns.count))
         precondition(shape.contains(rows: rows, columns: columns))
         let matrix = self
         withUnsafeMutableBufferPointer { pointer in
@@ -113,6 +114,7 @@ extension ComplexMatrix where Scalar == Float {
     }
     
     public mutating func setSubmatrix(_ submatrix: ComplexMatrix, rows: ClosedRange<Int>, columns: ClosedRange<Int>) {
+        precondition(submatrix.shape == .init(rows: rows.count, columns: columns.count))
         precondition(shape.contains(rows: rows, columns: columns))
         real.setSubmatrix(submatrix.real, rows: rows, columns: columns)
         imaginary.setSubmatrix(submatrix.imaginary, rows: rows, columns: columns)
@@ -206,6 +208,7 @@ extension Matrix where Scalar == Double {
     }
     
     public mutating func setSubmatrix(_ submatrix: Matrix, rows: ClosedRange<Int>, columns: ClosedRange<Int>) {
+        precondition(submatrix.shape == .init(rows: rows.count, columns: columns.count))
         precondition(shape.contains(rows: rows, columns: columns))
         let matrix = self
         withUnsafeMutableBufferPointer { pointer in
@@ -296,6 +299,7 @@ extension ComplexMatrix where Scalar == Double {
     }
     
     public mutating func setSubmatrix(_ submatrix: ComplexMatrix, rows: ClosedRange<Int>, columns: ClosedRange<Int>) {
+        precondition(submatrix.shape == .init(rows: rows.count, columns: columns.count))
         precondition(shape.contains(rows: rows, columns: columns))
         real.setSubmatrix(submatrix.real, rows: rows, columns: columns)
         imaginary.setSubmatrix(submatrix.imaginary, rows: rows, columns: columns)
