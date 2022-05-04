@@ -18,6 +18,10 @@ extension Matrix where Scalar == Float {
         return left.multiplied(by: right)
     }
     
+}
+
+extension Matrix where Scalar == Float {
+    
     @inlinable public static func <*>= (left: inout Matrix, right: Matrix) {
         left = left <*> right
     }
@@ -40,6 +44,10 @@ extension Matrix where Scalar == Double {
     @inlinable public static func <*> (left: Matrix, right: Matrix) -> Matrix {
         return left.multiplied(by: right)
     }
+    
+}
+
+extension Matrix where Scalar == Double {
     
     @inlinable public static func <*>= (left: inout Matrix, right: Matrix) {
         left = left <*> right
