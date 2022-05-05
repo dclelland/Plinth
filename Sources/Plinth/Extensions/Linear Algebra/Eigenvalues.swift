@@ -31,13 +31,8 @@ extension Matrix where Scalar == Double {
     public func eigenvalues() -> ComplexMatrix<Scalar> {
         precondition(shape.isSquare)
         
-//        // dgeev_ needs column-major matrices, so transpose lhs.
-//        var matrixGrid: [__CLPK_doublereal] = transpose(lhs).grid
-//        var matrixRowCount = __CLPK_integer(lhs.rows)
-//        let matrixColCount = matrixRowCount
-//        var eigenValueCount = matrixRowCount
-//        var leftEigenVectorCount = matrixRowCount
-//        var rightEigenVectorCount = matrixRowCount
+        print("Input")
+        print(self, "\n")
         
         var input = transposed()
         var length = __CLPK_integer(shape.length)
@@ -52,12 +47,16 @@ extension Matrix where Scalar == Double {
         var error = __CLPK_integer(0)
         
         print("Companion matrix before")
-        print(input)
+        print(input, "\n")
         
-        var leftComputed: [CChar] = [0x56, 0x00] // "V" (compute)
-        var rightComputed: [CChar] = [0x56, 0x00] // "V" (compute)
+        var leftComputed: [CChar] = [0x4E, 0x00] // "V" (compute) // 4E for N
+        var rightComputed: [CChar] = [0x4E, 0x00] // "V" (compute)
         withUnsafeMutablePointer(to: &length) { length in
             dgeev_(&leftComputed, &rightComputed, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspaceQuery, &workspaceSize, &error)
+            
+            print("Companion matrix in between")
+            print(input, "\n")
+            
             workspace = [Scalar](repeating: .zero, count: Int(workspaceQuery))
             workspaceSize = __CLPK_integer(workspaceQuery)
             dgeev_(&leftComputed, &rightComputed, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspace, &workspaceSize, &error)
@@ -66,15 +65,17 @@ extension Matrix where Scalar == Double {
         precondition(error == 0)
         
         print("Companion matrix after")
-        print(input)
+        print(input, "\n")
         print("Eigenvalues")
-        print(eigenvalues)
+        print(eigenvalues.asColumn(), "\n")
+//        print("Fixed eigenvalues(?)")
+//        print((eigenvalues.asColumn() * Complex(Darwin.sqrt(2.0) / 2.0, Darwin.sqrt(2.0) / 2.0)).conjugate(), "\n")
         print("Left workspace")
-        print(leftWorkspace)
+        print(leftWorkspace, "\n")
         print("Right workspace")
-        print(rightWorkspace)
+        print(rightWorkspace, "\n")
         print("Workspace")
-        print(workspace)
+        print(workspace, "\n")
         
         return eigenvalues
     }
