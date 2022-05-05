@@ -24,6 +24,8 @@ extension Matrix where Scalar == Float {
             sgetri_(length, &input.elements, length, &pivots, &workspace, length, &error)
         }
         
+        precondition(error == 0)
+        
         return input
     }
     
@@ -44,6 +46,8 @@ extension Matrix where Scalar == Double {
             dgetrf_(length, length, &input.elements, length, &pivots, &error)
             dgetri_(length, &input.elements, length, &pivots, &workspace, length, &error)
         }
+        
+        precondition(error == 0)
         
         return input
     }
