@@ -8,22 +8,24 @@
 import Foundation
 import Numerics
 
-extension Array where Element == Float {
+extension Matrix where Scalar == Float {
     
-    public func roots() -> [Complex<Element>] {
+    public func roots() -> ComplexMatrix<Element> {
+        precondition(shape.isRow)
         var companion: Matrix<Element> = .diagonal(length: count - 2, index: -1)
         companion[row: 0] = .init(row: Array(self[1..<count]) / self[0])
-        return companion.eigenDecomposition().eigenvalues
+        return companion.eigenvalues()
     }
     
 }
 
-extension Array where Element == Double {
+extension Matrix where Scalar == Double {
     
-    public func roots() -> [Complex<Element>] {
+    public func roots() -> ComplexMatrix<Element> {
+        precondition(shape.isRow)
         var companion: Matrix<Element> = .diagonal(length: count - 2, index: -1)
         companion[row: 0] = .init(row: Array(self[1..<count]) / self[0])
-        return companion.eigenDecomposition().eigenvalues
+        return companion.eigenvalues()
     }
     
 }
