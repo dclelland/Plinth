@@ -25,17 +25,15 @@ extension Matrix where Scalar == Float {
     
 }
 
-// TODO: Looks like computing the eigenvectors is optional
 extension Matrix where Scalar == Double {
     
     public func eigenvalues() -> ComplexMatrix<Scalar> {
         precondition(shape.isSquare)
         
-        print("Input")
-        print(self, "\n")
-        
         var input = transposed()
         var length = __CLPK_integer(shape.length)
+        var leftComputed: [CChar] = [0x4E, 0x00]
+        var rightComputed: [CChar] = [0x4E, 0x00]
 
         var eigenvalues = ComplexMatrix<Scalar>.zeros(shape: .row(length: shape.length))
         var leftWorkspace = Matrix.zeros(shape: shape)
@@ -46,36 +44,16 @@ extension Matrix where Scalar == Double {
         var workspaceSize = __CLPK_integer(-1)
         var error = __CLPK_integer(0)
         
-        print("Companion matrix before")
-        print(input, "\n")
-        
-        var leftComputed: [CChar] = [0x4E, 0x00] // "V" (compute) // 4E for N
-        var rightComputed: [CChar] = [0x4E, 0x00] // "V" (compute)
         withUnsafeMutablePointer(to: &length) { length in
             dgeev_(&leftComputed, &rightComputed, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspaceQuery, &workspaceSize, &error)
             
-            print("Companion matrix in between")
-            print(input, "\n")
-            
             workspace = [Scalar](repeating: .zero, count: Int(workspaceQuery))
             workspaceSize = __CLPK_integer(workspaceQuery)
+            
             dgeev_(&leftComputed, &rightComputed, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspace, &workspaceSize, &error)
         }
         
         precondition(error == 0)
-        
-        print("Companion matrix after")
-        print(input, "\n")
-        print("Eigenvalues")
-        print(eigenvalues.asColumn(), "\n")
-//        print("Fixed eigenvalues(?)")
-//        print((eigenvalues.asColumn() * Complex(Darwin.sqrt(2.0) / 2.0, Darwin.sqrt(2.0) / 2.0)).conjugate(), "\n")
-        print("Left workspace")
-        print(leftWorkspace, "\n")
-        print("Right workspace")
-        print(rightWorkspace, "\n")
-        print("Workspace")
-        print(workspace, "\n")
         
         return eigenvalues
     }
