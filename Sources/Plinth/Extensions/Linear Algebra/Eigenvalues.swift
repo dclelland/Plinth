@@ -54,13 +54,13 @@ extension Matrix where Scalar == Double {
         print("Companion matrix before")
         print(input)
         
-        var decompositionJobVL: [CChar] = [0x56, 0x00] // "V" (compute)
-        var decompositionJobVR: [CChar] = [0x56, 0x00] // "V" (compute)
+        var leftComputed: [CChar] = [0x56, 0x00] // "V" (compute)
+        var rightComputed: [CChar] = [0x56, 0x00] // "V" (compute)
         withUnsafeMutablePointer(to: &length) { length in
-            dgeev_(&decompositionJobVL, &decompositionJobVR, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspaceQuery, &workspaceSize, &error)
+            dgeev_(&leftComputed, &rightComputed, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspaceQuery, &workspaceSize, &error)
             workspace = [Scalar](repeating: .zero, count: Int(workspaceQuery))
             workspaceSize = __CLPK_integer(workspaceQuery)
-            dgeev_(&decompositionJobVL, &decompositionJobVR, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspace, &workspaceSize, &error)
+            dgeev_(&leftComputed, &rightComputed, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspace, &workspaceSize, &error)
         }
         
         precondition(error == 0)
