@@ -24,7 +24,7 @@ extension Float {
             s = x * x + y * y
             if s < 1.0 { break }
         }
-        return x * sqrt(-2.0 * log(s) / s)
+        return x * (-2.0 * log(s) / s).squareRoot()
     }
     
 }
@@ -58,7 +58,7 @@ extension Double {
             s = x * x + y * y
             if s < 1.0 { break }
         }
-        return x * sqrt(-2.0 * log(s) / s)
+        return x * (-2.0 * log(s) / s).squareRoot()
     }
     
 }
