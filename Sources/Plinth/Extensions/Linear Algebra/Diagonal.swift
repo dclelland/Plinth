@@ -15,7 +15,7 @@ extension Matrix where Scalar: Numeric {
     
     public static func diagonal(vector: [Scalar], index: Int = 0) -> Matrix {
         return .init(shape: .square(length: vector.count + abs(index))) { row, column in
-            return column - row == index ? vector[Swift.min(row, column)] : .zero
+            return column - row == index ? vector[Swift.min(row, column)] : 0
         }
     }
     
