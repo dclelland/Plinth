@@ -19,7 +19,7 @@ extension Matrix where Scalar == Double {
         case 2:
             return meanSquare()
         default:
-            return pow(degree).mean()
+            return (self ** degree).mean()
         }
     }
     
@@ -44,7 +44,7 @@ extension Matrix where Scalar == Double {
     }
     
     public func standardizedMoment(degree: Int, mean: Scalar) -> Scalar {
-        return centralMoment(degree: degree) / Darwin.pow(standardDeviation(mean: mean), Scalar(degree))
+        return centralMoment(degree: degree) / standardDeviation(mean: mean) ** Scalar(degree)
     }
     
 }

@@ -6,37 +6,191 @@
 //
 
 import Foundation
+import Accelerate
 
-extension Matrix where Scalar == Float {
+precedencegroup PowerPrecedence {
+    associativity: left
+    higherThan: MultiplicationPrecedence
+}
 
-    public func pow(_ exponent: Int) -> Matrix {
-        switch exponent.signum() {
-        case -1:
-            return [Matrix](repeating: self, count: -exponent - 1).reduce(self, *).reciprocal()
-        case 0:
-            return .init(shape: shape, repeating: 1.0)
-        case 1:
-            return [Matrix](repeating: self, count: exponent - 1).reduce(self, *)
-        default:
-            fatalError()
-        }
+infix operator **: PowerPrecedence
+
+infix operator **=: AssignmentPrecedence
+
+extension Float {
+
+    @inlinable public static func ** (left: Self, right: Self) -> Self {
+        return pow(left, right)
     }
 
 }
 
-extension Matrix where Scalar == Double {
+extension Float {
 
-    public func pow(_ exponent: Int) -> Matrix {
-        switch exponent.signum() {
+    @inlinable public static func **= (left: inout Self, right: Self) {
+        left = left ** right
+    }
+
+}
+
+extension Array where Element == Float {
+
+    @inlinable internal static func ** (left: Array, right: Int) -> Array {
+        switch right.signum() {
         case -1:
-            return [Matrix](repeating: self, count: -exponent - 1).reduce(self, *).reciprocal()
+            return vForce.reciprocal([Array](repeating: left, count: -right - 1).reduce(left, vDSP.multiply))
         case 0:
-            return .init(shape: shape, repeating: 1.0)
+            return Array(repeating: 1.0, count: left.count)
         case 1:
-            return [Matrix](repeating: self, count: exponent - 1).reduce(self, *)
+            return [Array](repeating: left, count: right - 1).reduce(left, vDSP.multiply)
         default:
             fatalError()
         }
     }
+    
+    @inlinable internal static func ** (left: Array, right: Element) -> Array {
+        return vForce.pow(bases: left, exponents: Array(repeating: right, count: left.count))
+    }
+    
+    @inlinable internal static func ** (left: Array, right: Array) -> Array {
+        return vForce.pow(bases: left, exponents: right)
+    }
 
+}
+
+extension Array where Element == Float {
+    
+    @inlinable public static func **= (left: inout Array, right: Int) {
+        left = left ** right
+    }
+    
+    @inlinable public static func **= (left: inout Array, right: Element) {
+        left = left ** right
+    }
+    
+    @inlinable public static func **= (left: inout Array, right: Array) {
+        left = left ** right
+    }
+    
+}
+
+extension Matrix where Scalar == Float {
+
+    @inlinable public static func ** (left: Matrix, right: Int) -> Matrix {
+        return left.fmap { $0 ** right }
+    }
+    
+    @inlinable public static func ** (left: Matrix, right: Element) -> Matrix {
+        return left.fmap { $0 ** right }
+    }
+    
+    @inlinable public static func ** (left: Matrix, right: Matrix) -> Matrix {
+        return left.fmap { $0 ** right.elements }
+    }
+
+}
+
+extension Matrix where Element == Float {
+    
+    @inlinable public static func **= (left: inout Matrix, right: Int) {
+        left = left ** right
+    }
+    
+    @inlinable public static func **= (left: inout Matrix, right: Element) {
+        left = left ** right
+    }
+    
+    @inlinable public static func **= (left: inout Matrix, right: Matrix) {
+        left = left ** right
+    }
+    
+}
+
+extension Double {
+
+    @inlinable public static func ** (left: Self, right: Self) -> Self {
+        return pow(left, right)
+    }
+
+}
+
+extension Double {
+
+    @inlinable public static func **= (left: inout Self, right: Self) {
+        left = left ** right
+    }
+
+}
+
+extension Array where Element == Double {
+
+    @inlinable internal static func ** (left: Array, right: Int) -> Array {
+        switch right.signum() {
+        case -1:
+            return vForce.reciprocal([Array](repeating: left, count: -right - 1).reduce(left, vDSP.multiply))
+        case 0:
+            return Array(repeating: 1.0, count: left.count)
+        case 1:
+            return [Array](repeating: left, count: right - 1).reduce(left, vDSP.multiply)
+        default:
+            fatalError()
+        }
+    }
+    
+    @inlinable internal static func ** (left: Array, right: Element) -> Array {
+        return vForce.pow(bases: left, exponents: Array(repeating: right, count: left.count))
+    }
+    
+    @inlinable internal static func ** (left: Array, right: Array) -> Array {
+        return vForce.pow(bases: left, exponents: right)
+    }
+
+}
+
+extension Array where Element == Double {
+    
+    @inlinable public static func **= (left: inout Array, right: Int) {
+        left = left ** right
+    }
+    
+    @inlinable public static func **= (left: inout Array, right: Element) {
+        left = left ** right
+    }
+    
+    @inlinable public static func **= (left: inout Array, right: Array) {
+        left = left ** right
+    }
+    
+}
+
+extension Matrix where Scalar == Double {
+
+    @inlinable public static func ** (left: Matrix, right: Int) -> Matrix {
+        return left.fmap { $0 ** right }
+    }
+    
+    @inlinable public static func ** (left: Matrix, right: Element) -> Matrix {
+        return left.fmap { $0 ** right }
+    }
+    
+    @inlinable public static func ** (left: Matrix, right: Matrix) -> Matrix {
+        return left.fmap { $0 ** right.elements }
+    }
+
+}
+
+extension Matrix where Element == Double {
+    
+    @inlinable public static func **= (left: inout Matrix, right: Int) {
+        left = left ** right
+    }
+    
+    @inlinable public static func **= (left: inout Matrix, right: Element) {
+        left = left ** right
+    }
+    
+    @inlinable public static func **= (left: inout Matrix, right: Matrix) {
+        left = left ** right
+    }
+    
 }
