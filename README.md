@@ -20,7 +20,13 @@ let package = Package(
 )
 ```
 
-Then `import Plinth` in your Swift files. Note that you may also need to `import Numerics` for full `ComplexMatrix` support, as that's where the `Complex` type lives. 
+Then import Plinth into your Swift files:
+
+```swift
+import Plinth
+```
+
+Note that you may also need to add `import Numerics` for full `ComplexMatrix` support, as that's where the `Complex` type lives. 
 
 ## Dependencies
 
