@@ -124,7 +124,7 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
 
 This also includes a large number of convenience initializers and implementations of typical typeclasses such as `Codable` and `ExpressibleByArrayLiteral`.
 
-The `real` and `imaginary` properties are also directly mutable; `ComplexMatrix` has its own `state` property which can be used to if the parts are mismatched or malformed.
+The `real` and `imaginary` properties are also directly mutable; `ComplexMatrix` has its own `state` property which can be used to check if the parts are mismatched or malformed.
 
 ## Core
 
