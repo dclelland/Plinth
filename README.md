@@ -35,8 +35,8 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 
 - [Arithmetic](Sources/Plinth/Core/Arithmetic.swift): `+` and `-` prefix operators and `+`, `-`, `*`, `/` infix operators implementing fast pointwise arithmetic for all combinations of `Scalar`, `Complex`, `Matrix` and `ComplexMatrix`, where `Scalar` is `Float` or `Double`.
 - [Conversions](Sources/Plinth/Core/Conversions.swift): Type conversions between `UInt8`, `UInt16`, `UInt32`, `Int8`, `Int16`, `Int32`, `Float` and `Double`.
-- [Functors](Sources/Plinth/Core/Functors.swift): Higher-order functions for shape-preserving operations. Not true functors as Swift lacks higher-kinded types...
-- [Submatrix](Sources/Plinth/Core/Submatrix.swift): Fast submatrix read/write access using Swift subscripts.
+- [Functors](Sources/Plinth/Core/Functors.swift): Higher-order functions for shape-preserving parallel operations on a matrix's elements. Includes support for operations on `DSPSplitComplex`/`DSPDoubleSplitComplex`. (Not true functors as Swift lacks higher-kinded types...)
+- [Submatrix](Sources/Plinth/Core/Submatrix.swift): Fast submatrix read/write access using Swift subscripts (with Accelerate's `vDSP_mmov`/`vDSP_mmovD`).
 - [Wrappers](Sources/Plinth/Core/Wrappers.swift): Wrappers over most of the basic `vDSP` and `vForce` functions.
 
 ### Extensions
@@ -51,9 +51,9 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 
 #### Mathematics
 
-- [Powers](Sources/Plinth/Extensions/Mathematics/Powers.swift): `**` infix operator implementing fast pointwise power operations for `Scalar` and `Matrix`. Includes special functions for taking integer powers of matrices, for use when successive application of `vDSP.multiply` will be faster than `vForce.pow` (which is quite an expensive operation).
+- [Powers](Sources/Plinth/Extensions/Mathematics/Powers.swift): `**` infix operator implementing fast pointwise power operations for `Scalar` and `Matrix`. Includes special functions for taking integer powers of matrices, for use when successive application of `vDSP.multiply` will be faster than `vForce.pow` (which is quite an expensive operation). This also supports negative integers by applying `vDSP.reciprocal` to the result.
 - [Exponentiation](Sources/Plinth/Extensions/Mathematics/Exponentiation.swift): Complex exponentials.
-- [Interpolation](Sources/Plinth/Extensions/Statistics/Interpolation.swift): Linear interpolate values from a given range to/from `0.0...1.0`, similar to C++'s `std::ilerp`.
+- [Interpolation](Sources/Plinth/Extensions/Statistics/Interpolation.swift): Linear interpolate values from a given range to/from `0.0...1.0`, similar to C++'s `std::lerp`.
 
 #### Statistics
 
@@ -69,12 +69,13 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 - [Transposition](Sources/Plinth/Extensions/Linear%20Algebra/Transposition.swift): Transpose a matrix (with Accelerate's `vDSP_mtrans`/`vDSP_mtransD`).
 - [Inversion](Sources/Plinth/Extensions/Linear%20Algebra/Inversion.swift): Calculate the inverse of a matrix (with LAPACK's `sgetri_`/`dgetri_`).
 - [Multiplication](Sources/Plinth/Extensions/Linear%20Algebra/Multiplication.swift): Matrix multiplication (with Accelerate's `vDSP_mmul`/`vDSP_mmulD`); `<*>` infix operator.
-- [Division](Sources/Plinth/Extensions/Linear%20Algebra/Division.swift): Left and right matrix division; `/>` and `</` infix operators.
+- [Division](Sources/Plinth/Extensions/Linear%20Algebra/Division.swift): Left and right matrix division (multiplying by the inverse of a matrix); `/>` and `</` infix operators.
 - [Products](Sources/Plinth/Extensions/Linear%20Algebra/Products.swift): Inner and outer products.
 - [Eigenvalues](Sources/Plinth/Extensions/Linear%20Algebra/Eigenvalues.swift): Calculate the eigenvalues of a matrix (with LAPACK's `sgeev_`/`dgeev_`).
 - [Roots](Sources/Plinth/Extensions/Linear%20Algebra/Roots.swift): Calculate the roots of a polynomial by taking the eigenvalues of a companion matrix.
 
 #### Signal Processing
 
-- [Correlation](Sources/Plinth/Extensions/Signal%20Processing/Correlation.swift)
-- [FFT](Sources/Plinth/Extensions/Signal%20Processing/FFT.swift)
+- [FFT](Sources/Plinth/Extensions/Signal%20Processing/FFT.swift): Forward and inverse two-dimensional fourier transforms (with Accelerate's `vDSP_fft2d_zip`/`vDSP_fft2d_zipD`), with support for generating and reusing your own `FFTSetup`/`FFTSetupD` struct. Some of the inverse fourier transform methods implement energy conservation by dividing by the size of the matrix.
+- [FFTShift](Sources/Plinth/Extensions/Signal%20Processing/FFTShift.swift): Apply a circular rotation to a frequency-domain matrix so that the DC/DC signal is at the top left of the lower right quadrant.
+- [Correlation](Sources/Plinth/Extensions/Signal%20Processing/Correlation.swift): Calculate the autocorrelation of a matrix by taking the square magnitudes in the frequency domain.
