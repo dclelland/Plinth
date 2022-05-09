@@ -27,15 +27,15 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 
 ### Types
 
-- [Shape](Sources/Plinth/Shape.swift): Defines the shape of a matrix in terms of rows and columns.
+- [Shape](Sources/Plinth/Shape.swift): Defines the shape of a matrix using `rows` and `columns` properties.
 - [Matrix](Sources/Plinth/Matrix.swift): Generic matrix struct with `Scalar` type argument and `shape` and `elements` properties.
 - [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift) Generic complex matrix struct encapsulating two `real` and `imaginary` matrices.
 
 ### Core
 
 - [Arithmetic](Sources/Plinth/Core/Arithmetic.swift): `+` and `-` prefix operators and `+`, `-`, `*`, `/` infix operators implementing fast pointwise arithmetic for all combinations of `Scalar`, `Complex`, `Matrix` and `ComplexMatrix`, where `Scalar` is `Float` or `Double`.
-- [Conversions](Sources/Plinth/Core/Conversions.swift): Type conversions between `UInt8`, `UInt16`, `UInt32`, `Int8`, `Int16`, `Int32`, `Float` and `Double`.
-- [Functors](Sources/Plinth/Core/Functors.swift): Higher-order functions for shape-preserving parallel operations on a matrix's elements. Includes support for operations on `DSPSplitComplex`/`DSPDoubleSplitComplex`. (Not true functors as Swift lacks higher-kinded types...)
+- [Conversions](Sources/Plinth/Core/Conversions.swift): Fast type conversions between `UInt8`, `UInt16`, `UInt32`, `Int8`, `Int16`, `Int32`, `Float` and `Double`.
+- [Functors](Sources/Plinth/Core/Functors.swift): Higher-order functions for shape-preserving operations on a matrix's elements. Includes support for complex matrix operations on `DSPSplitComplex`/`DSPDoubleSplitComplex`. (Disclaimer: These are not true functors, Swift lacks higher-kinded types...)
 - [Submatrix](Sources/Plinth/Core/Submatrix.swift): Fast submatrix read/write access using Swift subscripts (with Accelerate's `vDSP_mmov`/`vDSP_mmovD`).
 - [Wrappers](Sources/Plinth/Core/Wrappers.swift): Wrappers over most of the basic `vDSP` and `vForce` functions.
 
@@ -71,7 +71,7 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 - [Multiplication](Sources/Plinth/Extensions/Linear%20Algebra/Multiplication.swift): Matrix multiplication (with Accelerate's `vDSP_mmul`/`vDSP_mmulD`); `<*>` infix operator.
 - [Division](Sources/Plinth/Extensions/Linear%20Algebra/Division.swift): Left and right matrix division (multiplying by the inverse of a matrix); `/>` and `</` infix operators.
 - [Products](Sources/Plinth/Extensions/Linear%20Algebra/Products.swift): Inner and outer products.
-- [Eigenvalues](Sources/Plinth/Extensions/Linear%20Algebra/Eigenvalues.swift): Calculate the eigenvalues of a matrix (with LAPACK's `sgeev_`/`dgeev_`).
+- [Eigenvalues](Sources/Plinth/Extensions/Linear%20Algebra/Eigenvalues.swift): Calculate the eigenvalues of a matrix (with LAPACK's `sgeev_`/`dgeev_`; cribbed from the [Surge implementation](https://github.com/Jounce/Surge/blob/master/Sources/Surge/Linear%20Algebra/Matrix.swift#L944))).
 - [Roots](Sources/Plinth/Extensions/Linear%20Algebra/Roots.swift): Calculate the roots of a polynomial by taking the eigenvalues of a companion matrix.
 
 #### Signal Processing

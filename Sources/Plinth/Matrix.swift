@@ -11,7 +11,6 @@ import Accelerate
 public struct Matrix<Scalar> {
     
     public let shape: Shape
-    
     public var elements: [Scalar]
     
     public init(shape: Shape, elements: [Scalar]) {

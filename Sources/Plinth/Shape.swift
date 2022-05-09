@@ -12,15 +12,19 @@ public struct Shape: Codable {
     public var rows: Int
     public var columns: Int
     
-    public var count: Int {
-        return rows * columns
-    }
-    
     public init(rows: Int, columns: Int) {
         precondition(rows >= 0)
         precondition(columns >= 0)
         self.rows = rows
         self.columns = columns
+    }
+    
+}
+
+extension Shape {
+    
+    public var count: Int {
+        return rows * columns
     }
     
 }
