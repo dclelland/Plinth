@@ -49,14 +49,14 @@ import Numerics
 
 ## Todo
 
-- Add documentation:
+- [ ] Add documentation:
     - Architecture and API design
     - Code examples 
-- Add wrappers:
+- [ ] Add wrappers:
     - Convolution with `vDSP.convolve`
     - Complex matrix multiplication with `vDSP_zmmul`
-- Add cross correlation functions (see MATLAB `xcorr`, `xcorr2`)
-- Add upsampling functions
+- [ ] Add cross correlation functions (see MATLAB `xcorr`, `xcorr2`)
+- [ ] Add upsampling functions
 
 ## Types
 
@@ -136,7 +136,9 @@ Fast type conversions between `UInt8`, `UInt16`, `UInt32`, `Int8`, `Int16`, `Int
 
 ### [Functors](Sources/Plinth/Core/Functors.swift)
 
-Higher-order functions for shape-preserving operations on a matrix's elements. Includes support for complex matrix operations on `DSPSplitComplex`/`DSPDoubleSplitComplex`. (Disclaimer: These are not true functors, Swift lacks higher-kinded types...)
+Higher-order functions for shape-preserving operations on a matrix's elements. Includes support for complex matrix operations on `DSPSplitComplex`/`DSPDoubleSplitComplex`.
+
+> Disclaimer: These are not true functors, Swift lacks higher-kinded types...
 
 ### [Submatrix](Sources/Plinth/Core/Submatrix.swift)
 
