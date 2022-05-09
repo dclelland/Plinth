@@ -138,7 +138,9 @@ Fast type conversions between `UInt8`, `UInt16`, `UInt32`, `Int8`, `Int16`, `Int
 
 ### [Functors](Sources/Plinth/Core/Functors.swift)
 
-Higher-order functions for shape-preserving operations on a matrix's elements. Includes support for complex matrix operations on `DSPSplitComplex`/`DSPDoubleSplitComplex`.
+Higher-order functions for shape-preserving operations on a matrix's elements.
+
+Includes support for complex matrix operations on `DSPSplitComplex`/`DSPDoubleSplitComplex`.
 
 > Disclaimer: These are not true functors, Swift lacks higher-kinded types...
 
@@ -176,7 +178,9 @@ Apply a circular shift to a matrix.
 
 ### [Powers](Sources/Plinth/Extensions/Mathematics/Powers.swift)
 
-`**` infix operator implementing fast pointwise power operations for `Scalar` and `Matrix`. Includes special functions for taking integer powers of matrices, for use when successive application of `vDSP.multiply` will be faster than `vForce.pow` (which is quite an expensive operation). This also supports negative integers by applying `vDSP.reciprocal` to the result.
+`**` infix operator implementing fast pointwise power operations for `Scalar` and `Matrix`.
+
+Includes special functions for taking integer powers of matrices, for use when successive application of `vDSP.multiply` will be faster than `vForce.pow` (which is quite an expensive operation). This also supports negative integers by applying `vDSP.reciprocal` to the result.
 
 ### [Exponentiation](Sources/Plinth/Extensions/Mathematics/Exponentiation.swift)
 
@@ -184,7 +188,7 @@ Complex exponentials.
 
 ### [Interpolation](Sources/Plinth/Extensions/Statistics/Interpolation.swift)
 
-Linear interpolate values from a given range to/from `0.0...1.0`, similar to C++'s `std::lerp`.
+Linear interpolate values from a given range to/from `0.0...1.0` (similar to C++'s `std::lerp`).
 
 ## Statistics
 
@@ -236,7 +240,7 @@ Inner and outer products.
 
 ### [Eigenvalues](Sources/Plinth/Extensions/Linear%20Algebra/Eigenvalues.swift)
 
-Calculate the eigenvalues of a matrix (with LAPACK's `sgeev_`/`dgeev_`; Swift implementation cribbed from the [Surge implementation](https://github.com/Jounce/Surge/blob/master/Sources/Surge/Linear%20Algebra/Matrix.swift#L944))).
+Calculate the eigenvalues of a matrix (with LAPACK's `sgeev_`/`dgeev_`; Swift implementation cribbed from [Surge](https://github.com/Jounce/Surge/blob/master/Sources/Surge/Linear%20Algebra/Matrix.swift#L944))).
 
 ### [Roots](Sources/Plinth/Extensions/Linear%20Algebra/Roots.swift)
 
@@ -246,7 +250,9 @@ Calculate the roots of a polynomial by taking the eigenvalues of a companion mat
 
 ### [FFT](Sources/Plinth/Extensions/Signal%20Processing/FFT.swift)
 
-Forward and inverse two-dimensional fourier transforms (with Accelerate's `vDSP_fft2d_zip`/`vDSP_fft2d_zipD`), with support for generating and reusing your own `FFTSetup`/`FFTSetupD` struct. Some of the inverse fourier transform methods implement energy conservation by dividing by the size of the matrix.
+Forward and inverse two-dimensional fourier transforms (with Accelerate's `vDSP_fft2d_zip`/`vDSP_fft2d_zipD`), with support for generating and reusing your own `FFTSetup`/`FFTSetupD` struct.
+
+Some of the inverse fourier transform methods implement energy conservation by dividing by the size of the matrix.
 
 ### [FFTShift](Sources/Plinth/Extensions/Signal%20Processing/FFTShift.swift)
 
