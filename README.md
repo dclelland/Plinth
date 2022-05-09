@@ -9,6 +9,10 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 - https://github.com/stsievert/swix
 - https://github.com/cgarciae/NDArray
 
+## Dependencies
+
+- https://github.com/apple/swift-numerics
+
 ## Todo
 
 - Add documentation on architecture and API to this readme file
@@ -18,23 +22,10 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 - Add cross correlation functions (see MATLAB `xcorr`, `xcorr2`)
 - Add upsampling functions
 
-## Example
+## Manifest
 
-```swift
-let input: ComplexMatrix<Double> = [[ .one,  .i],
-                                    [-.one, -.i]]
+### Types
 
-let phase = input.fmap(vDSP.phase)
-
-let frequencies = input.fmap { inputVector in
-    let log2N = vDSP_Length(log2(Double(input.shape.count)))
-    let log2N0 = vDSP_Length(log2(Double(input.shape.columns)))
-    let log2N1 = vDSP_Length(log2(Double(input.shape.rows)))
-    let setup = vDSP_create_fftsetupD(log2N, FFTRadix(kFFTRadix2))!
-    vDSP_fft2d_zipD(setup, &inputVector, 1, 0, log2N0, log2N1, FFTDirection(kFFTDirection_Forward))
-    vDSP_destroy_fftsetupD(setup)
-}
-
-print(phase.elements) // [0.0, 1.5707963267948966, 3.141592653589793, -1.5707963267948966]
-print(frequencies.elements) // [Complex<Double>(0.0, 0.0), Complex<Double>(0.0, 0.0), Complex<Double>(2.0, 2.0), Complex<Double>(2.0, -2.0)]
-```
+- [Shape](Sources/Plinth/Shape.swift)
+- [Matrix](Sources/Plinth/Matrix.swift)
+- [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift)
