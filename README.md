@@ -182,7 +182,9 @@ Apply a circular shift to a matrix.
 
 Implements fast pointwise power operations for `Scalar` and `Matrix`.
 
-Includes special functions for taking integer powers of matrices, for use when successive application of `vDSP.multiply` will be faster than `vForce.pow` (which is quite an expensive operation). This also supports negative integers by applying `vDSP.reciprocal` to the result.
+Includes special functions for taking integer powers of matrices, for use when recursive application of `vDSP.multiply` will be faster than `vForce.pow` (which is quite an expensive operation).
+
+This also supports negative integers by applying `vForce.reciprocal` to the result.
 
 ### [Exponentiation](Sources/Plinth/Extensions/Mathematics/Exponentiation.swift)
 
