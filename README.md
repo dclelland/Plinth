@@ -61,7 +61,7 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 - [Normalization](Sources/Plinth/Extensions/Statistics/Normalization.swift)
 - [Random](Sources/Plinth/Extensions/Statistics/Random.swift)
 
-#### [Linear Algebra](Sources/Plinth/Extensions/Linear\ Algebra)
+#### [Linear Algebra](Sources/Plinth/Extensions/Linear%20Algebra)
 
 - [Diagonal](Sources/Plinth/Extensions/Linear Algebra/Diagonal.swift)
 - [Division](Sources/Plinth/Extensions/Linear Algebra/Division.swift)
