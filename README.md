@@ -73,6 +73,8 @@ public struct Shape {
 }
 ```
 
+This includes a number of convenience properties like `count`, `length` and `breadth`; as well as convenience initializers `.row(length:)`, `.column(length:)` and `.square(length:)`. 
+
 #### [Matrix](Sources/Plinth/Matrix.swift)
 
 Generic matrix struct with `Scalar` type argument and `shape` and `elements` properties.
@@ -85,6 +87,8 @@ public struct Matrix<Scalar> {
     
 }
 ```
+
+This also includes a large number of convenience initializers and implementations of typical typeclasses such as `Codable` and `ExpressibleByArrayLiteral`.
 
 The `elements` property is directly mutable but this is ideally to be avoided; matrix regularity is not enforced (except during encoding to or decoding from a serialization format), but there is a computed property `state` which can be used to check when the matrix is considered to be malformed.
 
@@ -113,6 +117,8 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
     
 }
 ```
+
+This also includes a large number of convenience initializers and implementations of typical typeclasses such as `Codable` and `ExpressibleByArrayLiteral`.
 
 The `real` and `imaginary` properties are also directly mutable; `ComplexMatrix` has its own `state` property which can be used to check if the parts are mismatched or one or both of them is malformed.
 
