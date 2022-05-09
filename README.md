@@ -58,9 +58,13 @@ import Numerics
 - [ ] Add cross correlation functions (see MATLAB `xcorr`, `xcorr2`)
 - [ ] Add upsampling functions
 
-## Types
+## Documentation
 
-### [Shape](Sources/Plinth/Shape.swift)
+### Types
+
+---
+
+#### [Shape](Sources/Plinth/Shape.swift)
 
 Defines the shape of a matrix using `rows` and `columns` properties.
 
@@ -75,7 +79,9 @@ public struct Shape {
 
 This includes a number of convenience properties like `count`, `length` and `breadth`; as well as convenience initializers `.row(length:)`, `.column(length:)` and `.square(length:)`. 
 
-### [Matrix](Sources/Plinth/Matrix.swift)
+---
+
+#### [Matrix](Sources/Plinth/Matrix.swift)
 
 Generic matrix struct with `Scalar` type argument and `shape` and `elements` properties.
 
@@ -107,7 +113,9 @@ print(malformed.state)
 > Mismatched shape and elements; 2×2 != 5
 ```
 
-### [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift)
+---
+
+#### [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift)
 
 Generic complex matrix struct encapsulating two separate matrices for the `real` and `imaginary` parts.
 
