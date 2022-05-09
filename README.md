@@ -49,14 +49,10 @@ import Numerics
 
 ## Todo
 
-- [ ] Add documentation:
-    - [ ] Architecture and API design
-    - [ ] Code examples 
-- [ ] Add wrappers:
-    - [ ] Convolution with `vDSP.convolve`
-    - [ ] Complex matrix multiplication with `vDSP_zmmul`
-- [ ] Add cross correlation functions (see MATLAB `xcorr`, `xcorr2`)
-- [ ] Add upsampling functions
+- [ ] Write notes on architecture and API design
+- [ ] Write code examples
+- [ ] Update `Eigenvalues.swift` to return the full eigendecomposition
+- [ ] Implement wrapper for `vDSP.convolve`
 
 # Documentation
 
