@@ -79,7 +79,7 @@ This includes a number of convenience properties like `count`, `length` and `bre
 
 ### [Matrix](Sources/Plinth/Matrix.swift)
 
-Generic matrix struct with `Scalar` type argument and `shape` and `elements` properties.
+Generic matrix struct with `Scalar` type argument and `shape` and `elements` properties. Elements are stored as a single array in row-major format.
 
 ```swift
 public struct Matrix<Scalar> {
@@ -130,11 +130,11 @@ The `real` and `imaginary` properties are also directly mutable; `ComplexMatrix`
 
 ### [Arithmetic](Sources/Plinth/Core/Arithmetic.swift)
 
-`+` and `-` prefix operators and `+`, `-`, `*`, `/` infix operators implementing fast pointwise arithmetic for all combinations of `Scalar`, `Complex`, `Matrix` and `ComplexMatrix`, where `Scalar` is `Float` or `Double`.
+`+` and `-` prefix operators and `+`, `-`, `*`, `/` infix operators implementing fast pointwise arithmetic for combinations of `Scalar`, `Complex<Scalar>`, `Matrix<Scalar>` and `ComplexMatrix<Scalar>`, where `Scalar` is `Float` or `Double`.
 
 ### [Conversions](Sources/Plinth/Core/Conversions.swift)
 
-Fast type conversions between `UInt8`, `UInt16`, `UInt32`, `Int8`, `Int16`, `Int32`, `Float` and `Double`.
+Fast type conversions between the integer types `UInt8`, `UInt16`, `UInt32`, `Int8`, `Int16`, `Int32` and the floating point types `Float` `Double`.
 
 ### [Functors](Sources/Plinth/Core/Functors.swift)
 
@@ -150,7 +150,7 @@ Fast submatrix read/write access using Swift subscripts (with Accelerate's [`vDS
 
 ### [Wrappers](Sources/Plinth/Core/Wrappers.swift)
 
-Wrappers over most of the basic `vDSP` and `vForce` functions.
+Wrappers over most of the basic `vDSP` and `vForce` functions in Accelerate.
 
 ## Transformations
 
