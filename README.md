@@ -130,7 +130,9 @@ The `real` and `imaginary` properties are also directly mutable; `ComplexMatrix`
 
 ### [Arithmetic](Sources/Plinth/Core/Arithmetic.swift)
 
-`+` and `-` prefix operators and `+`, `-`, `*`, `/` infix operators implementing fast pointwise arithmetic for combinations of `Scalar`, `Complex<Scalar>`, `Matrix<Scalar>` and `ComplexMatrix<Scalar>`, where `Scalar` is `Float` or `Double`.
+`+` and `-` prefix operators and `+`, `-`, `*`, `/` infix operators.
+
+Implements fast pointwise arithmetic for combinations of `Scalar`, `Complex<Scalar>`, `Matrix<Scalar>` and `ComplexMatrix<Scalar>`, where `Scalar` is `Float` or `Double`.
 
 ### [Conversions](Sources/Plinth/Core/Conversions.swift)
 
@@ -146,7 +148,7 @@ Includes support for complex matrix operations on [`DSPSplitComplex`](https://de
 
 ### [Submatrix](Sources/Plinth/Core/Submatrix.swift)
 
-Fast submatrix read/write access using Swift subscripts (with Accelerate's [`vDSP_mmov`](https://developer.apple.com/documentation/accelerate/1449950-vdsp_mmov)/[`vDSP_mmovD`](https://developer.apple.com/documentation/accelerate/1449956-vdsp_mmovd)).
+Fast submatrix read/write access using a Swift subscript interface (with Accelerate's [`vDSP_mmov`](https://developer.apple.com/documentation/accelerate/1449950-vdsp_mmov)/[`vDSP_mmovD`](https://developer.apple.com/documentation/accelerate/1449956-vdsp_mmovd)).
 
 ### [Wrappers](Sources/Plinth/Core/Wrappers.swift)
 
@@ -178,7 +180,9 @@ Apply a circular shift to a matrix.
 
 ### [Powers](Sources/Plinth/Extensions/Mathematics/Powers.swift)
 
-`**` infix operator implementing fast pointwise power operations for `Scalar` and `Matrix`.
+`**` infix operator.
+
+Implements fast pointwise power operations for `Scalar` and `Matrix`.
 
 Includes special functions for taking integer powers of matrices, for use when successive application of `vDSP.multiply` will be faster than `vForce.pow` (which is quite an expensive operation). This also supports negative integers by applying `vDSP.reciprocal` to the result.
 
@@ -228,11 +232,15 @@ Calculate the inverse of a matrix (with LAPACK's [`sgetri_`](http://www.netlib.o
 
 ### [Multiplication](Sources/Plinth/Extensions/Linear%20Algebra/Multiplication.swift)
 
-Matrix multiplication (with Accelerate's [`vDSP_mmul`](https://developer.apple.com/documentation/accelerate/1449984-vdsp_mmul)/[`vDSP_mmulD`](https://developer.apple.com/documentation/accelerate/1450386-vdsp_mmuld)); `<*>` infix operator.
+`<*>` infix operator.
+
+Implements matrix multiplication (with Accelerate's [`vDSP_mmul`](https://developer.apple.com/documentation/accelerate/1449984-vdsp_mmul)/[`vDSP_mmulD`](https://developer.apple.com/documentation/accelerate/1450386-vdsp_mmuld)) 
 
 ### [Division](Sources/Plinth/Extensions/Linear%20Algebra/Division.swift)
 
-Left and right matrix division (multiplying by the inverse of a matrix); `/>` and `</` infix operators.
+`/>` and `</` infix operators.
+
+Implements left and right matrix division (multiplying by the inverse of a matrix). 
 
 ### [Products](Sources/Plinth/Extensions/Linear%20Algebra/Products.swift)
 
