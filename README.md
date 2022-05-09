@@ -24,13 +24,13 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 
 ## Manifest
 
-### [Types](Sources/Plinth)
+### Types
 
 - [Shape](Sources/Plinth/Shape.swift)
 - [Matrix](Sources/Plinth/Matrix.swift)
 - [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift)
 
-### [Core](Sources/Plinth/Core)
+### Core
 
 - [Arithmetic](Sources/Plinth/Core/Arithmetic.swift)
 - [Conversions](Sources/Plinth/Core/Conversions.swift)
@@ -63,17 +63,17 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 
 #### [Linear Algebra](Sources/Plinth/Extensions/Linear%20Algebra)
 
-- [Diagonal](Sources/Plinth/Extensions/Linear Algebra/Diagonal.swift)
-- [Division](Sources/Plinth/Extensions/Linear Algebra/Division.swift)
-- [Eigenvalues](Sources/Plinth/Extensions/Linear Algebra/Eigenvalues.swift)
-- [Identity](Sources/Plinth/Extensions/Linear Algebra/Identity.swift)
-- [Inversion](Sources/Plinth/Extensions/Linear Algebra/Inversion.swift)
-- [Multiplication](Sources/Plinth/Extensions/Linear Algebra/Multiplication.swift)
-- [Products](Sources/Plinth/Extensions/Linear Algebra/Products.swift)
-- [Roots](Sources/Plinth/Extensions/Linear Algebra/Roots.swift)
-- [Transposition](Sources/Plinth/Extensions/Linear Algebra/Transposition.swift)
+- [Diagonal](Sources/Plinth/Extensions/Linear%20Algebra/Diagonal.swift)
+- [Division](Sources/Plinth/Extensions/Linear%20Algebra/Division.swift)
+- [Eigenvalues](Sources/Plinth/Extensions/Linear%20Algebra/Eigenvalues.swift)
+- [Identity](Sources/Plinth/Extensions/Linear%20Algebra/Identity.swift)
+- [Inversion](Sources/Plinth/Extensions/Linear%20Algebra/Inversion.swift)
+- [Multiplication](Sources/Plinth/Extensions/Linear%20Algebra/Multiplication.swift)
+- [Products](Sources/Plinth/Extensions/Linear%20Algebra/Products.swift)
+- [Roots](Sources/Plinth/Extensions/Linear%20Algebra/Roots.swift)
+- [Transposition](Sources/Plinth/Extensions/Linear%20Algebra/Transposition.swift)
 
-#### [Signal Processing](Sources/Plinth/Extensions/Signal Processing)
+#### [Signal Processing](Sources/Plinth/Extensions/Signal%20Processing)
 
-- [Correlation](Sources/Plinth/Extensions/Signal Processing/Correlation.swift)
-- [FFT](Sources/Plinth/Extensions/Signal Processing/FFT.swift)
+- [Correlation](Sources/Plinth/Extensions/Signal%20Processing/Correlation.swift)
+- [FFT](Sources/Plinth/Extensions/Signal%20Processing/FFT.swift)
