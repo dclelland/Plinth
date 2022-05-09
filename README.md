@@ -2,16 +2,25 @@
 
 Simple matrix types for Swift with helpers for making vDSP operations.
 
-## Todo
+## Installation
 
-- Add documentation:
-    - Architecture and API design
-    - Code examples 
-- Add wrappers:
-    - Convolution with `vDSP.convolve`
-    - Complex matrix multiplication with `vDSP_zmmul`
-- Add cross correlation functions (see MATLAB `xcorr`, `xcorr2`)
-- Add upsampling functions
+### Swift Package Manager
+
+Simply add Plinth to your `Package.swift` file: 
+
+```swift
+let package = Package(
+    name: "Example",
+    dependencies: [
+        .package(url: "https://github.com/dclelland/Plinth.git", from: "2.0.0"),
+    ],
+    targets: [
+        .target(name: "Example", dependencies: ["Plinth"])
+    ]
+)
+```
+
+Then `import Plinth` in your Swift files. Note that you may also need to `import Numerics` for full `ComplexMatrix` support, as that's where the `Complex` type lives. 
 
 ## Dependencies
 
@@ -24,6 +33,17 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 - https://github.com/stsievert/swix
 - https://github.com/cgarciae/NDArray
 - https://github.com/apple/swift-numerics/issues/6
+
+## Todo
+
+- Add documentation:
+    - Architecture and API design
+    - Code examples 
+- Add wrappers:
+    - Convolution with `vDSP.convolve`
+    - Complex matrix multiplication with `vDSP_zmmul`
+- Add cross correlation functions (see MATLAB `xcorr`, `xcorr2`)
+- Add upsampling functions
 
 ## Manifest
 
