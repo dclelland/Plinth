@@ -7,7 +7,7 @@
 
 import Foundation
     
-public struct Shape: Codable {
+public struct Shape {
     
     public var rows: Int
     public var columns: Int
