@@ -136,7 +136,7 @@ Implements fast pointwise arithmetic for combinations of `Scalar`, `Complex<Scal
 
 ### [Conversions](Sources/Plinth/Core/Conversions.swift)
 
-Fast type conversions between the integer types `UInt8`, `UInt16`, `UInt32`, `Int8`, `Int16`, `Int32` and the floating point types `Float` `Double`.
+Fast type conversions between the integer types `UInt8`, `UInt16`, `UInt32`, `Int8`, `Int16`, `Int32` and the floating point types `Float` and `Double`.
 
 ### [Functors](Sources/Plinth/Core/Functors.swift)
 
