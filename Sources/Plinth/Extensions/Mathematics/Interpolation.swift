@@ -14,7 +14,7 @@ extension Matrix where Scalar == Float {
     }
     
     public func inverseLinearInterpolated(from origin: ClosedRange<Scalar>) -> Matrix {
-        guard origin.isEmpty == false else {
+        guard origin.lowerBound != origin.upperBound else {
             return .init(shape: shape, repeating: origin.lowerBound)
         }
         
