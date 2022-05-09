@@ -56,11 +56,9 @@ import Numerics
 - Add cross correlation functions (see MATLAB `xcorr`, `xcorr2`)
 - Add upsampling functions
 
-## Manifest
+## Types
 
-### Types
-
-#### [Shape](Sources/Plinth/Shape.swift)
+### [Shape](Sources/Plinth/Shape.swift)
 
 Defines the shape of a matrix using `rows` and `columns` properties.
 
@@ -75,7 +73,7 @@ public struct Shape {
 
 This includes a number of convenience properties like `count`, `length` and `breadth`; as well as convenience initializers `.row(length:)`, `.column(length:)` and `.square(length:)`. 
 
-#### [Matrix](Sources/Plinth/Matrix.swift)
+### [Matrix](Sources/Plinth/Matrix.swift)
 
 Generic matrix struct with `Scalar` type argument and `shape` and `elements` properties.
 
@@ -90,7 +88,9 @@ public struct Matrix<Scalar> {
 
 This also includes a large number of convenience initializers and implementations of typical typeclasses such as `Codable` and `ExpressibleByArrayLiteral`.
 
-The `elements` property is directly mutable but this is ideally to be avoided; matrix regularity is not enforced (except during encoding to or decoding from a serialization format), but there is a computed property `state` which can be used to check when the matrix is considered to be malformed.
+The `elements` property is directly mutable but this is ideally to be avoided; matrix regularity is not enforced, except during encoding to or decoding from a serialization format.
+
+There is a computed property `state` which can be used to check if the matrix is considered to be malformed:
 
 ```swift
 let malformed = Matrix<Double>(
@@ -105,7 +105,7 @@ print(malformed.state)
 > Mismatched shape and elements; 2×2 != 5
 ```
 
-#### [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift)
+### [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift)
 
 Generic complex matrix struct encapsulating two separate matrices for the `real` and `imaginary` parts.
 
@@ -120,9 +120,9 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
 
 This also includes a large number of convenience initializers and implementations of typical typeclasses such as `Codable` and `ExpressibleByArrayLiteral`.
 
-The `real` and `imaginary` properties are also directly mutable; `ComplexMatrix` has its own `state` property which can be used to check if the parts are mismatched or one or both of them is malformed.
+The `real` and `imaginary` properties are also directly mutable; `ComplexMatrix` has its own `state` property which can be used to if the parts are mismatched or malformed.
 
-### Core
+## Core
 
 - [Arithmetic](Sources/Plinth/Core/Arithmetic.swift): `+` and `-` prefix operators and `+`, `-`, `*`, `/` infix operators implementing fast pointwise arithmetic for all combinations of `Scalar`, `Complex`, `Matrix` and `ComplexMatrix`, where `Scalar` is `Float` or `Double`.
 - [Conversions](Sources/Plinth/Core/Conversions.swift): Fast type conversions between `UInt8`, `UInt16`, `UInt32`, `Int8`, `Int16`, `Int32`, `Float` and `Double`.
@@ -130,9 +130,9 @@ The `real` and `imaginary` properties are also directly mutable; `ComplexMatrix`
 - [Submatrix](Sources/Plinth/Core/Submatrix.swift): Fast submatrix read/write access using Swift subscripts (with Accelerate's `vDSP_mmov`/`vDSP_mmovD`).
 - [Wrappers](Sources/Plinth/Core/Wrappers.swift): Wrappers over most of the basic `vDSP` and `vForce` functions.
 
-### Extensions
+## Extensions
 
-#### Transformations
+### Transformations
 
 - [Center](Sources/Plinth/Extensions/Transformations/Center.swift): Find the center point of a matrix, given a rounding rule.
 - [Crop](Sources/Plinth/Extensions/Transformations/Crop.swift): Crop a matrix towards the center, given a rounding rule.
@@ -140,20 +140,20 @@ The `real` and `imaginary` properties are also directly mutable; `ComplexMatrix`
 - [Reshape](Sources/Plinth/Extensions/Transformations/Reshape.swift): Apply a new shape to a matrix, or reshape it as a single row or column.
 - [Shift](Sources/Plinth/Extensions/Transformations/Shift.swift): Apply a circular shift to a matrix.
 
-#### Mathematics
+### Mathematics
 
 - [Powers](Sources/Plinth/Extensions/Mathematics/Powers.swift): `**` infix operator implementing fast pointwise power operations for `Scalar` and `Matrix`. Includes special functions for taking integer powers of matrices, for use when successive application of `vDSP.multiply` will be faster than `vForce.pow` (which is quite an expensive operation). This also supports negative integers by applying `vDSP.reciprocal` to the result.
 - [Exponentiation](Sources/Plinth/Extensions/Mathematics/Exponentiation.swift): Complex exponentials.
 - [Interpolation](Sources/Plinth/Extensions/Statistics/Interpolation.swift): Linear interpolate values from a given range to/from `0.0...1.0`, similar to C++'s `std::lerp`.
 
-#### Statistics
+### Statistics
 
 - [Random](Sources/Plinth/Extensions/Statistics/Random.swift): Generate matrices populated with random noise.
 - [Gaussian](Sources/Plinth/Extensions/Statistics/Gaussian.swift): Generate matrices populated with Gaussian noise (derived from the [comp.lang.c FAQ](http://c-faq.com/lib/gaussian.html)).
 - [Moments](Sources/Plinth/Extensions/Statistics/Moments.swift): Calculate central and standardized moments; convenience methods for `variance`, `standardDeviation`, `skewness`, and `kurtosis`.
 - [Normalization](Sources/Plinth/Extensions/Statistics/Normalization.swift): Normalize a matrix to `0.0...1.0` using its `minimum()` and `maximum()` values; or shift it so that its `mean()` is centered on zero.
 
-#### Linear Algebra
+### Linear Algebra
 
 - [Identity](Sources/Plinth/Extensions/Linear%20Algebra/Identity.swift): Generate identity matrices.
 - [Diagonal](Sources/Plinth/Extensions/Linear%20Algebra/Diagonal.swift): Generate diagonal matrices.
@@ -165,7 +165,7 @@ The `real` and `imaginary` properties are also directly mutable; `ComplexMatrix`
 - [Eigenvalues](Sources/Plinth/Extensions/Linear%20Algebra/Eigenvalues.swift): Calculate the eigenvalues of a matrix (with LAPACK's `sgeev_`/`dgeev_`; cribbed from the [Surge implementation](https://github.com/Jounce/Surge/blob/master/Sources/Surge/Linear%20Algebra/Matrix.swift#L944))).
 - [Roots](Sources/Plinth/Extensions/Linear%20Algebra/Roots.swift): Calculate the roots of a polynomial by taking the eigenvalues of a companion matrix.
 
-#### Signal Processing
+### Signal Processing
 
 - [FFT](Sources/Plinth/Extensions/Signal%20Processing/FFT.swift): Forward and inverse two-dimensional fourier transforms (with Accelerate's `vDSP_fft2d_zip`/`vDSP_fft2d_zipD`), with support for generating and reusing your own `FFTSetup`/`FFTSetupD` struct. Some of the inverse fourier transform methods implement energy conservation by dividing by the size of the matrix.
 - [FFTShift](Sources/Plinth/Extensions/Signal%20Processing/FFTShift.swift): Apply a circular rotation to a frequency-domain matrix so that the DC/DC signal is at the top left of the lower right quadrant.
