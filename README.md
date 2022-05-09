@@ -88,7 +88,7 @@ public struct Matrix<Scalar> {
 
 #### [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift)
 
-Generic complex matrix struct encapsulating two `real` and `imaginary` matrices.
+Generic complex matrix struct encapsulating separate matrices for the `real` and `imaginary` parts.
 
 ```swift
 public struct ComplexMatrix<Scalar> where Scalar: Real {

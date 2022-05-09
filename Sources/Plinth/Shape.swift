@@ -9,8 +9,8 @@ import Foundation
     
 public struct Shape {
     
-    public var rows: Int
-    public var columns: Int
+    public let rows: Int
+    public let columns: Int
     
     public init(rows: Int, columns: Int) {
         precondition(rows >= 0)
