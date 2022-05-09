@@ -150,7 +150,7 @@ Includes support for complex matrix operations on [`DSPSplitComplex`](https://de
 
 Fast submatrix read/write access using a Swift subscript interface.
 
-> Uses Accelerate's [`vDSP_mmov`](https://developer.apple.com/documentation/accelerate/1449950-vdsp_mmov)/[`vDSP_mmovD`](https://developer.apple.com/documentation/accelerate/1449956-vdsp_mmovd)).
+> Uses Accelerate's [`vDSP_mmov`](https://developer.apple.com/documentation/accelerate/1449950-vdsp_mmov)/[`vDSP_mmovD`](https://developer.apple.com/documentation/accelerate/1449956-vdsp_mmovd).
 
 ### [Wrappers](Sources/Plinth/Core/Wrappers.swift)
 
@@ -196,7 +196,7 @@ Complex exponentials.
 
 Linear interpolate values from a given range to/from `0.0...1.0`.
 
-> This is similar to C++'s [`std::lerp`](https://en.cppreference.com/w/cpp/numeric/lerp)).
+> This is similar to C++'s [`std::lerp`](https://en.cppreference.com/w/cpp/numeric/lerp).
 
 ## Statistics
 
@@ -208,7 +208,7 @@ Generate matrices populated with random noise.
 
 Generate matrices populated with Gaussian noise.
 
-> This is derived from an answer on the [comp.lang.c FAQ](http://c-faq.com/lib/gaussian.html)).
+> This is derived from an answer on the [comp.lang.c FAQ](http://c-faq.com/lib/gaussian.html).
 
 ### [Moments](Sources/Plinth/Extensions/Statistics/Moments.swift)
 
@@ -232,13 +232,13 @@ Generate diagonal matrices.
 
 Transpose a matrix.
 
-> Uses Accelerate's [`vDSP_mtrans`](https://developer.apple.com/documentation/accelerate/1449988-vdsp_mtrans)/[`vDSP_mtransD`](https://developer.apple.com/documentation/accelerate/1450422-vdsp_mtransd)).
+> Uses Accelerate's [`vDSP_mtrans`](https://developer.apple.com/documentation/accelerate/1449988-vdsp_mtrans)/[`vDSP_mtransD`](https://developer.apple.com/documentation/accelerate/1450422-vdsp_mtransd).
 
 ### [Inversion](Sources/Plinth/Extensions/Linear%20Algebra/Inversion.swift)
 
 Calculate the inverse of a matrix.
 
-> Uses LAPACK's [`sgetri_`](http://www.netlib.org/lapack/explore-html/d8/ddc/group__real_g_ecomputational_ga1af62182327d0be67b1717db399d7d83.html)/[`dgetri_`](http://www.netlib.org/lapack/explore-html/dd/d9a/group__double_g_ecomputational_ga56d9c860ce4ce42ded7f914fdb0683ff.html#ga56d9c860ce4ce42ded7f914fdb0683ff)).
+> Uses LAPACK's [`sgetri_`](http://www.netlib.org/lapack/explore-html/d8/ddc/group__real_g_ecomputational_ga1af62182327d0be67b1717db399d7d83.html)/[`dgetri_`](http://www.netlib.org/lapack/explore-html/dd/d9a/group__double_g_ecomputational_ga56d9c860ce4ce42ded7f914fdb0683ff.html#ga56d9c860ce4ce42ded7f914fdb0683ff).
 
 ### [Multiplication](Sources/Plinth/Extensions/Linear%20Algebra/Multiplication.swift)
 
@@ -246,7 +246,7 @@ Calculate the inverse of a matrix.
 
 Implements matrix multiplication.
 
-> Uses Accelerate's [`vDSP_mmul`](https://developer.apple.com/documentation/accelerate/1449984-vdsp_mmul)/[`vDSP_mmulD`](https://developer.apple.com/documentation/accelerate/1450386-vdsp_mmuld)) 
+> Uses Accelerate's [`vDSP_mmul`](https://developer.apple.com/documentation/accelerate/1449984-vdsp_mmul)/[`vDSP_mmulD`](https://developer.apple.com/documentation/accelerate/1450386-vdsp_mmuld) 
 
 ### [Division](Sources/Plinth/Extensions/Linear%20Algebra/Division.swift)
 
@@ -262,7 +262,8 @@ Inner and outer products.
 
 Calculate the eigenvalues of a matrix.
 
-> Uses LAPACK's [`sgeev_`](http://www.netlib.org/lapack/explore-html/d3/dfb/group__real_g_eeigen_ga104525b749278774f7b7f57195aa6798.html)/[`dgeev_`](http://www.netlib.org/lapack/explore-html/d9/d8e/group__double_g_eeigen_ga66e19253344358f5dee1e60502b9e96f.html); Swift implementation cribbed from [Surge](https://github.com/Jounce/Surge/blob/master/Sources/Surge/Linear%20Algebra/Matrix.swift#L944))).
+> Uses LAPACK's [`sgeev_`](http://www.netlib.org/lapack/explore-html/d3/dfb/group__real_g_eeigen_ga104525b749278774f7b7f57195aa6798.html)/[`dgeev_`](http://www.netlib.org/lapack/explore-html/d9/d8e/group__double_g_eeigen_ga66e19253344358f5dee1e60502b9e96f.html).
+> Swift implementation cribbed from [Surge](https://github.com/Jounce/Surge/blob/master/Sources/Surge/Linear%20Algebra/Matrix.swift#L944).
 
 ### [Roots](Sources/Plinth/Extensions/Linear%20Algebra/Roots.swift)
 
