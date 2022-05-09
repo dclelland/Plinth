@@ -4,7 +4,9 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 
 ## Todo
 
-- Add documentation on architecture and API to this readme file
+- Add documentation:
+    - Architecture and API design
+    - Code examples 
 - Add wrappers:
     - Convolution with `vDSP.convolve`
     - Complex matrix multiplication with `vDSP_zmmul`
@@ -59,8 +61,8 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 
 - [Random](Sources/Plinth/Extensions/Statistics/Random.swift): Generate matrices populated with random noise.
 - [Gaussian](Sources/Plinth/Extensions/Statistics/Gaussian.swift): Generate matrices populated with Gaussian noise (derived from the [comp.lang.c FAQ](http://c-faq.com/lib/gaussian.html)).
-- [Moments](Sources/Plinth/Extensions/Statistics/Moments.swift): Calculate central and standardized moments; `variance`, `standardDeviation`, `skewness`, and `kurtosis`.
-- [Normalization](Sources/Plinth/Extensions/Statistics/Normalization.swift): Normalize a matrix using either its `minimum()` and `maximum()` values or so that its `mean()` is centered on zero.
+- [Moments](Sources/Plinth/Extensions/Statistics/Moments.swift): Calculate central and standardized moments; convenience methods for `variance`, `standardDeviation`, `skewness`, and `kurtosis`.
+- [Normalization](Sources/Plinth/Extensions/Statistics/Normalization.swift): Normalize a matrix to `0.0...1.0` using its `minimum()` and `maximum()` values; or shift it so that its `mean()` is centered on zero.
 
 #### Linear Algebra
 
