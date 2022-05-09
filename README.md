@@ -246,7 +246,7 @@ Calculate the inverse of a matrix.
 
 Implements matrix multiplication.
 
-> Uses Accelerate's [`vDSP_mmul`](https://developer.apple.com/documentation/accelerate/1449984-vdsp_mmul)/[`vDSP_mmulD`](https://developer.apple.com/documentation/accelerate/1450386-vdsp_mmuld) 
+> Uses Accelerate's [`vDSP_mmul`](https://developer.apple.com/documentation/accelerate/1449984-vdsp_mmul)/[`vDSP_mmulD`](https://developer.apple.com/documentation/accelerate/1450386-vdsp_mmuld).
 
 ### [Division](Sources/Plinth/Extensions/Linear%20Algebra/Division.swift)
 
@@ -275,11 +275,11 @@ Calculate the roots of a polynomial by taking the eigenvalues of a companion mat
 
 Forward and inverse two-dimensional fourier transforms.
 
-> Uses Accelerate's [`vDSP_fft2d_zip`](https://developer.apple.com/documentation/accelerate/1450430-vdsp_fft2d_zip)/[`vDSP_fft2d_zipD`](https://developer.apple.com/documentation/accelerate/1450508-vdsp_fft2d_zipd).
-
 Includes support for creating, reusing, and destroying your own [`FFTSetup`](https://developer.apple.com/documentation/accelerate/fftsetup)/[`FFTSetupD`](https://developer.apple.com/documentation/accelerate/fftsetupd) structure.
 
 Some of the inverse fourier transform methods implement energy conservation by dividing by the size of the matrix.
+
+> Uses Accelerate's [`vDSP_fft2d_zip`](https://developer.apple.com/documentation/accelerate/1450430-vdsp_fft2d_zip)/[`vDSP_fft2d_zipD`](https://developer.apple.com/documentation/accelerate/1450508-vdsp_fft2d_zipd).
 
 ### [FFTShift](Sources/Plinth/Extensions/Signal%20Processing/FFTShift.swift)
 
