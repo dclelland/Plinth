@@ -26,7 +26,7 @@ Then import Plinth into your Swift files:
 import Plinth
 ```
 
-Or for full `ComplexMatrix` support you should also import `[swift-numerics](https://github.com/apple/swift-numerics)`, as that's where the `[Complex](https://github.com/apple/swift-numerics/blob/main/Sources/ComplexModule/Complex.swift)` type lives. 
+Or for full `ComplexMatrix` support you should also import [`swift-numerics`](https://github.com/apple/swift-numerics), as that's where the [`Complex`](https://github.com/apple/swift-numerics/blob/main/Sources/ComplexModule/Complex.swift) type lives. 
 
 ```swift
 import Plinth
