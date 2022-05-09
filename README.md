@@ -86,9 +86,11 @@ public struct Matrix<Scalar> {
 }
 ```
 
+The `elements` property is directly mutable but this is ideally to be avoided; matrix regularity is not enforced, but the `state` property can be used to check when the matrix is considered to be malformed. 
+
 #### [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift)
 
-Generic complex matrix struct encapsulating separate matrices for the `real` and `imaginary` parts.
+Generic complex matrix struct encapsulating two separate matrices for the `real` and `imaginary` parts.
 
 ```swift
 public struct ComplexMatrix<Scalar> where Scalar: Real {
@@ -98,6 +100,8 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
     
 }
 ```
+
+The `real` and `imaginary` properties are also directly mutable; `ComplexMatrix` has its own `state` property which can be used to check if the parts are mismatched or one or both of them is malformed.
 
 ### Core
 
