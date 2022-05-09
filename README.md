@@ -86,7 +86,16 @@ public struct Matrix<Scalar> {
 }
 ```
 
-The `elements` property is directly mutable but this is ideally to be avoided; matrix regularity is not enforced, but the `state` property can be used to check when the matrix is considered to be malformed. 
+The `elements` property is directly mutable but this is ideally to be avoided; matrix regularity is not enforced, but there is a computed property `state` which can be used to check when the matrix is considered to be malformed.
+
+```swift
+let malformed = Matrix<Double>(shape: Shape(rows: 2, columns: 2), elements: [1.0, 2.0, 3.0, 4.0, 5.0])
+print(malformed.state)
+```
+
+```
+> Mismatched shape and elements; 2×2 != 5
+```
 
 #### [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift)
 
