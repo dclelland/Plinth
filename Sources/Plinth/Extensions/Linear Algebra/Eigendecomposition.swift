@@ -15,6 +15,31 @@ public struct Eigendecomposition<Scalar> where Scalar: Real {
     public let eigenvalues: ComplexMatrix<Scalar>
     public let rightEigenvector: ComplexMatrix<Scalar>
     
+    internal init(leftWorkspace: Matrix<Scalar>, eigenvalues: ComplexMatrix<Scalar>, rightWorkspace: Matrix<Scalar>) {
+        self.leftEigenvector = Self.eigenvector(from: leftWorkspace, eigenvalues: eigenvalues)
+        self.eigenvalues = eigenvalues
+        self.rightEigenvector = Self.eigenvector(from: rightWorkspace, eigenvalues: eigenvalues)
+    }
+    
+    private static func eigenvector(from workspace: Matrix<Scalar>, eigenvalues: ComplexMatrix<Scalar>) -> ComplexMatrix<Scalar> {
+        var eigenvector: ComplexMatrix<Scalar> = .zeros(shape: workspace.shape)
+        for row in workspace.shape.rowIndices {
+            var column = 0
+            while column < workspace.shape.columns {
+                switch eigenvalues[column, 0].imaginary.isZero {
+                case true:
+                    eigenvector[row, column] = Complex(workspace[row, column], .zero)
+                    column += 1
+                case false:
+                    eigenvector[row, column] = Complex(workspace[row, column], workspace[row, column + 1])
+                    eigenvector[row, column + 1] = Complex(workspace[row, column], -workspace[row, column + 1])
+                    column += 2
+                }
+            }
+        }
+        return eigenvector
+    }
+    
 }
 
 extension Matrix where Scalar == Double {
@@ -47,46 +72,10 @@ extension Matrix where Scalar == Double {
         
         precondition(error == 0)
         
-        leftWorkspace = leftWorkspace.transposed()
-        eigenvalues = eigenvalues.transposed()
-        rightWorkspace = rightWorkspace.transposed()
-        
-        var leftEigenvector = ComplexMatrix<Scalar>.zeros(shape: leftWorkspace.shape)
-        for row in leftWorkspace.shape.rowIndices {
-            var column = 0
-            while column < leftWorkspace.shape.columns {
-                switch eigenvalues[column].imaginary.isZero {
-                case true:
-                    leftEigenvector[row, column] = Complex(leftWorkspace[row, column], 0.0)
-                    column += 1
-                case false:
-                    leftEigenvector[row, column] = Complex(leftWorkspace[row, column], leftWorkspace[row, column + 1])
-                    leftEigenvector[row, column + 1] = Complex(leftWorkspace[row, column], -leftWorkspace[row, column + 1])
-                    column += 2
-                }
-            }
-        }
-        
-        var rightEigenvector = ComplexMatrix<Scalar>.zeros(shape: rightWorkspace.shape)
-        for row in rightWorkspace.shape.rowIndices {
-            var column = 0
-            while column < rightWorkspace.shape.columns {
-                switch eigenvalues[column].imaginary.isZero {
-                case true:
-                    rightEigenvector[row, column] = Complex(rightWorkspace[row, column], 0.0)
-                    column += 1
-                case false:
-                    rightEigenvector[row, column] = Complex(rightWorkspace[row, column], rightWorkspace[row, column + 1])
-                    rightEigenvector[row, column + 1] = Complex(rightWorkspace[row, column], -rightWorkspace[row, column + 1])
-                    column += 2
-                }
-            }
-        }
-        
         return Eigendecomposition(
-            leftEigenvector: leftEigenvector,
-            eigenvalues: eigenvalues,
-            rightEigenvector: rightEigenvector
+            leftWorkspace: leftWorkspace.transposed(),
+            eigenvalues: eigenvalues.transposed(),
+            rightWorkspace: rightWorkspace.transposed()
         )
     }
     
