@@ -60,11 +60,17 @@ import Numerics
 
 ### Types
 
-[Shape](Sources/Plinth/Shape.swift): Defines the shape of a matrix using `rows` and `columns` properties.
+##### [Shape](Sources/Plinth/Shape.swift)
 
-[Matrix](Sources/Plinth/Matrix.swift): Generic matrix struct with `Scalar` type argument and `shape` and `elements` properties.
+Defines the shape of a matrix using `rows` and `columns` properties.
 
-[ComplexMatrix](Sources/Plinth/ComplexMatrix.swift) Generic complex matrix struct encapsulating two `real` and `imaginary` matrices.
+##### [Matrix](Sources/Plinth/Matrix.swift)
+
+Generic matrix struct with `Scalar` type argument and `shape` and `elements` properties.
+
+##### [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift)
+
+Generic complex matrix struct encapsulating two `real` and `imaginary` matrices.
 
 ### Core
 
