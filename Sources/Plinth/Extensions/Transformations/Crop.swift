@@ -9,17 +9,10 @@ import Foundation
 
 public struct CropRoundingRule {
     
-    internal var top: FloatingPointRoundingRule
-    internal var left: FloatingPointRoundingRule
-    internal var bottom: FloatingPointRoundingRule
-    internal var right: FloatingPointRoundingRule
-    
-    internal init(top: FloatingPointRoundingRule, left: FloatingPointRoundingRule, bottom: FloatingPointRoundingRule, right: FloatingPointRoundingRule) {
-        self.top = top
-        self.left = left
-        self.bottom = bottom
-        self.right = right
-    }
+    internal let top: FloatingPointRoundingRule
+    internal let left: FloatingPointRoundingRule
+    internal let bottom: FloatingPointRoundingRule
+    internal let right: FloatingPointRoundingRule
     
     public static let towardsTopLeft = CropRoundingRule(top: .down, left: .down, bottom: .up, right: .up)
     public static let towardsTopRight = CropRoundingRule(top: .down, left: .up, bottom: .up, right: .down)

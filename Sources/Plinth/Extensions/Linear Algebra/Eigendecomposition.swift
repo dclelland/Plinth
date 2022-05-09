@@ -11,7 +11,7 @@ import Numerics
 
 public struct EigendecompositionOptions {
     
-    public enum Computed {
+    internal enum Computed {
         
         case computed
         case notComputed
@@ -27,8 +27,8 @@ public struct EigendecompositionOptions {
         
     }
     
-    public let leftEigenvector: Computed
-    public let rightEigenvector: Computed
+    internal let leftEigenvector: Computed
+    internal let rightEigenvector: Computed
     
     public static let eigenvalues = EigendecompositionOptions(leftEigenvector: .notComputed, rightEigenvector: .notComputed)
     public static let leftEigenvector = EigendecompositionOptions(leftEigenvector: .computed, rightEigenvector: .notComputed)

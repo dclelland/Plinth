@@ -9,13 +9,8 @@ import Foundation
 
 public struct CenterRoundingRule {
     
-    internal var row: FloatingPointRoundingRule
-    internal var column: FloatingPointRoundingRule
-    
-    internal init(row: FloatingPointRoundingRule, column: FloatingPointRoundingRule) {
-        self.row = row
-        self.column = column
-    }
+    internal let row: FloatingPointRoundingRule
+    internal let column: FloatingPointRoundingRule
     
     public static let towardsTopLeft = CenterRoundingRule(row: .down, column: .down)
     public static let towardsTopRight = CenterRoundingRule(row: .down, column: .up)
