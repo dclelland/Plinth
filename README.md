@@ -26,7 +26,7 @@ Then import Plinth into your Swift files:
 import Plinth
 ```
 
-Or for full `ComplexMatrix` support you should also import [`swift-numerics`](https://github.com/apple/swift-numerics), as that's where the [`Complex`](https://github.com/apple/swift-numerics/blob/main/Sources/ComplexModule/Complex.swift) type lives. 
+Or for full [`ComplexMatrix`](Sources/Plinth/ComplexMatrix.swift) support you should also import [`swift-numerics`](https://github.com/apple/swift-numerics), as that's where the [`Complex`](https://github.com/apple/swift-numerics/blob/main/Sources/ComplexModule/Complex.swift) type lives. 
 
 ```swift
 import Plinth
@@ -60,9 +60,9 @@ import Numerics
 
 ### Types
 
-- [Shape](Sources/Plinth/Shape.swift): Defines the shape of a matrix using `rows` and `columns` properties.
-- [Matrix](Sources/Plinth/Matrix.swift): Generic matrix struct with `Scalar` type argument and `shape` and `elements` properties.
-- [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift) Generic complex matrix struct encapsulating two `real` and `imaginary` matrices.
+[Shape](Sources/Plinth/Shape.swift): Defines the shape of a matrix using `rows` and `columns` properties.
+[Matrix](Sources/Plinth/Matrix.swift): Generic matrix struct with `Scalar` type argument and `shape` and `elements` properties.
+[ComplexMatrix](Sources/Plinth/ComplexMatrix.swift) Generic complex matrix struct encapsulating two `real` and `imaginary` matrices.
 
 ### Core
 
