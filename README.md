@@ -27,17 +27,17 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 
 ### Types
 
-- [Shape](Sources/Plinth/Shape.swift)
-- [Matrix](Sources/Plinth/Matrix.swift)
-- [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift)
+- [Shape](Sources/Plinth/Shape.swift): Defines the shape of a matrix in terms of rows and columns.
+- [Matrix](Sources/Plinth/Matrix.swift): Generic matrix struct with `Scalar` type argument and `shape` and `elements` properties.
+- [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift) Generic complex matrix struct encapsulating two `real` and `imaginary` matrices.
 
 ### Core
 
-- [Arithmetic](Sources/Plinth/Core/Arithmetic.swift)
-- [Conversions](Sources/Plinth/Core/Conversions.swift)
-- [Functors](Sources/Plinth/Core/Functors.swift)
-- [Submatrix](Sources/Plinth/Core/Submatrix.swift)
-- [Wrappers](Sources/Plinth/Core/Wrappers.swift)
+- [Arithmetic](Sources/Plinth/Core/Arithmetic.swift): `+` and `-` prefix operators and `+`, `-`, `*`, `/` infix operators implementing fast pointwise arithmetic for all combinations of `Scalar`, `Complex`, `Matrix` and `ComplexMatrix`, where `Scalar` is `Float` or `Double`.
+- [Conversions](Sources/Plinth/Core/Conversions.swift): Type conversions between `UInt8`, `UInt16`, `UInt32`, `Int8`, `Int16`, `Int32`, `Float` and `Double`.
+- [Functors](Sources/Plinth/Core/Functors.swift): Not true functors as Swift lacks higher-kinded types; really just convenience higher-order functions for shape-preserving operations.
+- [Submatrix](Sources/Plinth/Core/Submatrix.swift): Fast submatrix read/write access using Swift subscripts.
+- [Wrappers](Sources/Plinth/Core/Wrappers.swift): Wrappers over most of the basic `vDSP` and `vForce` functions.
 
 ### Extensions
 
