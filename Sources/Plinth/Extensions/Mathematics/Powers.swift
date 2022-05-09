@@ -20,7 +20,7 @@ infix operator **=: AssignmentPrecedence
 extension Float {
 
     @inlinable public static func ** (left: Self, right: Self) -> Self {
-        return pow(left, right)
+        return Darwin.pow(left, right)
     }
 
 }
@@ -109,7 +109,7 @@ extension Matrix where Element == Float {
 extension Double {
 
     @inlinable public static func ** (left: Self, right: Self) -> Self {
-        return pow(left, right)
+        return Darwin.pow(left, right)
     }
 
 }
