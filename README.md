@@ -1,6 +1,6 @@
 # Plinth
 
-Simple matrix types for Swift with helpers for making vDSP operations.
+Hardware-accelerated matrix library for Swift.
 
 ## Installation
 
