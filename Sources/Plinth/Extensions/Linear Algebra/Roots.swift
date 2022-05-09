@@ -14,7 +14,7 @@ extension Matrix where Scalar == Float {
         precondition(shape.isRow)
         var companion: Matrix<Element> = .diagonal(length: count - 2, index: -1)
         companion[row: 0] = -self[0, 1...shape.columnIndices.upperBound] / self[0, 0]
-        return companion.eigenvalues()
+        return companion.eigendecomposition(.eigenvalues).eigenvalues
     }
     
 }
@@ -25,7 +25,7 @@ extension Matrix where Scalar == Double {
         precondition(shape.isRow)
         var companion: Matrix<Element> = .diagonal(length: count - 2, index: -1)
         companion[row: 0] = -self[0, 1...shape.columnIndices.upperBound] / self[0, 0]
-        return companion.eigenvalues()
+        return companion.eigendecomposition(.eigenvalues).eigenvalues
     }
     
 }
