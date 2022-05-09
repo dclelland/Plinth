@@ -41,11 +41,11 @@ import Numerics
 
 ### References/prior art
 
+- https://github.com/apple/swift-numerics/issues/6 (discussion on adding a `ShapedArray` type to `swift-numerics`)
 - [Jounce/Surge](https://github.com/Jounce/Surge)
 - [hollance/Matrix](https://github.com/hollance/Matrix)
 - [stsievert/swix](https://github.com/stsievert/swix)
 - [cgarciae/NDArray](https://github.com/cgarciae/NDArray)
-- https://github.com/apple/swift-numerics/issues/6 (discussion on adding a `ShapedArray` type to `swift-numerics`)
 
 ## Todo
 
