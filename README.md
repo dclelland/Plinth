@@ -106,7 +106,7 @@ print(malformed.state)
 ```
 
 ```
-> Mismatched shape and elements; 2×2 != 5
+> Malformed: Mismatched shape and elements; 2×2 != 5
 ```
 
 ### [ComplexMatrix](Sources/Plinth/ComplexMatrix.swift)

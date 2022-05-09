@@ -93,10 +93,19 @@ extension ComplexMatrix where Scalar: Numeric {
 
 extension ComplexMatrix {
     
-    public enum State {
+    public enum State: CustomStringConvertible {
         
         case regular
         case malformed(_ malformation: Malformation)
+        
+        public var description: String {
+            switch self {
+            case .regular:
+                return "Regular"
+            case .malformed(let malformation):
+                return "Malformed: \(malformation)"
+            }
+        }
         
     }
     

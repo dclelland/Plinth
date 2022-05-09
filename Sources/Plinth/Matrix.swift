@@ -82,10 +82,19 @@ extension Matrix where Scalar: Numeric {
 
 extension Matrix {
     
-    public enum State {
+    public enum State: CustomStringConvertible {
         
         case regular
         case malformed(_ malformation: Malformation)
+        
+        public var description: String {
+            switch self {
+            case .regular:
+                return "Regular"
+            case .malformed(let malformation):
+                return "Malformed: \(malformation)"
+            }
+        }
         
     }
     
