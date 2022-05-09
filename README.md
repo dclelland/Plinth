@@ -40,7 +40,7 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 
 ### Extensions
 
-#### [Transformations](Sources/Plinth/Extensions/Transformations)
+#### Transformations
 
 - [Center](Sources/Plinth/Extensions/Transformations/Center.swift)
 - [Crop](Sources/Plinth/Extensions/Transformations/Crop.swift)
@@ -48,12 +48,12 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 - [Reshape](Sources/Plinth/Extensions/Transformations/Reshape.swift)
 - [Shift](Sources/Plinth/Extensions/Transformations/Shift.swift)
 
-#### [Mathematics](Sources/Plinth/Extensions/Mathematics/Exponentiation)
+#### Mathematics
 
 - [Exponentiation](Sources/Plinth/Extensions/Mathematics/Exponentiation.swift)
 - [Powers](Sources/Plinth/Extensions/Mathematics/Powers.swift)
 
-#### [Statistics](Sources/Plinth/Extensions/Statistics)
+#### Statistics
 
 - [Gaussian](Sources/Plinth/Extensions/Statistics/Gaussian.swift)
 - [Interpolation](Sources/Plinth/Extensions/Statistics/Interpolation.swift)
@@ -61,7 +61,7 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 - [Normalization](Sources/Plinth/Extensions/Statistics/Normalization.swift)
 - [Random](Sources/Plinth/Extensions/Statistics/Random.swift)
 
-#### [Linear Algebra](Sources/Plinth/Extensions/Linear%20Algebra)
+#### Linear Algebra
 
 - [Diagonal](Sources/Plinth/Extensions/Linear%20Algebra/Diagonal.swift)
 - [Division](Sources/Plinth/Extensions/Linear%20Algebra/Division.swift)
@@ -73,7 +73,7 @@ Simple matrix types for Swift with helpers for making vDSP operations.
 - [Roots](Sources/Plinth/Extensions/Linear%20Algebra/Roots.swift)
 - [Transposition](Sources/Plinth/Extensions/Linear%20Algebra/Transposition.swift)
 
-#### [Signal Processing](Sources/Plinth/Extensions/Signal%20Processing)
+#### Signal Processing
 
 - [Correlation](Sources/Plinth/Extensions/Signal%20Processing/Correlation.swift)
 - [FFT](Sources/Plinth/Extensions/Signal%20Processing/FFT.swift)
