@@ -65,8 +65,8 @@ Defines the shape of a matrix using `rows` and `columns` properties.
 ```swift
 public struct Shape {
     
-    public var rows: Int
-    public var columns: Int
+    public let rows: Int
+    public let columns: Int
     
 }
 ```
