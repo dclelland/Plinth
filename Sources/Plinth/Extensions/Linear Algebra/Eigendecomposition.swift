@@ -86,24 +86,22 @@ extension Eigendecomposition {
     }
     
     public func sorted(_ sortOrder: SortOrder = .ascending) -> Eigendecomposition {
-        let indices: [Int] = {
+        let sorted = eigenvalues.enumerated().sorted { lhs, rhs in
             switch sortOrder {
             case .ascending:
-                return eigenvalues.enumerated().sorted(by: { $0.element.real < $1.element.real }).map(\.offset)
+                return lhs.element.real < rhs.element.real
             case .descending:
-                return eigenvalues.enumerated().sorted(by: { $0.element.real > $1.element.real }).map(\.offset)
+                return lhs.element.real > rhs.element.real
             }
-        }()
+        }
         
         return Eigendecomposition(
             leftEigenvectors: .init(shape: leftEigenvectors.shape) { row, column in
-                return leftEigenvectors[indices[row], column]
+                return leftEigenvectors[sorted[row].offset, column]
             },
-            eigenvalues: .init(shape: eigenvalues.shape) { row, column in
-                return eigenvalues[indices[column]]
-            },
+            eigenvalues: ComplexMatrix(row: sorted.map(\.element)),
             rightEigenvectors: .init(shape: rightEigenvectors.shape) { row, column in
-                return rightEigenvectors[row, indices[column]]
+                return rightEigenvectors[row, sorted[column].offset]
             }
         )
     }
