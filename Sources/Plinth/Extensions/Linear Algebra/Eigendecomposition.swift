@@ -27,45 +27,45 @@ public struct EigendecompositionOptions {
         
     }
     
-    internal let leftEigenvector: Computed
-    internal let rightEigenvector: Computed
+    internal let leftEigenvectors: Computed
+    internal let rightEigenvectors: Computed
     
-    public static let eigenvalues = EigendecompositionOptions(leftEigenvector: .notComputed, rightEigenvector: .notComputed)
-    public static let leftEigenvector = EigendecompositionOptions(leftEigenvector: .computed, rightEigenvector: .notComputed)
-    public static let rightEigenvector = EigendecompositionOptions(leftEigenvector: .notComputed, rightEigenvector: .computed)
-    public static let full = EigendecompositionOptions(leftEigenvector: .computed, rightEigenvector: .computed)
+    public static let eigenvalues = EigendecompositionOptions(leftEigenvectors: .notComputed, rightEigenvectors: .notComputed)
+    public static let leftEigenvectors = EigendecompositionOptions(leftEigenvectors: .computed, rightEigenvectors: .notComputed)
+    public static let rightEigenvectors = EigendecompositionOptions(leftEigenvectors: .notComputed, rightEigenvectors: .computed)
+    public static let full = EigendecompositionOptions(leftEigenvectors: .computed, rightEigenvectors: .computed)
     
 }
 
 public struct Eigendecomposition<Scalar> where Scalar: Real {
     
-    public let leftEigenvector: ComplexMatrix<Scalar>
+    public let leftEigenvectors: ComplexMatrix<Scalar>
     public let eigenvalues: ComplexMatrix<Scalar>
-    public let rightEigenvector: ComplexMatrix<Scalar>
+    public let rightEigenvectors: ComplexMatrix<Scalar>
     
     internal init(leftWorkspace: Matrix<Scalar>, eigenvalues: ComplexMatrix<Scalar>, rightWorkspace: Matrix<Scalar>) {
-        self.leftEigenvector = Self.eigenvector(from: leftWorkspace, eigenvalues: eigenvalues)
+        self.leftEigenvectors = Self.eigenvectors(from: leftWorkspace, eigenvalues: eigenvalues)
         self.eigenvalues = eigenvalues
-        self.rightEigenvector = Self.eigenvector(from: rightWorkspace, eigenvalues: eigenvalues)
+        self.rightEigenvectors = Self.eigenvectors(from: rightWorkspace, eigenvalues: eigenvalues)
     }
     
-    private static func eigenvector(from workspace: Matrix<Scalar>, eigenvalues: ComplexMatrix<Scalar>) -> ComplexMatrix<Scalar> {
-        var eigenvector: ComplexMatrix<Scalar> = .zeros(shape: workspace.shape)
+    private static func eigenvectors(from workspace: Matrix<Scalar>, eigenvalues: ComplexMatrix<Scalar>) -> ComplexMatrix<Scalar> {
+        var eigenvectors: ComplexMatrix<Scalar> = .zeros(shape: workspace.shape)
         for row in workspace.shape.rowIndices {
             var column = 0
             while column < workspace.shape.columns {
-                switch eigenvalues[column, 0].imaginary.isZero {
+                switch eigenvalues[0, column].imaginary.isZero {
                 case true:
-                    eigenvector[row, column] = Complex(workspace[row, column], .zero)
+                    eigenvectors[row, column] = Complex(workspace[row, column], .zero)
                     column += 1
                 case false:
-                    eigenvector[row, column] = Complex(workspace[row, column], workspace[row, column + 1])
-                    eigenvector[row, column + 1] = Complex(workspace[row, column], -workspace[row, column + 1])
+                    eigenvectors[row, column] = Complex(workspace[row, column], workspace[row, column + 1])
+                    eigenvectors[row, column + 1] = Complex(workspace[row, column], -workspace[row, column + 1])
                     column += 2
                 }
             }
         }
-        return eigenvector
+        return eigenvectors
     }
     
 }
@@ -77,8 +77,8 @@ extension Matrix where Scalar == Float {
         
         var input = transposed()
         var length = __CLPK_integer(shape.length)
-        var leftComputed = options.leftEigenvector.flag
-        var rightComputed = options.rightEigenvector.flag
+        var leftFlag = options.leftEigenvectors.flag
+        var rightFlag = options.rightEigenvectors.flag
 
         var eigenvalues = ComplexMatrix<Scalar>.zeros(shape: .row(length: shape.length))
         var leftWorkspace = Matrix.zeros(shape: shape)
@@ -90,19 +90,19 @@ extension Matrix where Scalar == Float {
         var error = __CLPK_integer(0)
         
         withUnsafeMutablePointer(to: &length) { length in
-            sgeev_(&leftComputed, &rightComputed, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspaceQuery, &workspaceSize, &error)
+            sgeev_(&leftFlag, &rightFlag, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspaceQuery, &workspaceSize, &error)
             
             workspace = [Scalar](repeating: .zero, count: Int(workspaceQuery))
             workspaceSize = __CLPK_integer(workspaceQuery)
             
-            sgeev_(&leftComputed, &rightComputed, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspace, &workspaceSize, &error)
+            sgeev_(&leftFlag, &rightFlag, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspace, &workspaceSize, &error)
         }
         
         precondition(error == 0)
         
         return Eigendecomposition(
             leftWorkspace: leftWorkspace.transposed(),
-            eigenvalues: eigenvalues.transposed(),
+            eigenvalues: eigenvalues,
             rightWorkspace: rightWorkspace.transposed()
         )
     }
@@ -116,8 +116,8 @@ extension Matrix where Scalar == Double {
         
         var input = transposed()
         var length = __CLPK_integer(shape.length)
-        var leftComputed = options.leftEigenvector.flag
-        var rightComputed = options.rightEigenvector.flag
+        var leftFlag = options.leftEigenvectors.flag
+        var rightFlag = options.rightEigenvectors.flag
 
         var eigenvalues = ComplexMatrix<Scalar>.zeros(shape: .row(length: shape.length))
         var leftWorkspace = Matrix.zeros(shape: shape)
@@ -129,19 +129,19 @@ extension Matrix where Scalar == Double {
         var error = __CLPK_integer(0)
         
         withUnsafeMutablePointer(to: &length) { length in
-            dgeev_(&leftComputed, &rightComputed, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspaceQuery, &workspaceSize, &error)
+            dgeev_(&leftFlag, &rightFlag, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspaceQuery, &workspaceSize, &error)
             
             workspace = [Scalar](repeating: .zero, count: Int(workspaceQuery))
             workspaceSize = __CLPK_integer(workspaceQuery)
             
-            dgeev_(&leftComputed, &rightComputed, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspace, &workspaceSize, &error)
+            dgeev_(&leftFlag, &rightFlag, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspace, &workspaceSize, &error)
         }
         
         precondition(error == 0)
         
         return Eigendecomposition(
             leftWorkspace: leftWorkspace.transposed(),
-            eigenvalues: eigenvalues.transposed(),
+            eigenvalues: eigenvalues,
             rightWorkspace: rightWorkspace.transposed()
         )
     }
