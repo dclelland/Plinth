@@ -9,7 +9,7 @@ import Foundation
 import Accelerate
 import Numerics
 
-public struct EigendecompositionOptions {
+public struct EigendecompositionComponents {
     
     internal enum Computed {
         
@@ -30,10 +30,10 @@ public struct EigendecompositionOptions {
     internal let leftEigenvectors: Computed
     internal let rightEigenvectors: Computed
     
-    public static let eigenvalues = EigendecompositionOptions(leftEigenvectors: .notComputed, rightEigenvectors: .notComputed)
-    public static let leftEigenvectors = EigendecompositionOptions(leftEigenvectors: .computed, rightEigenvectors: .notComputed)
-    public static let rightEigenvectors = EigendecompositionOptions(leftEigenvectors: .notComputed, rightEigenvectors: .computed)
-    public static let full = EigendecompositionOptions(leftEigenvectors: .computed, rightEigenvectors: .computed)
+    public static let eigenvalues = EigendecompositionComponents(leftEigenvectors: .notComputed, rightEigenvectors: .notComputed)
+    public static let leftEigenvectors = EigendecompositionComponents(leftEigenvectors: .computed, rightEigenvectors: .notComputed)
+    public static let rightEigenvectors = EigendecompositionComponents(leftEigenvectors: .notComputed, rightEigenvectors: .computed)
+    public static let all = EigendecompositionComponents(leftEigenvectors: .computed, rightEigenvectors: .computed)
     
 }
 
@@ -72,13 +72,13 @@ public struct Eigendecomposition<Scalar> where Scalar: Real {
 
 extension Matrix where Scalar == Float {
     
-    public func eigendecomposition(_ options: EigendecompositionOptions = .full) -> Eigendecomposition<Scalar> {
+    public func eigendecomposition(computing components: EigendecompositionComponents = .all) -> Eigendecomposition<Scalar> {
         precondition(shape.isSquare)
         
         var input = transposed()
         var length = __CLPK_integer(shape.length)
-        var leftFlag = options.leftEigenvectors.flag
-        var rightFlag = options.rightEigenvectors.flag
+        var leftFlag = components.leftEigenvectors.flag
+        var rightFlag = components.rightEigenvectors.flag
 
         var eigenvalues = ComplexMatrix<Scalar>.zeros(shape: .row(length: shape.length))
         var leftWorkspace = Matrix.zeros(shape: shape)
@@ -111,13 +111,13 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Double {
     
-    public func eigendecomposition(_ options: EigendecompositionOptions = .full) -> Eigendecomposition<Scalar> {
+    public func eigendecomposition(computing components: EigendecompositionComponents = .all) -> Eigendecomposition<Scalar> {
         precondition(shape.isSquare)
         
         var input = transposed()
         var length = __CLPK_integer(shape.length)
-        var leftFlag = options.leftEigenvectors.flag
-        var rightFlag = options.rightEigenvectors.flag
+        var leftFlag = components.leftEigenvectors.flag
+        var rightFlag = components.rightEigenvectors.flag
 
         var eigenvalues = ComplexMatrix<Scalar>.zeros(shape: .row(length: shape.length))
         var leftWorkspace = Matrix.zeros(shape: shape)
