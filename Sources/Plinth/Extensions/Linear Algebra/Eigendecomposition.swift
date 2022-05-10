@@ -43,6 +43,12 @@ public struct Eigendecomposition<Scalar> where Scalar: Real {
     public let eigenvalues: ComplexMatrix<Scalar>
     public let rightEigenvectors: ComplexMatrix<Scalar>
     
+    internal init(leftEigenvectors: ComplexMatrix<Scalar>, eigenvalues: ComplexMatrix<Scalar>, rightEigenvectors: ComplexMatrix<Scalar>) {
+        self.leftEigenvectors = leftEigenvectors
+        self.eigenvalues = eigenvalues
+        self.rightEigenvectors = rightEigenvectors
+    }
+    
     internal init(leftWorkspace: Matrix<Scalar>, eigenvalues: ComplexMatrix<Scalar>, rightWorkspace: Matrix<Scalar>) {
         self.leftEigenvectors = Self.eigenvectors(from: leftWorkspace, eigenvalues: eigenvalues)
         self.eigenvalues = eigenvalues
@@ -66,6 +72,40 @@ public struct Eigendecomposition<Scalar> where Scalar: Real {
             }
         }
         return eigenvectors
+    }
+    
+}
+
+extension Eigendecomposition {
+    
+    public enum SortOrder {
+        
+        case ascending
+        case descending
+        
+    }
+    
+    public func sorted(_ sortOrder: SortOrder = .ascending) -> Eigendecomposition {
+        let indices: [Int] = {
+            switch sortOrder {
+            case .ascending:
+                return eigenvalues.enumerated().sorted(by: { $0.element.real < $1.element.real }).map(\.offset)
+            case .descending:
+                return eigenvalues.enumerated().sorted(by: { $0.element.real > $1.element.real }).map(\.offset)
+            }
+        }()
+        
+        return Eigendecomposition(
+            leftEigenvectors: .init(shape: leftEigenvectors.shape) { row, column in
+                return leftEigenvectors[indices[row], column]
+            },
+            eigenvalues: .init(shape: eigenvalues.shape) { row, column in
+                return eigenvalues[indices[column]]
+            },
+            rightEigenvectors: .init(shape: rightEigenvectors.shape) { row, column in
+                return rightEigenvectors[row, indices[column]]
+            }
+        )
     }
     
 }
