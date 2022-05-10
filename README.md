@@ -256,9 +256,9 @@ Implements left and right matrix division (multiplying by the inverse of a matri
 
 Inner and outer products.
 
-### [Eigenvalues](Sources/Plinth/Extensions/Linear%20Algebra/Eigenvalues.swift)
+### [Eigendecomposition](Sources/Plinth/Extensions/Linear%20Algebra/Eigendecomposition.swift)
 
-Calculate the eigenvalues of a matrix.
+Calculate the eigendecomposition of a matrix. Includes support for only calculating the necessary components.
 
 > Uses LAPACK's [`sgeev_`](http://www.netlib.org/lapack/explore-html/d3/dfb/group__real_g_eeigen_ga104525b749278774f7b7f57195aa6798.html)/[`dgeev_`](http://www.netlib.org/lapack/explore-html/d9/d8e/group__double_g_eeigen_ga66e19253344358f5dee1e60502b9e96f.html).
 > Swift implementation cribbed from [Surge](https://github.com/Jounce/Surge/blob/master/Sources/Surge/Linear%20Algebra/Matrix.swift#L944).
