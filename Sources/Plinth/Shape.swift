@@ -81,20 +81,6 @@ extension Shape {
 
 extension Shape {
     
-    public func upscaled(by factor: Int = 1) -> Shape {
-        let multiplicand = Int(pow(2.0, Double(factor)))
-        return Shape(rows: rows * multiplicand, columns: columns * multiplicand)
-    }
-    
-    public func downscaled(by factor: Int = 1) -> Shape {
-        let divisor = Int(pow(2.0, Double(factor)))
-        return Shape(rows: rows / divisor, columns: columns / divisor)
-    }
-    
-}
-
-extension Shape {
-    
     @inlinable internal var rowIndices: ClosedRange<Int> {
         return 0...(rows - 1)
     }
