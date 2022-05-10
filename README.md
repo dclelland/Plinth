@@ -51,8 +51,9 @@ import Numerics
 
 - [ ] Write notes on architecture and API design
 - [ ] Write code examples
-- [ ] Update `Eigenvalues.swift` to return the full eigendecomposition
+- [x] Update `Eigenvalues.swift` to return the full eigendecomposition
 - [ ] Implement wrapper for `vDSP.convolve`
+- [ ] Add Cocoapods support
 
 # Documentation
 
