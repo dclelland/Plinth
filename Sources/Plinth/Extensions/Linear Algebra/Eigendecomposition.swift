@@ -33,7 +33,7 @@ public struct EigendecompositionComponents {
     public static let eigenvalues = EigendecompositionComponents(leftEigenvectors: .notComputed, rightEigenvectors: .notComputed)
     public static let leftEigenvectors = EigendecompositionComponents(leftEigenvectors: .computed, rightEigenvectors: .notComputed)
     public static let rightEigenvectors = EigendecompositionComponents(leftEigenvectors: .notComputed, rightEigenvectors: .computed)
-    public static let all = EigendecompositionComponents(leftEigenvectors: .computed, rightEigenvectors: .computed)
+    public static let allComponents = EigendecompositionComponents(leftEigenvectors: .computed, rightEigenvectors: .computed)
     
 }
 
@@ -72,7 +72,7 @@ public struct Eigendecomposition<Scalar> where Scalar: Real {
 
 extension Matrix where Scalar == Float {
     
-    public func eigendecomposition(computing components: EigendecompositionComponents = .all) -> Eigendecomposition<Scalar> {
+    public func eigendecomposition(computing components: EigendecompositionComponents = .allComponents) -> Eigendecomposition<Scalar> {
         precondition(shape.isSquare)
         
         var input = transposed()
@@ -111,7 +111,7 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Double {
     
-    public func eigendecomposition(computing components: EigendecompositionComponents = .all) -> Eigendecomposition<Scalar> {
+    public func eigendecomposition(computing components: EigendecompositionComponents = .allComponents) -> Eigendecomposition<Scalar> {
         precondition(shape.isSquare)
         
         var input = transposed()
