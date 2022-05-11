@@ -85,6 +85,10 @@ extension ComplexMatrix where Scalar: Numeric {
         self.init(real: real, imaginary: .zeros(shape: real.shape))
     }
     
+    public init(imaginary: Matrix) {
+        self.init(real: .zeros(shape: imaginary.shape), imaginary: imaginary)
+    }
+    
     public static func zeros(shape: Shape) -> ComplexMatrix {
         return .init(shape: shape, repeating: .zero)
     }
