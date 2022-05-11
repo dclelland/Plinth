@@ -27,10 +27,6 @@ extension Shape {
         return rows * columns
     }
     
-}
-
-extension Shape {
-    
     public var length: Int {
         return max(rows, columns)
     }
@@ -43,15 +39,21 @@ extension Shape {
 
 extension Shape {
     
-    public static let empty = Shape(rows: 0, columns: 0)
+    public var rowIndices: ClosedRange<Int> {
+        return 0...(rows - 1)
+    }
     
-    public var isEmpty: Bool {
-        return rows == 0 || columns == 0
+    public var columnIndices: ClosedRange<Int> {
+        return 0...(columns - 1)
     }
     
 }
 
 extension Shape {
+    
+    public static var empty: Shape {
+        return .init(rows: 0, columns: 0)
+    }
     
     public static func row(length: Int) -> Shape {
         return .init(rows: 1, columns: length)
@@ -63,6 +65,10 @@ extension Shape {
     
     public static func square(length: Int) -> Shape {
         return .init(rows: length, columns: length)
+    }
+    
+    public var isEmpty: Bool {
+        return rows == 0 || columns == 0
     }
     
     public var isRow: Bool {
@@ -81,24 +87,12 @@ extension Shape {
 
 extension Shape {
     
-    @inlinable internal var rowIndices: ClosedRange<Int> {
-        return 0...(rows - 1)
+    @inlinable internal func indexFor(row: Int, column: Int) -> Int {
+        return row * columns + column
     }
-    
-    @inlinable internal var columnIndices: ClosedRange<Int> {
-        return 0...(columns - 1)
-    }
-    
-}
-
-extension Shape {
     
     @inlinable internal func indicesFor(row: Int) -> ClosedRange<Int> {
         return indexFor(row: row, column: columnIndices.lowerBound)...indexFor(row: row, column: columnIndices.upperBound)
-    }
-    
-    @inlinable internal func indexFor(row: Int, column: Int) -> Int {
-        return row * columns + column
     }
     
 }
