@@ -23,6 +23,18 @@ public struct Shape {
 
 extension Shape {
     
+    public var rowIndices: ClosedRange<Int> {
+        return 0...(rows - 1)
+    }
+    
+    public var columnIndices: ClosedRange<Int> {
+        return 0...(columns - 1)
+    }
+    
+}
+
+extension Shape {
+    
     public var count: Int {
         return rows * columns
     }
@@ -33,18 +45,6 @@ extension Shape {
     
     public var breadth: Int {
         return min(rows, columns)
-    }
-    
-}
-
-extension Shape {
-    
-    public var rowIndices: ClosedRange<Int> {
-        return 0...(rows - 1)
-    }
-    
-    public var columnIndices: ClosedRange<Int> {
-        return 0...(columns - 1)
     }
     
 }
