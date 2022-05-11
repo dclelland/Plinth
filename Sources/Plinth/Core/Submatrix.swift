@@ -135,10 +135,10 @@ extension ComplexMatrix where Scalar == Float {
     
     public subscript(column column: Int) -> ComplexMatrix<Float> {
         get {
-            return submatrix(rows: shape.columnIndices, columns: column...column)
+            return submatrix(rows: shape.rowIndices, columns: column...column)
         }
         set {
-            setSubmatrix(newValue, rows: shape.columnIndices, columns: column...column)
+            setSubmatrix(newValue, rows: shape.rowIndices, columns: column...column)
         }
     }
     
@@ -233,10 +233,10 @@ extension Matrix where Scalar == Double {
     
     public subscript(column column: Int) -> Matrix<Double> {
         get {
-            return submatrix(rows: shape.columnIndices, columns: column...column)
+            return submatrix(rows: shape.rowIndices, columns: column...column)
         }
         set {
-            setSubmatrix(newValue, rows: shape.columnIndices, columns: column...column)
+            setSubmatrix(newValue, rows: shape.rowIndices, columns: column...column)
         }
     }
     
