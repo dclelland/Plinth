@@ -48,10 +48,10 @@ extension Matrix where Scalar == Float {
     
     public subscript(column column: Int) -> Matrix<Float> {
         get {
-            return submatrix(rows: shape.columnIndices, columns: column...column)
+            return submatrix(rows: shape.rowIndices, columns: column...column)
         }
         set {
-            setSubmatrix(newValue, rows: shape.columnIndices, columns: column...column)
+            setSubmatrix(newValue, rows: shape.rowIndices, columns: column...column)
         }
     }
     
