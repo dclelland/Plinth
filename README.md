@@ -53,6 +53,7 @@ import Numerics
 - [ ] Write code examples
 - [x] Update `Eigenvalues.swift` to return the full eigendecomposition
 - [ ] Implement wrapper for `vDSP.convolve`
+- [ ] Implement Equality/Comparisons extension
 - [ ] Add Cocoapods support
 
 # Documentation
