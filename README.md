@@ -172,6 +172,8 @@ Zero-pad a matrix away from the center, given a rounding rule.
 
 Apply a new shape to a matrix, or reshape it as a single row or column.
 
+This also supports both `.rowMajor` and `.columnMajor` orderings.
+
 ### [Shift](Sources/Plinth/Extensions/Transformations/Shift.swift)
 
 Apply a circular shift to a matrix.

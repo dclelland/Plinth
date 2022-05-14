@@ -7,45 +7,105 @@
 
 import Foundation
 
-extension Matrix {
+public enum ReshapeOrder {
     
-    public func reshaped(_ shape: Shape) -> Matrix {
+    case rowMajor
+    case columnMajor
+    
+}
+
+extension Matrix where Scalar == Float {
+    
+    public func reshaped(_ shape: Shape, order: ReshapeOrder = .rowMajor) -> Matrix {
         precondition(self.shape.count == shape.count)
-        return Matrix(shape: shape, elements: elements)
+        switch order {
+        case .rowMajor:
+            return Matrix(shape: shape, elements: elements)
+        case .columnMajor:
+            return Matrix(shape: shape, elements: transposed().elements)
+        }
     }
     
 }
 
-extension Matrix {
+extension Matrix where Scalar == Float {
     
-    public func asRow() -> Matrix {
-        return reshaped(.row(length: shape.count))
+    public func asRow(order: ReshapeOrder = .rowMajor) -> Matrix {
+        return reshaped(.row(length: shape.count), order: order)
     }
     
-    public func asColumn() -> Matrix {
-        return reshaped(.column(length: shape.count))
+    public func asColumn(order: ReshapeOrder = .rowMajor) -> Matrix {
+        return reshaped(.column(length: shape.count), order: order)
     }
     
 }
 
-extension ComplexMatrix {
+extension ComplexMatrix where Scalar == Float {
     
-    public func reshaped(_ shape: Shape) -> ComplexMatrix {
+    public func reshaped(_ shape: Shape, order: ReshapeOrder = .rowMajor) -> ComplexMatrix {
         precondition(self.shape.count == shape.count)
-        return ComplexMatrix(shape: shape, elements: elements)
+        return ComplexMatrix(real: real.reshaped(shape, order: order), imaginary: imaginary.reshaped(shape, order: order))
     }
     
 }
 
 
-extension ComplexMatrix {
+extension ComplexMatrix where Scalar == Float {
     
-    public func asRow() -> ComplexMatrix {
-        return reshaped(.row(length: shape.count))
+    public func asRow(order: ReshapeOrder = .rowMajor) -> ComplexMatrix {
+        return reshaped(.row(length: shape.count), order: order)
     }
     
-    public func asColumn() -> ComplexMatrix {
-        return reshaped(.column(length: shape.count))
+    public func asColumn(order: ReshapeOrder = .rowMajor) -> ComplexMatrix {
+        return reshaped(.column(length: shape.count), order: order)
+    }
+    
+}
+
+extension Matrix where Scalar == Double {
+    
+    public func reshaped(_ shape: Shape, order: ReshapeOrder = .rowMajor) -> Matrix {
+        precondition(self.shape.count == shape.count)
+        switch order {
+        case .rowMajor:
+            return Matrix(shape: shape, elements: elements)
+        case .columnMajor:
+            return Matrix(shape: shape, elements: transposed().elements)
+        }
+    }
+    
+}
+
+extension Matrix where Scalar == Double {
+    
+    public func asRow(order: ReshapeOrder = .rowMajor) -> Matrix {
+        return reshaped(.row(length: shape.count), order: order)
+    }
+    
+    public func asColumn(order: ReshapeOrder = .rowMajor) -> Matrix {
+        return reshaped(.column(length: shape.count), order: order)
+    }
+    
+}
+
+extension ComplexMatrix where Scalar == Double {
+    
+    public func reshaped(_ shape: Shape, order: ReshapeOrder = .rowMajor) -> ComplexMatrix {
+        precondition(self.shape.count == shape.count)
+        return ComplexMatrix(real: real.reshaped(shape, order: order), imaginary: imaginary.reshaped(shape, order: order))
+    }
+    
+}
+
+
+extension ComplexMatrix where Scalar == Double {
+    
+    public func asRow(order: ReshapeOrder = .rowMajor) -> ComplexMatrix {
+        return reshaped(.row(length: shape.count), order: order)
+    }
+    
+    public func asColumn(order: ReshapeOrder = .rowMajor) -> ComplexMatrix {
+        return reshaped(.column(length: shape.count), order: order)
     }
     
 }
