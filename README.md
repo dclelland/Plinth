@@ -49,11 +49,12 @@ import Numerics
 
 ## Todo
 
+- [ ] Implement Equality/Comparisons extension
+- [ ] Implement wrapper for `vDSP.convolve`
+- [ ] Implement wrappers for `vDSP.fill`, `vDSP.clear`, `vDSP.window`, `vDSP.ramp`, `vDSP.stereoRamp`
+- [ ] Revisit `Eigendecomposition.sorted`, is sorting the eigenvalues by real component or the magnitude preferable?
 - [ ] Write notes on architecture and API design
 - [ ] Write code examples
-- [x] Update `Eigenvalues.swift` to return the full eigendecomposition
-- [ ] Implement wrapper for `vDSP.convolve`
-- [ ] Implement Equality/Comparisons extension
 - [ ] Add Cocoapods support
 
 # Documentation
