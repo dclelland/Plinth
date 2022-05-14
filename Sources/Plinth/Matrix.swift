@@ -71,14 +71,6 @@ extension Matrix {
     }
     
 }
-    
-extension Matrix where Scalar: Numeric {
-    
-    public static func zeros(shape: Shape) -> Matrix {
-        return .init(shape: shape, repeating: .zero)
-    }
-    
-}
 
 extension Matrix {
     

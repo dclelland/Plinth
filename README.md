@@ -50,7 +50,7 @@ import Numerics
 ## Todo
 
 - [ ] Implement Equality/Comparisons extension
-- [ ] Implement both `.zeros` and `.ones` initializers
+- [x] Implement both `.zeros` and `.ones` initializers
 - [ ] Implement wrappers for `vDSP.fill`, `vDSP.clear`, `vDSP.window`, `vDSP.ramp`, `vDSP.stereoRamp`
 - [ ] Implement wrapper for `vDSP.convolve`
 - [ ] Revisit `Eigendecomposition.sorted`, is sorting the eigenvalues by real component or the magnitude preferable?
@@ -223,6 +223,14 @@ Calculate central and standardized moments; convenience methods for `variance`, 
 Normalize a matrix to `0.0...1.0` using its `minimum()` and `maximum()` values; or shift it so that its `mean()` is centered on zero.
 
 ## Linear Algebra
+
+### [Zeros](Sources/Plinth/Extensions/Linear%20Algebra/Zeros.swift)
+
+Generate matrices populated by zeros.
+
+### [Ones](Sources/Plinth/Extensions/Linear%20Algebra/Ones.swift)
+
+Generate matrices populated by ones.
 
 ### [Identity](Sources/Plinth/Extensions/Linear%20Algebra/Identity.swift)
 
