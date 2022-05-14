@@ -49,7 +49,7 @@ import Numerics
 
 ## Todo
 
-- [ ] Implement Equality/Comparisons extension
+- [x] Implement Equality/Comparisons extension
 - [x] Implement both `.zeros` and `.ones` initializers
 - [ ] Implement wrappers for `vDSP.fill`, `vDSP.clear`, `vDSP.window`, `vDSP.ramp`, `vDSP.stereoRamp`
 - [ ] Implement wrapper for `vDSP.convolve`
@@ -179,6 +179,14 @@ This also supports both `.rowMajor` and `.columnMajor` orderings.
 ### [Shift](Sources/Plinth/Extensions/Transformations/Shift.swift)
 
 Apply a circular shift to a matrix.
+
+## Comparisons
+
+### [Comparisons](Sources/Plinth/Extensions/Comparisons/Comparisons.swift)
+
+`<`, `<=`, `>`, `>=`, `==`, `!==` infix operators.
+
+Pointwise comparison or equality checks, returning `0.0` for `false` and `1.0` for `true`.
 
 ## Mathematics
 
