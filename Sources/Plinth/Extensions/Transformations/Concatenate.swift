@@ -14,7 +14,7 @@ extension Array where Element == Matrix<Float> {
     }
     
     public func concatenatedColumns() -> Element {
-        return .concatenating(rows: self)
+        return .concatenating(columns: self)
     }
     
 }
@@ -54,7 +54,7 @@ extension Array where Element == ComplexMatrix<Float> {
     }
     
     public func concatenatedColumns() -> Element {
-        return .concatenating(rows: self)
+        return .concatenating(columns: self)
     }
     
 }
@@ -78,7 +78,7 @@ extension Array where Element == Matrix<Double> {
     }
     
     public func concatenatedColumns() -> Element {
-        return .concatenating(rows: self)
+        return .concatenating(columns: self)
     }
     
 }
@@ -118,7 +118,7 @@ extension Array where Element == ComplexMatrix<Double> {
     }
     
     public func concatenatedColumns() -> Element {
-        return .concatenating(rows: self)
+        return .concatenating(columns: self)
     }
     
 }
