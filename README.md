@@ -180,6 +180,10 @@ This also supports both `.rowMajor` and `.columnMajor` orderings.
 
 Apply a circular shift to a matrix.
 
+### [Concatenate](Sources/Plinth/Extensions/Transformations/Concatenate.swift)
+
+Concatentate multiple matrices together, row-wise or column-wise.
+
 ## Comparisons
 
 ### [Comparisons](Sources/Plinth/Extensions/Comparisons/Comparisons.swift)
