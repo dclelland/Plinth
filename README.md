@@ -204,10 +204,6 @@ Includes special functions for taking integer powers of matrices, for use when r
 
 This also supports negative integers by applying `vForce.reciprocal` to the result.
 
-### [Exponentiation](Sources/Plinth/Extensions/Mathematics/Exponentiation.swift)
-
-Complex exponentials.
-
 ### [Interpolation](Sources/Plinth/Extensions/Statistics/Interpolation.swift)
 
 Linear interpolate values from a given range to/from `0.0...1.0`.
@@ -277,6 +273,10 @@ Implements matrix multiplication.
 `/>` and `</` infix operators.
 
 Implements left and right matrix division (multiplying by the inverse of a matrix). 
+
+### [Exponentiation](Sources/Plinth/Extensions/Mathematics/Exponentiation.swift)
+
+Complex exponentials.
 
 ### [Products](Sources/Plinth/Extensions/Linear%20Algebra/Products.swift)
 
