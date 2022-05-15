@@ -7,6 +7,18 @@
 
 import Foundation
 
+extension Array where Element == Matrix<Float> {
+    
+    public func concatenatedRows() -> Element {
+        return .concatenating(rows: self)
+    }
+    
+    public func concatenatedColumns() -> Element {
+        return .concatenating(rows: self)
+    }
+    
+}
+
 extension Matrix where Scalar == Float {
     
     public static func concatenating(rows matrices: [Matrix]) -> Matrix {
@@ -35,6 +47,18 @@ extension Matrix where Scalar == Float {
     
 }
 
+extension Array where Element == ComplexMatrix<Float> {
+    
+    public func concatenatedRows() -> Element {
+        return .concatenating(rows: self)
+    }
+    
+    public func concatenatedColumns() -> Element {
+        return .concatenating(rows: self)
+    }
+    
+}
+
 extension ComplexMatrix where Scalar == Float {
     
     public static func concatenating(rows matrices: [ComplexMatrix]) -> ComplexMatrix {
@@ -43,6 +67,18 @@ extension ComplexMatrix where Scalar == Float {
     
     public static func concatenating(columns matrices: [ComplexMatrix]) -> ComplexMatrix {
         return ComplexMatrix(real: .concatenating(columns: matrices.map(\.real)), imaginary: .concatenating(columns: matrices.map(\.imaginary)))
+    }
+    
+}
+
+extension Array where Element == Matrix<Double> {
+    
+    public func concatenatedRows() -> Element {
+        return .concatenating(rows: self)
+    }
+    
+    public func concatenatedColumns() -> Element {
+        return .concatenating(rows: self)
     }
     
 }
@@ -71,6 +107,18 @@ extension Matrix where Scalar == Double {
             currentColumn += matrix.shape.columns
         }
         return output
+    }
+    
+}
+
+extension Array where Element == ComplexMatrix<Double> {
+    
+    public func concatenatedRows() -> Element {
+        return .concatenating(rows: self)
+    }
+    
+    public func concatenatedColumns() -> Element {
+        return .concatenating(rows: self)
     }
     
 }
