@@ -51,6 +51,7 @@ import Numerics
 
 - [x] Implement Equality/Comparisons extension
 - [x] Implement both `.zeros` and `.ones` initializers
+- [x] Implement exception handling for LAPACK calls
 - [ ] Implement wrappers for `vDSP.fill`, `vDSP.clear`, `vDSP.window`, `vDSP.ramp`, `vDSP.stereoRamp`
 - [ ] Implement wrapper for `vDSP.convolve`
 - [ ] Revisit `Eigendecomposition.sorted`, is sorting the eigenvalues by real component or the magnitude preferable?

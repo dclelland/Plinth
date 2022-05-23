@@ -8,9 +8,25 @@
 import Foundation
 import Accelerate
 
+public enum InversionError<Scalar>: Error, CustomStringConvertible {
+    
+    case illegalValue(matrix: Matrix<Scalar>, code: Int32)
+    case computationFailed(matrix: Matrix<Scalar>, code: Int32)
+    
+    public var description: String {
+        switch self {
+        case .illegalValue(_, let code):
+            return "Matrix inversion error: Illegal value (\(code))"
+        case .computationFailed(_, let code):
+            return "Matrix inversion error: Computation failed (\(code))"
+        }
+    }
+    
+}
+
 extension Matrix where Scalar == Float {
     
-    public func inverted() -> Matrix {
+    public func inverted() throws -> Matrix {
         precondition(shape.isSquare)
         
         var input = self
@@ -24,7 +40,13 @@ extension Matrix where Scalar == Float {
             sgetri_(length, &input.elements, length, &pivots, &workspace, length, &error)
         }
         
-        precondition(error == 0)
+        if error < 0 {
+            throw InversionError.illegalValue(matrix: self, code: error)
+        }
+        
+        if error > 0 {
+            throw InversionError.computationFailed(matrix: self, code: error)
+        }
         
         return input
     }
@@ -33,7 +55,7 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Double {
     
-    public func inverted() -> Matrix {
+    public func inverted() throws -> Matrix {
         precondition(shape.isSquare)
         
         var input = self
@@ -47,7 +69,13 @@ extension Matrix where Scalar == Double {
             dgetri_(length, &input.elements, length, &pivots, &workspace, length, &error)
         }
         
-        precondition(error == 0)
+        if error < 0 {
+            throw InversionError.illegalValue(matrix: self, code: error)
+        }
+        
+        if error > 0 {
+            throw InversionError.computationFailed(matrix: self, code: error)
+        }
         
         return input
     }

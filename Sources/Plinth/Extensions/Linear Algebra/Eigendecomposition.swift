@@ -9,6 +9,22 @@ import Foundation
 import Accelerate
 import Numerics
 
+public enum EigendecompositionError<Scalar>: Error, CustomStringConvertible {
+    
+    case illegalValue(matrix: Matrix<Scalar>, code: Int32)
+    case computationFailed(matrix: Matrix<Scalar>, code: Int32)
+    
+    public var description: String {
+        switch self {
+        case .illegalValue(_, let code):
+            return "Matrix eigendecomposition error: Illegal value (\(code))"
+        case .computationFailed(_, let code):
+            return "Matrix eigendecomposition error: Computation failed (\(code))"
+        }
+    }
+    
+}
+
 public struct EigendecompositionComponents {
     
     internal enum Computed {
@@ -110,7 +126,7 @@ extension Eigendecomposition {
 
 extension Matrix where Scalar == Float {
     
-    public func eigendecomposition(computing components: EigendecompositionComponents = .allComponents) -> Eigendecomposition<Scalar> {
+    public func eigendecomposition(computing components: EigendecompositionComponents = .allComponents) throws -> Eigendecomposition<Scalar> {
         precondition(shape.isSquare)
         
         var input = transposed()
@@ -135,8 +151,14 @@ extension Matrix where Scalar == Float {
             
             sgeev_(&leftFlag, &rightFlag, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspace, &workspaceSize, &error)
         }
+
+        if error < 0 {
+            throw EigendecompositionError.illegalValue(matrix: self, code: error)
+        }
         
-        precondition(error == 0)
+        if error > 0 {
+            throw EigendecompositionError.computationFailed(matrix: self, code: error)
+        }
         
         return Eigendecomposition(
             leftWorkspace: leftWorkspace.transposed(),
@@ -149,7 +171,7 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Double {
     
-    public func eigendecomposition(computing components: EigendecompositionComponents = .allComponents) -> Eigendecomposition<Scalar> {
+    public func eigendecomposition(computing components: EigendecompositionComponents = .allComponents) throws -> Eigendecomposition<Scalar> {
         precondition(shape.isSquare)
         
         var input = transposed()
@@ -175,7 +197,13 @@ extension Matrix where Scalar == Double {
             dgeev_(&leftFlag, &rightFlag, length, &input.elements, length, &eigenvalues.real.elements, &eigenvalues.imaginary.elements, &leftWorkspace.elements, length, &rightWorkspace.elements, length, &workspace, &workspaceSize, &error)
         }
         
-        precondition(error == 0)
+        if error < 0 {
+            throw EigendecompositionError.illegalValue(matrix: self, code: error)
+        }
+        
+        if error > 0 {
+            throw EigendecompositionError.computationFailed(matrix: self, code: error)
+        }
         
         return Eigendecomposition(
             leftWorkspace: leftWorkspace.transposed(),

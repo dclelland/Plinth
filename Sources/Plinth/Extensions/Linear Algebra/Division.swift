@@ -17,72 +17,72 @@ infix operator </=: AssignmentPrecedence
 
 extension Matrix where Scalar == Float {
     
-    @inlinable public static func /> (left: Matrix, right: Matrix) -> Matrix {
-        return left.leftDivided(by: right)
+    @inlinable public static func /> (left: Matrix, right: Matrix) throws -> Matrix {
+        return try left.leftDivided(by: right)
     }
     
-    @inlinable public static func </ (left: Matrix, right: Matrix) -> Matrix {
-        return left.rightDivided(by: right)
-    }
-    
-}
-
-extension Matrix where Scalar == Float {
-    
-    @inlinable public static func />= (left: inout Matrix, right: Matrix) {
-        left = left </ right
-    }
-    
-    @inlinable public static func </= (left: inout Matrix, right: Matrix) {
-        left = left /> right
+    @inlinable public static func </ (left: Matrix, right: Matrix) throws -> Matrix {
+        return try left.rightDivided(by: right)
     }
     
 }
 
 extension Matrix where Scalar == Float {
     
-    public func leftDivided(by dividend: Matrix) -> Matrix {
-        return inverted() <*> dividend
+    @inlinable public static func />= (left: inout Matrix, right: Matrix) throws {
+        left = try left </ right
     }
     
-    public func rightDivided(by divisor: Matrix) -> Matrix {
-        return divisor <*> inverted()
+    @inlinable public static func </= (left: inout Matrix, right: Matrix) throws {
+        left = try left /> right
+    }
+    
+}
+
+extension Matrix where Scalar == Float {
+    
+    public func leftDivided(by dividend: Matrix) throws -> Matrix {
+        return try inverted() <*> dividend
+    }
+    
+    public func rightDivided(by divisor: Matrix) throws -> Matrix {
+        return try divisor <*> inverted()
     }
     
 }
 
 extension Matrix where Scalar == Double {
     
-    @inlinable public static func /> (left: Matrix, right: Matrix) -> Matrix {
-        return left.leftDivided(by: right)
+    @inlinable public static func /> (left: Matrix, right: Matrix) throws -> Matrix {
+        return try left.leftDivided(by: right)
     }
     
-    @inlinable public static func </ (left: Matrix, right: Matrix) -> Matrix {
-        return left.rightDivided(by: right)
-    }
-    
-}
-
-extension Matrix where Scalar == Double {
-    
-    @inlinable public static func />= (left: inout Matrix, right: Matrix) {
-        left = left </ right
-    }
-    
-    @inlinable public static func </= (left: inout Matrix, right: Matrix) {
-        left = left /> right
+    @inlinable public static func </ (left: Matrix, right: Matrix) throws -> Matrix {
+        return try left.rightDivided(by: right)
     }
     
 }
 
 extension Matrix where Scalar == Double {
     
-    public func leftDivided(by dividend: Matrix) -> Matrix {
-        return inverted() <*> dividend
+    @inlinable public static func />= (left: inout Matrix, right: Matrix) throws {
+        try left = left </ right
     }
     
-    public func rightDivided(by divisor: Matrix) -> Matrix {
-        return divisor <*> inverted()
+    @inlinable public static func </= (left: inout Matrix, right: Matrix) throws {
+        try left = left /> right
+    }
+    
+}
+
+extension Matrix where Scalar == Double {
+    
+    public func leftDivided(by dividend: Matrix) throws -> Matrix {
+        return try inverted() <*> dividend
+    }
+    
+    public func rightDivided(by divisor: Matrix) throws -> Matrix {
+        return try divisor <*> inverted()
     }
     
 }
