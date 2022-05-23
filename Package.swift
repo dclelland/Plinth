@@ -7,7 +7,7 @@ let package = Package(
     name: "Plinth",
     platforms: [
         .macOS(.v12),
-        .iOS(.v13)
+        .iOS(.v14)
     ],
     products: [
         .library(name: "Plinth", targets: ["Plinth"])
