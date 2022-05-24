@@ -8,12 +8,12 @@
 import Foundation
 import Accelerate
 
-public enum InversionError<Scalar>: Error, CustomStringConvertible {
+public enum InversionError<Scalar>: LocalizedError {
     
     case illegalValue(matrix: Matrix<Scalar>, code: Int32)
     case computationFailed(matrix: Matrix<Scalar>, code: Int32)
     
-    public var description: String {
+    public var errorDescription: String? {
         switch self {
         case .illegalValue(_, let code):
             return "Matrix inversion error: Illegal value (\(code))"

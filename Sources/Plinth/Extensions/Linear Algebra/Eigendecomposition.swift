@@ -9,12 +9,12 @@ import Foundation
 import Accelerate
 import Numerics
 
-public enum EigendecompositionError<Scalar>: Error, CustomStringConvertible {
+public enum EigendecompositionError<Scalar>: LocalizedError {
     
     case illegalValue(matrix: Matrix<Scalar>, code: Int32)
     case computationFailed(matrix: Matrix<Scalar>, code: Int32)
     
-    public var description: String {
+    public var errorDescription: String? {
         switch self {
         case .illegalValue(_, let code):
             return "Matrix eigendecomposition error: Illegal value (\(code))"
