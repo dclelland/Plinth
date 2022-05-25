@@ -133,3 +133,24 @@ extension Shape: Hashable {
     }
     
 }
+
+extension Shape: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        case rows
+        case columns
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.rows = try container.decode(Int.self, forKey: .rows)
+        self.columns = try container.decode(Int.self, forKey: .columns)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(rows, forKey: .rows)
+        try container.encode(columns, forKey: .columns)
+    }
+
+}
