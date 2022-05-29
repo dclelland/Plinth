@@ -100,7 +100,7 @@ extension Matrix {
             case .shapeIsEmpty:
                 return "Shape is empty"
             case .shapeMismatch(let shape, let count):
-                return "Mismatched shape and elements; \(shape) != \(count)"
+                return "Mismatched shape and elements; \(shape) ≠ \(count)"
             }
         }
         

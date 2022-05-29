@@ -125,7 +125,7 @@ extension ComplexMatrix {
             case .imaginaryPart(let imaginary):
                 return "Malformed imaginary part: \(imaginary)"
             case .shapeMismatch(let real, let imaginary):
-                return "Shape mismatch between real and imaginary parts; \(real) != \(imaginary)"
+                return "Shape mismatch between real and imaginary parts; \(real) ≠ \(imaginary)"
             }
         }
         
