@@ -20,3 +20,17 @@ extension Matrix where Scalar: Numeric {
     }
     
 }
+
+extension ComplexMatrix where Scalar: Numeric {
+    
+    public static func diagonal(length: Int, index: Int = 0) -> ComplexMatrix {
+        return .diagonal(vector: .init(repeating: 1, count: length), index: index)
+    }
+    
+    public static func diagonal(vector: [Complex], index: Int = 0) -> ComplexMatrix {
+        return .init(shape: .square(length: vector.count + abs(index))) { row, column in
+            return column - row == index ? vector[Swift.min(row, column)] : 0
+        }
+    }
+    
+}

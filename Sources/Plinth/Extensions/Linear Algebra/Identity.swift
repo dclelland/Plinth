@@ -16,3 +16,13 @@ extension Matrix where Scalar: Numeric {
     }
     
 }
+
+extension ComplexMatrix where Scalar: Numeric {
+    
+    public static func identity(shape: Shape) -> ComplexMatrix {
+        return .init(shape: shape) { row, column in
+            return row == column ? 1 : 0
+        }
+    }
+    
+}
