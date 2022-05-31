@@ -259,7 +259,7 @@ Transpose a matrix.
 
 Calculate the inverse of a matrix.
 
-> Uses LAPACK's [`sgetri_`](http://www.netlib.org/lapack/explore-html/d8/ddc/group__real_g_ecomputational_ga1af62182327d0be67b1717db399d7d83.html)/[`dgetri_`](http://www.netlib.org/lapack/explore-html/dd/d9a/group__double_g_ecomputational_ga56d9c860ce4ce42ded7f914fdb0683ff.html#ga56d9c860ce4ce42ded7f914fdb0683ff).
+> Uses LAPACK's [`sgetri_`](http://www.netlib.org/lapack/explore-html/d8/ddc/group__real_g_ecomputational_ga1af62182327d0be67b1717db399d7d83.html)/[`dgetri_`](http://www.netlib.org/lapack/explore-html/dd/d9a/group__double_g_ecomputational_ga56d9c860ce4ce42ded7f914fdb0683ff.html) for real matrices and [`cgetri_`](http://www.netlib.org/lapack/explore-html/d4/d7e/group__complex_g_ecomputational_gae22ce12a3734b080ad8369ebf7e9c3a7.html)/[`zgetri_`](http://www.netlib.org/lapack/explore-html/d3/d01/group__complex16_g_ecomputational_gab490cfc4b92edec5345479f19a9a72ca.html).
 
 ### [Multiplication](Sources/Plinth/Extensions/Linear%20Algebra/Multiplication.swift)
 
@@ -267,7 +267,7 @@ Calculate the inverse of a matrix.
 
 Implements matrix multiplication.
 
-> Uses Accelerate's [`vDSP_mmul`](https://developer.apple.com/documentation/accelerate/1449984-vdsp_mmul)/[`vDSP_mmulD`](https://developer.apple.com/documentation/accelerate/1450386-vdsp_mmuld).
+> Uses Accelerate's [`vDSP_mmul`](https://developer.apple.com/documentation/accelerate/1449984-vdsp_mmul)/[`vDSP_mmulD`](https://developer.apple.com/documentation/accelerate/1450386-vdsp_mmuld) for real matrices and [`vDSP_zmmul`](https://developer.apple.com/documentation/accelerate/1449712-vdsp_zmmul)/[`vDSP_zmmulD`](https://developer.apple.com/documentation/accelerate/1450796-vdsp_zmmuld) for complex matrices.
 
 ### [Division](Sources/Plinth/Extensions/Linear%20Algebra/Division.swift)
 
