@@ -97,19 +97,33 @@ extension Eigendecomposition {
     
     public enum SortOrder {
         
-        case ascending
-        case descending
+        case realAscending
+        case realDescending
+        case magnitudeAscending
+        case magnitudeDescending
+        
+        internal func areInIncreasingOrder(_ lhs: Complex<Scalar>, _ rhs: Complex<Scalar>) -> Bool {
+            switch self {
+            case .realAscending:
+                return lhs.real < rhs.real
+            case .realDescending:
+                return lhs.real > rhs.real
+            case .magnitudeAscending:
+                return lhs.magnitude < rhs.magnitude
+            case .magnitudeDescending:
+                return lhs.magnitude > rhs.magnitude
+            }
+        }
         
     }
     
-    public func sorted(_ sortOrder: SortOrder = .ascending) -> Eigendecomposition {
-        let sorted = eigenvalues.enumerated().sorted { lhs, rhs in
-            switch sortOrder {
-            case .ascending:
-                return lhs.element.real < rhs.element.real
-            case .descending:
-                return lhs.element.real > rhs.element.real
-            }
+    public func sorted(_ sortOrder: SortOrder) -> Eigendecomposition {
+        return sorted(by: sortOrder.areInIncreasingOrder)
+    }
+    
+    public func sorted(by areInIncreasingOrder: (Complex<Scalar>, Complex<Scalar>) throws -> Bool) rethrows -> Eigendecomposition {
+        let sorted = try eigenvalues.enumerated().sorted { lhs, rhs in
+            return try areInIncreasingOrder(lhs.element, rhs.element)
         }
         
         return Eigendecomposition(

@@ -54,7 +54,7 @@ import Numerics
 - [x] Implement exception handling for LAPACK calls
 - [ ] Implement wrappers for `vDSP.fill`, `vDSP.clear`, `vDSP.window`, `vDSP.ramp`, `vDSP.stereoRamp`
 - [ ] Implement wrapper for `vDSP.convolve`
-- [ ] Revisit `Eigendecomposition.sorted`, is sorting the eigenvalues by real component or the magnitude preferable?
+- [x] Revisit `Eigendecomposition.sorted`, is sorting the eigenvalues by real component or the magnitude preferable?
 - [ ] Write notes on architecture and API design
 - [ ] Write code examples
 - [ ] Add Cocoapods support
@@ -293,7 +293,7 @@ Inner and outer products.
 
 ### [Eigendecomposition](Sources/Plinth/Extensions/Linear%20Algebra/Eigendecomposition.swift)
 
-Calculate the eigendecomposition of a matrix. Includes support for only calculating the necessary components.
+Calculate the eigendecomposition of a matrix. Includes support for only calculating the necessary components. Also includes support for sorting the eigenvectors by properties of the eigenvalues.
 
 > Uses LAPACK's [`sgeev_`](http://www.netlib.org/lapack/explore-html/d3/dfb/group__real_g_eeigen_ga104525b749278774f7b7f57195aa6798.html)/[`dgeev_`](http://www.netlib.org/lapack/explore-html/d9/d8e/group__double_g_eeigen_ga66e19253344358f5dee1e60502b9e96f.html).
 > Swift implementation cribbed from [Surge](https://github.com/Jounce/Surge/blob/master/Sources/Surge/Linear%20Algebra/Matrix.swift#L944).
