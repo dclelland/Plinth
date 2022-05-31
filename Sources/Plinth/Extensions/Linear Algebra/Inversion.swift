@@ -53,6 +53,15 @@ extension Matrix where Scalar == Float {
     
 }
 
+extension ComplexMatrix where Scalar == Float {
+    
+    public func inverted() throws -> ComplexMatrix {
+        #warning("Implement ComplexMatrix<Float>.inverted()")
+        fatalError()
+    }
+    
+}
+
 extension Matrix where Scalar == Double {
     
     public func inverted() throws -> Matrix {
@@ -78,6 +87,15 @@ extension Matrix where Scalar == Double {
         }
         
         return input
+    }
+    
+}
+
+extension ComplexMatrix where Scalar == Double {
+    
+    public func inverted() throws -> ComplexMatrix {
+        #warning("Implement ComplexMatrix<Double>.inverted()")
+        fatalError()
     }
     
 }
