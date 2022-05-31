@@ -71,8 +71,17 @@ extension ComplexMatrix where Scalar == Float {
     
     public func multiplied(by multiplicand: ComplexMatrix) -> ComplexMatrix {
         precondition(shape.columns == multiplicand.shape.rows)
-        #warning("Implement ComplexMatrix<Float>.multiplied(by:)")
-        fatalError()
+        var left = self
+        var right = multiplicand
+        var output: ComplexMatrix = .zeros(shape: .init(rows: shape.rows, columns: multiplicand.shape.columns))
+        left.withUnsafeMutableSplitComplexVector { leftVector in
+            right.withUnsafeMutableSplitComplexVector { rightVector in
+                output.withUnsafeMutableSplitComplexVector { outputVector in
+                    vDSP_zmmul(&leftVector, 1, &rightVector, 1, &outputVector, 1, vDSP_Length(shape.rows), vDSP_Length(multiplicand.shape.columns), vDSP_Length(shape.columns))
+                }
+            }
+        }
+        return output
     }
     
 }
@@ -136,8 +145,17 @@ extension ComplexMatrix where Scalar == Double {
     
     public func multiplied(by multiplicand: ComplexMatrix) -> ComplexMatrix {
         precondition(shape.columns == multiplicand.shape.rows)
-        #warning("Implement ComplexMatrix<Double>.multiplied(by:)")
-        fatalError()
+        var left = self
+        var right = multiplicand
+        var output: ComplexMatrix = .zeros(shape: .init(rows: shape.rows, columns: multiplicand.shape.columns))
+        left.withUnsafeMutableSplitComplexVector { leftVector in
+            right.withUnsafeMutableSplitComplexVector { rightVector in
+                output.withUnsafeMutableSplitComplexVector { outputVector in
+                    vDSP_zmmulD(&leftVector, 1, &rightVector, 1, &outputVector, 1, vDSP_Length(shape.rows), vDSP_Length(multiplicand.shape.columns), vDSP_Length(shape.columns))
+                }
+            }
+        }
+        return output
     }
     
 }
