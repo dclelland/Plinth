@@ -76,7 +76,8 @@ public struct Eigendecomposition<Scalar> where Scalar: Real {
         for row in workspace.shape.rowIndices {
             var column = 0
             while column < workspace.shape.columns {
-                switch eigenvalues[0, column].imaginary.isZero {
+                let eigenvalue = eigenvalues[0, column]
+                switch eigenvalue.imaginary.isZero || eigenvalue.imaginary.isNaN {
                 case true:
                     eigenvectors[row, column] = Complex(workspace[row, column], .zero)
                     column += 1
