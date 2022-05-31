@@ -275,9 +275,17 @@ Implements matrix multiplication.
 
 Implements left and right matrix division (multiplying by the inverse of a matrix). 
 
+### [Square Root](Sources/Plinth/Extensions/Mathematics/SquareRoot.swift)
+
+Complex square roots.
+
+> Formula taken from MATLAB's [`sqrt`](https://www.mathworks.com/help/matlab/ref/sqrt.html) function.
+
 ### [Exponentiation](Sources/Plinth/Extensions/Mathematics/Exponentiation.swift)
 
 Complex exponentials.
+
+> Formula taken from MATLAB's [`exp`](https://www.mathworks.com/help/matlab/ref/exp.html) function.
 
 ### [Products](Sources/Plinth/Extensions/Linear%20Algebra/Products.swift)
 
