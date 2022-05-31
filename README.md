@@ -318,6 +318,6 @@ Some of the inverse fourier transform methods implement energy conservation by d
 
 Apply a circular rotation to a frequency-domain matrix so that the DC/DC signal is at the top left of the lower right quadrant.
 
-### [Correlation](Sources/Plinth/Extensions/Signal%20Processing/Correlation.swift)
+### [Autocorrelation](Sources/Plinth/Extensions/Signal%20Processing/Autocorrelation.swift)
 
 Calculate the autocorrelation of a matrix by taking the square magnitudes in the frequency domain.
