@@ -44,7 +44,11 @@ extension Matrix where Scalar == Float {
     }
     
     public func standardizedMoment(degree: Int, mean: Scalar) -> Scalar {
-        return centralMoment(degree: degree, mean: mean) / standardDeviation(mean: mean) ** Scalar(degree)
+        let standardDeviation = standardDeviation(mean: mean)
+        guard standardDeviation.isZero == false else {
+            return .zero
+        }
+        return centralMoment(degree: degree, mean: mean) / standardDeviation ** Scalar(degree)
     }
     
 }
@@ -134,7 +138,11 @@ extension Matrix where Scalar == Double {
     }
     
     public func standardizedMoment(degree: Int, mean: Scalar) -> Scalar {
-        return centralMoment(degree: degree, mean: mean) / standardDeviation(mean: mean) ** Scalar(degree)
+        let standardDeviation = standardDeviation(mean: mean)
+        guard standardDeviation.isZero == false else {
+            return .zero
+        }
+        return centralMoment(degree: degree, mean: mean) / standardDeviation ** Scalar(degree)
     }
     
 }
