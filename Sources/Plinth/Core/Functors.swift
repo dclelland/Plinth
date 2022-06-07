@@ -32,6 +32,37 @@ extension Matrix {
     
 }
 
+extension Matrix where Scalar: Numeric {
+    
+    @inlinable public func fmap(shape: Shape, _ function: (inout vImage_Buffer, inout vImage_Buffer) -> (vImage_Error)) throws -> Matrix {
+        var input = self
+        var output: Matrix = .zeros(shape: shape)
+        try input.withImageBuffer { inputBuffer in
+            try output.withImageBuffer { outputBuffer in
+                if case let error = function(&inputBuffer, &outputBuffer), error != kvImageNoError {
+                    throw vImage.Error(vImageError: error)
+                }
+            }
+        }
+        return output
+    }
+    
+}
+
+extension Matrix {
+    
+    @inlinable public mutating func withImageBuffer<Result>(_ body: (inout vImage_Buffer) throws -> Result) rethrows -> Result {
+        var input = self
+        return try input.elements.withUnsafeMutableBytes { pointer in
+            var buffer = vImage_Buffer(data: pointer.baseAddress!, height: vImagePixelCount(shape.rows), width: vImagePixelCount(shape.columns), rowBytes: MemoryLayout<Scalar>.size * shape.columns)
+            let result = try body(&buffer)
+            self.elements = Array(UnsafeBufferPointer(start: buffer.data.bindMemory(to: Scalar.self, capacity: shape.count), count: shape.count))
+            return result
+        }
+    }
+    
+}
+
 extension ComplexMatrix {
     
     @inlinable public func fmap<A>(real realFunction: ([Scalar]) -> [A], imaginary imaginaryFunction: ([Scalar]) -> [A]) -> ComplexMatrix<A> {
