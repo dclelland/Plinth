@@ -1,6 +1,6 @@
 # Plinth
 
-Hardware-accelerated matrix library for Swift.
+Hardware-accelerated matrix/numeric programming library for Swift.
 
 ## Installation
 
