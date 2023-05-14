@@ -57,7 +57,7 @@ import Numerics
 - [x] Revisit `Eigendecomposition.sorted`, is sorting the eigenvalues by real component or the magnitude preferable?
 - [ ] Write notes on architecture and API design
 - [ ] Write code examples
-- [ ] ~~Add Cocoapods support~~ Can't do this, [swift-numerics](https://github.com/apple/swift-numerics) only supports SPM. Perhaps I should make my own `Complex` type.
+- [ ] ~~Add Cocoapods support~~ Can't do this, `swift-numerics` only supports SPM. Perhaps I should make my own `Complex` type.
 
 # Documentation
 
