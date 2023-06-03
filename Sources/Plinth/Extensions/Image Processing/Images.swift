@@ -49,7 +49,7 @@ extension Matrix where Scalar == UInt8 {
 extension Matrix where Scalar == UInt8 {
     
     public init?(ciImage: CIImage) {
-        guard let cgImage = ciImage.cgImage else {
+        guard let cgImage = CIContext().createCGImage(ciImage, from: ciImage.extent) else {
             return nil
         }
         self.init(cgImage: cgImage)
