@@ -302,6 +302,16 @@ Calculate the eigendecomposition of a matrix. Includes support for only calculat
 
 Calculate the roots of a polynomial by taking the eigenvalues of a companion matrix.
 
+## Image Processing
+
+### [Bitmaps](Sources/Plinth/Extensions/Image%20Processing/Bitmaps.swift)
+
+Conversion to and from floating point formats in the range `0.0...1.0` to 8-bit bitmaps in the range `0...255`.
+
+### [Images](Sources/Plinth/Extensions/Image%20Processing/Images.swift)
+
+Conversion to and from 8-bit bitmaps and `CGImage`, `CIImage`, `NSImage`, and `UIImage`.
+
 ## Signal Processing
 
 ### [FFT](Sources/Plinth/Extensions/Signal%20Processing/FFT.swift)
