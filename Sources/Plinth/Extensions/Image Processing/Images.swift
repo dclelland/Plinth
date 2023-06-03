@@ -35,11 +35,14 @@ import UIKit
 extension Matrix where Scalar == UInt8 {
     
     public init?(uiImage: UIImage) {
-        fatalError("UIImage to Matrix conversion not implemented yet")
+        guard let cgImage = uiImage.cgImage else {
+            return nil
+        }
+        self.init(cgImage: cgImage)
     }
 
     public var uiImage: UIImage {
-        fatalError("Matrix to UIImage conversion not implemented yet")
+        return UIImage(cgImage: cgImage)
     }
     
 }
