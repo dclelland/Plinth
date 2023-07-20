@@ -7,6 +7,7 @@
 
 import Foundation
 import Accelerate
+import Numerics
 
 extension Matrix where Scalar == Float {
     

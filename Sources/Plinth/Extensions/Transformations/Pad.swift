@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Numerics
 
 public struct PadRoundingRule {
 

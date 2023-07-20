@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Accelerate
 
 extension Matrix where Scalar == Float {
     

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Numerics
 
 extension Array where Element == Matrix<Float> {
     
