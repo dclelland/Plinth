@@ -30,12 +30,44 @@ extension Matrix where Scalar == Float {
 
 extension Matrix where Scalar == Float {
     
+    @inlinable public static func < (left: Scalar, right: Matrix) -> Matrix {
+        return right > left
+    }
+    
+    @inlinable public static func <= (left: Scalar, right: Matrix) -> Matrix {
+        return right >= left
+    }
+    
+    @inlinable public static func > (left: Scalar, right: Matrix) -> Matrix {
+        return right < left
+    }
+    
+    @inlinable public static func >= (left: Scalar, right: Matrix) -> Matrix {
+        return right <= left
+    }
+    
+}
+
+extension Matrix where Scalar == Float {
+    
     @inlinable public static func == (left: Matrix, right: Scalar) -> Matrix {
         return (left - right).absolute().threshold(to: .zero.nextUp, with: .signedConstant(-1.0)).threshold(to: .zero, with: .zeroFill)
     }
     
     @inlinable public static func !== (left: Matrix, right: Scalar) -> Matrix {
         return (left - right).absolute().threshold(to: .zero.nextUp, with: .signedConstant(1.0)).threshold(to: .zero, with: .zeroFill)
+    }
+    
+}
+
+extension Matrix where Scalar == Float {
+    
+    @inlinable public static func == (left: Scalar, right: Matrix) -> Matrix {
+        return right == left
+    }
+    
+    @inlinable public static func !== (left: Scalar, right: Matrix) -> Matrix {
+        return right !== left
     }
     
 }
@@ -59,7 +91,27 @@ extension Matrix where Scalar == Double {
     }
     
 }
+
+extension Matrix where Scalar == Double {
     
+    @inlinable public static func < (left: Scalar, right: Matrix) -> Matrix {
+        return right > left
+    }
+    
+    @inlinable public static func <= (left: Scalar, right: Matrix) -> Matrix {
+        return right >= left
+    }
+    
+    @inlinable public static func > (left: Scalar, right: Matrix) -> Matrix {
+        return right < left
+    }
+    
+    @inlinable public static func >= (left: Scalar, right: Matrix) -> Matrix {
+        return right <= left
+    }
+    
+}
+
 extension Matrix where Scalar == Double {
     
     @inlinable public static func == (left: Matrix, right: Scalar) -> Matrix {
@@ -68,6 +120,18 @@ extension Matrix where Scalar == Double {
     
     @inlinable public static func !== (left: Matrix, right: Scalar) -> Matrix {
         return (left - right).absolute().threshold(to: .zero.nextUp, with: .signedConstant(1.0)).threshold(to: .zero, with: .zeroFill)
+    }
+    
+}
+
+extension Matrix where Scalar == Double {
+    
+    @inlinable public static func == (left: Scalar, right: Matrix) -> Matrix {
+        return right == left
+    }
+    
+    @inlinable public static func !== (left: Scalar, right: Matrix) -> Matrix {
+        return right !== left
     }
     
 }
