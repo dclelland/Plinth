@@ -215,11 +215,13 @@ Linear interpolate values from a given range to/from `0.0...1.0`.
 
 ### [Random](Sources/Plinth/Extensions/Statistics/Random.swift)
 
-Generate matrices populated with random noise.
+Generate matrices populated with random noise using the Swift random number generators or LAPACK functions for faster generation within set distributions.
+
+> Uses LAPACK's [`slarnv_`](https://www.netlib.org/lapack/explore-html/d5/dd2/group__larnv_ga46eb9295314bab79acf8821078c29d18.html)/[`dlarnv_`](https://www.netlib.org/lapack/explore-html/d5/dd2/group__larnv_ga768743496c909a18850020a8ce0382b4.html) for real matrices and [`clarnv_`](https://www.netlib.org/lapack/explore-html/d5/dd2/group__larnv_ga72a1ed9b1c8b1417e5d20234c3b7683d.html)/[`zlarnv_`](https://www.netlib.org/lapack/explore-html/d5/dd2/group__larnv_ga6c82846cc4856910b261619be101560c.html) for complex matrices.
 
 ### [Gaussian](Sources/Plinth/Extensions/Statistics/Gaussian.swift)
 
-Generate matrices populated with Gaussian noise.
+Generate matrices populated with Gaussian noise using the Swift random number generators.
 
 > This is derived from an answer on the [comp.lang.c FAQ](http://c-faq.com/lib/gaussian.html).
 
