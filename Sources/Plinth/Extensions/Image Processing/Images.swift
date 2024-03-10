@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Accelerate
 import CoreImage
 
 #if os(macOS)
@@ -67,44 +68,33 @@ extension Matrix where Scalar == UInt8 {
 extension Matrix where Scalar == UInt8 {
     
     public init?(cgImage: CGImage) {
-        let elements = CGContext(
-            data: nil,
-            width: cgImage.width,
-            height: cgImage.height,
-            bitsPerComponent: 8,
-            bytesPerRow: cgImage.width,
-            space: CGColorSpaceCreateDeviceGray(),
-            bitmapInfo: CGImageAlphaInfo.none.rawValue
-        ).flatMap { context in
-            context.draw(cgImage, in: CGRect(x: 0, y: 0, width: cgImage.width, height: cgImage.height))
-            return context.data.flatMap { data in
-                return Array<UInt8>(
-                    UnsafeBufferPointer(
-                        start: data.bindMemory(to: UInt8.self, capacity: cgImage.width * cgImage.height),
-                        count: cgImage.width * cgImage.height
-                    )
-                )
-            }
-        }
-        guard let elements = elements else {
-            return nil
-        }
-        self.init(shape: .init(rows: cgImage.height, columns: cgImage.width), elements: elements)
+        var cgImageFormat = Self.cgImageFormat
+        try? self.init(pixelBuffer: vImage.PixelBuffer(cgImage: cgImage, cgImageFormat: &cgImageFormat))
     }
     
     public var cgImage: CGImage {
-        var elements = elements
-        return CGContext(
-            data: &elements,
-            width: shape.columns,
-            height: shape.rows,
+        return pixelBuffer.makeCGImage(cgImageFormat: Self.cgImageFormat)!
+    }
+    
+    private static var cgImageFormat: vImage_CGImageFormat {
+        return vImage_CGImageFormat(
             bitsPerComponent: 8,
-            bytesPerRow: shape.columns,
-            space: CGColorSpaceCreateDeviceGray(),
-            bitmapInfo: CGImageAlphaInfo.none.rawValue
-        ).flatMap { context in
-            return context.makeImage()
-        }!
+            bitsPerPixel: 8,
+            colorSpace: CGColorSpaceCreateDeviceGray(),
+            bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
+        )!
+    }
+    
+}
+
+extension Matrix where Scalar == UInt8 {
+    
+    public init(pixelBuffer: vImage.PixelBuffer<vImage.Planar8>) {
+        fatalError()
+    }
+    
+    public var pixelBuffer: vImage.PixelBuffer<vImage.Planar8> {
+        return vImage.PixelBuffer(pixelValues: elements, size: vImage.Size(width: shape.columns, height: shape.rows))
     }
     
 }
