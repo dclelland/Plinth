@@ -90,7 +90,7 @@ extension Matrix where Scalar == UInt8 {
 extension Matrix where Scalar == UInt8 {
     
     public init(pixelBuffer: vImage.PixelBuffer<vImage.Planar8>) {
-        fatalError()
+        self.init(shape: .init(rows: pixelBuffer.height, columns: pixelBuffer.width), elements: pixelBuffer.array)
     }
     
     public var pixelBuffer: vImage.PixelBuffer<vImage.Planar8> {
