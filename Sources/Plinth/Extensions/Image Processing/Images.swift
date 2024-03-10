@@ -69,7 +69,7 @@ extension Matrix where Scalar == UInt8 {
     
     public init?(cgImage: CGImage) {
         var cgImageFormat = Self.cgImageFormat
-        try? self.init(pixelBuffer: PixelBuffer(cgImage: cgImage, cgImageFormat: &cgImageFormat))
+        try? self.init(pixelBuffer: vImage.PixelBuffer<vImage.Planar8>(cgImage: cgImage, cgImageFormat: &cgImageFormat))
     }
     
     public var cgImage: CGImage {
@@ -78,8 +78,8 @@ extension Matrix where Scalar == UInt8 {
     
     private static var cgImageFormat: vImage_CGImageFormat {
         return vImage_CGImageFormat(
-            bitsPerComponent: 8,
-            bitsPerPixel: 8,
+            bitsPerComponent: vImage.Planar8.bitCountPerComponent,
+            bitsPerPixel: vImage.Planar8.bitCountPerPixel,
             colorSpace: CGColorSpaceCreateDeviceGray(),
             bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
         )!
@@ -89,15 +89,12 @@ extension Matrix where Scalar == UInt8 {
 
 extension Matrix where Scalar == UInt8 {
     
-    public typealias PixelFormat = vImage.Planar8
-    public typealias PixelBuffer = vImage.PixelBuffer<PixelFormat>
-    
-    public init(pixelBuffer: PixelBuffer) {
+    public init(pixelBuffer: vImage.PixelBuffer<vImage.Planar8>) {
         self.init(shape: .init(rows: pixelBuffer.height, columns: pixelBuffer.width), elements: pixelBuffer.array)
     }
     
-    public var pixelBuffer: PixelBuffer {
-        return PixelBuffer(pixelValues: elements, size: vImage.Size(width: shape.columns, height: shape.rows))
+    public var pixelBuffer: vImage.PixelBuffer<vImage.Planar8> {
+        return vImage.PixelBuffer<vImage.Planar8>(pixelValues: elements, size: vImage.Size(width: shape.columns, height: shape.rows))
     }
     
 }
