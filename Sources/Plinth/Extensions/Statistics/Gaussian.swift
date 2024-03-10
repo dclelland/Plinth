@@ -41,6 +41,24 @@ extension Matrix where Scalar == Float {
     
 }
 
+extension ComplexMatrix where Scalar == Float {
+    
+    public static func gaussian(shape: Shape, mean: Complex = .zero, standardDeviation: Scalar = 1.0) -> ComplexMatrix {
+        return .init(
+            real: .gaussian(shape: shape, mean: mean.real, standardDeviation: standardDeviation),
+            imaginary: .gaussian(shape: shape, mean: mean.imaginary, standardDeviation: standardDeviation)
+        )
+    }
+    
+    public static func gaussian<T>(shape: Shape, mean: Complex = .zero, standardDeviation: Scalar = 1.0, using generator: inout T) -> ComplexMatrix where T: RandomNumberGenerator {
+        return .init(
+            real: .gaussian(shape: shape, mean: mean.real, standardDeviation: standardDeviation, using: &generator),
+            imaginary: .gaussian(shape: shape, mean: mean.imaginary, standardDeviation: standardDeviation, using: &generator)
+        )
+    }
+    
+}
+
 extension Double {
     
     internal static func gaussian() -> Self {
@@ -71,6 +89,24 @@ extension Matrix where Scalar == Double {
     
     public static func gaussian<T>(shape: Shape, mean: Scalar = 0.0, standardDeviation: Scalar = 1.0, using generator: inout T) -> Matrix where T: RandomNumberGenerator {
         return .init(shape: shape, Scalar.gaussian(using: &generator)) * standardDeviation + mean
+    }
+    
+}
+
+extension ComplexMatrix where Scalar == Double {
+    
+    public static func gaussian(shape: Shape, mean: Complex = .zero, standardDeviation: Scalar = 1.0) -> ComplexMatrix {
+        return .init(
+            real: .gaussian(shape: shape, mean: mean.real, standardDeviation: standardDeviation),
+            imaginary: .gaussian(shape: shape, mean: mean.imaginary, standardDeviation: standardDeviation)
+        )
+    }
+    
+    public static func gaussian<T>(shape: Shape, mean: Complex = .zero, standardDeviation: Scalar = 1.0, using generator: inout T) -> ComplexMatrix where T: RandomNumberGenerator {
+        return .init(
+            real: .gaussian(shape: shape, mean: mean.real, standardDeviation: standardDeviation, using: &generator),
+            imaginary: .gaussian(shape: shape, mean: mean.imaginary, standardDeviation: standardDeviation, using: &generator)
+        )
     }
     
 }
