@@ -54,7 +54,8 @@ import Numerics
 - [x] Implement exception handling for LAPACK calls
 - [ ] Implement wrappers for `vDSP.fill`, `vDSP.clear`, `vDSP.window`, `vDSP.ramp`, `vDSP.stereoRamp`
 - [ ] Implement wrapper for `vDSP.convolve`
-- [ ] Implement API for specifying seeds for LAPACK random number generator calls
+- [ ] Implement API for specifying seeds for LAPACK random number generator calls.
+    - Note the LAPACK specifications: "ISEED is INTEGER array, dimension (4). On entry, the seed of the random number generator; the array elements must be between 0 and 4095, and ISEED(4) must be odd."
 - [x] Revisit `Eigendecomposition.sorted`, is sorting the eigenvalues by real component or the magnitude preferable?
 - [ ] Write notes on architecture and API design
 - [ ] Write code examples
