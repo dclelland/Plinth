@@ -314,7 +314,7 @@ Conversion to and from floating point formats in the range `0.0...1.0` to 8-bit 
 
 ### [Images](Sources/Plinth/Extensions/Image%20Processing/Images.swift)
 
-Conversion to and from 8-bit bitmaps and `CGImage`, `CIImage`, `NSImage`, and `UIImage`.
+Conversion to and from `vImage.PixelBuffer`, `CGImage`, `CIImage`, `NSImage`, and `UIImage`.
 
 ## Signal Processing
 
