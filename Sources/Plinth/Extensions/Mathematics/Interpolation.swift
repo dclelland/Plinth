@@ -9,16 +9,44 @@ import Foundation
 
 extension Matrix where Scalar == Float {
     
+    public func linearInterpolated(to y0: Scalar, _ y1: Scalar) -> Matrix {
+        return self * (y1 - y0) + y0
+    }
+    
+    public func inverseLinearInterpolated(from x0: Scalar, _ x1: Scalar) -> Matrix {
+        guard x0 != x1 else {
+            return .init(shape: shape, repeating: x0)
+        }
+        
+        return (self - x0) / (x1 - x0)
+    }
+    
+}
+
+extension Matrix where Scalar == Float {
+    
     public func linearInterpolated(to destination: ClosedRange<Scalar>) -> Matrix {
-        return self * (destination.upperBound - destination.lowerBound) + destination.lowerBound
+        return linearInterpolated(to: destination.lowerBound, destination.upperBound)
     }
     
     public func inverseLinearInterpolated(from origin: ClosedRange<Scalar>) -> Matrix {
-        guard origin.lowerBound != origin.upperBound else {
-            return .init(shape: shape, repeating: origin.lowerBound)
+        return inverseLinearInterpolated(from: origin.lowerBound, origin.upperBound)
+    }
+    
+}
+
+extension Matrix where Scalar == Double {
+    
+    public func linearInterpolated(to y0: Scalar, _ y1: Scalar) -> Matrix {
+        return self * (y1 - y0) + y0
+    }
+    
+    public func inverseLinearInterpolated(from x0: Scalar, _ x1: Scalar) -> Matrix {
+        guard x0 != x1 else {
+            return .init(shape: shape, repeating: x0)
         }
         
-        return (self - origin.lowerBound) / (origin.upperBound - origin.lowerBound)
+        return (self - x0) / (x1 - x0)
     }
     
 }
@@ -26,15 +54,11 @@ extension Matrix where Scalar == Float {
 extension Matrix where Scalar == Double {
     
     public func linearInterpolated(to destination: ClosedRange<Scalar>) -> Matrix {
-        return self * (destination.upperBound - destination.lowerBound) + destination.lowerBound
+        return linearInterpolated(to: destination.lowerBound, destination.upperBound)
     }
     
     public func inverseLinearInterpolated(from origin: ClosedRange<Scalar>) -> Matrix {
-        guard origin.lowerBound != origin.upperBound else {
-            return .init(shape: shape, repeating: origin.lowerBound)
-        }
-        
-        return (self - origin.lowerBound) / (origin.upperBound - origin.lowerBound)
+        return inverseLinearInterpolated(from: origin.lowerBound, origin.upperBound)
     }
     
 }
