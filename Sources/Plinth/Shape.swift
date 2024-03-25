@@ -87,11 +87,11 @@ extension Shape {
 
 extension Shape {
     
-    @inlinable internal func indexFor(row: Int, column: Int) -> Int {
+    @inlinable public func indexFor(row: Int, column: Int) -> Int {
         return row * columns + column
     }
     
-    @inlinable internal func indicesFor(row: Int) -> ClosedRange<Int> {
+    @inlinable public func indicesFor(row: Int) -> ClosedRange<Int> {
         return indexFor(row: row, column: columnIndices.lowerBound)...indexFor(row: row, column: columnIndices.upperBound)
     }
     
@@ -99,11 +99,11 @@ extension Shape {
 
 extension Shape {
     
-    @inlinable internal func contains(row: Int, column: Int) -> Bool {
+    @inlinable public func contains(row: Int, column: Int) -> Bool {
         return rowIndices.contains(row) && columnIndices.contains(column)
     }
     
-    @inlinable internal func contains(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Bool {
+    @inlinable public func contains(rows: ClosedRange<Int>, columns: ClosedRange<Int>) -> Bool {
         return rowIndices.contains(rows.lowerBound) && rowIndices.contains(rows.upperBound) && columnIndices.contains(columns.lowerBound) && columnIndices.contains(columns.upperBound)
     }
     
