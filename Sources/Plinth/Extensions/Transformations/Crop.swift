@@ -31,6 +31,10 @@ extension Matrix where Scalar == Float {
         return cropped(top: top, left: left, bottom: bottom, right: right)
     }
     
+    public func cropped(inset: Int) -> Matrix {
+        return cropped(top: inset, left: inset, bottom: inset, right: inset)
+    }
+    
     public func cropped(top: Int = 0, left: Int = 0, bottom: Int = 0, right: Int = 0) -> Matrix {
         let rows = (top)...(shape.rows - bottom - 1)
         let columns = (left)...(shape.columns - right - 1)
@@ -43,6 +47,10 @@ extension ComplexMatrix where Scalar == Float {
     
     public func cropped(to shape: Shape, _ rule: CropRoundingRule = .towardsTopLeft) -> ComplexMatrix {
         return ComplexMatrix(real: real.cropped(to: shape, rule), imaginary: imaginary.cropped(to: shape, rule))
+    }
+    
+    public func cropped(inset: Int) -> ComplexMatrix {
+        return ComplexMatrix(real: real.cropped(inset: inset), imaginary: imaginary.cropped(inset: inset))
     }
     
     public func cropped(top: Int = 0, left: Int = 0, bottom: Int = 0, right: Int = 0) -> ComplexMatrix {
@@ -61,6 +69,10 @@ extension Matrix where Scalar == Double {
         return cropped(top: top, left: left, bottom: bottom, right: right)
     }
     
+    public func cropped(inset: Int) -> Matrix {
+        return cropped(top: inset, left: inset, bottom: inset, right: inset)
+    }
+    
     public func cropped(top: Int = 0, left: Int = 0, bottom: Int = 0, right: Int = 0) -> Matrix {
         let rows = (top)...(shape.rows - bottom - 1)
         let columns = (left)...(shape.columns - right - 1)
@@ -73,6 +85,10 @@ extension ComplexMatrix where Scalar == Double {
     
     public func cropped(to shape: Shape, _ rule: CropRoundingRule = .towardsTopLeft) -> ComplexMatrix {
         return ComplexMatrix(real: real.cropped(to: shape, rule), imaginary: imaginary.cropped(to: shape, rule))
+    }
+    
+    public func cropped(inset: Int) -> ComplexMatrix {
+        return ComplexMatrix(real: real.cropped(inset: inset), imaginary: imaginary.cropped(inset: inset))
     }
     
     public func cropped(top: Int = 0, left: Int = 0, bottom: Int = 0, right: Int = 0) -> ComplexMatrix {

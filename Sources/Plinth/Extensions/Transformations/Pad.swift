@@ -32,6 +32,10 @@ extension Matrix where Scalar == Float {
         return padded(top: top, left: left, bottom: bottom, right: right)
     }
     
+    public func padded(inset: Int, repeating element: Scalar = .zero) -> Matrix {
+        return padded(top: inset, left: inset, bottom: inset, right: inset, repeating: element)
+    }
+    
     public func padded(top: Int = 0, left: Int = 0, bottom: Int = 0, right: Int = 0, repeating element: Scalar = .zero) -> Matrix {
         var output: Matrix = .init(shape: .init(rows: shape.rows + top + bottom, columns: shape.columns + left + right), repeating: element)
         output[top...(top + shape.rows - 1), left...(left + shape.columns - 1)] = self
@@ -46,6 +50,13 @@ extension ComplexMatrix where Scalar == Float {
         return ComplexMatrix(
             real: real.padded(to: shape, rule, repeating: element.real),
             imaginary: imaginary.padded(to: shape, rule, repeating: element.imaginary)
+        )
+    }
+    
+    public func padded(inset: Int, repeating element: Complex = .zero) -> ComplexMatrix {
+        return ComplexMatrix(
+            real: real.padded(inset: inset),
+            imaginary: imaginary.padded(inset: inset)
         )
     }
     
@@ -68,6 +79,10 @@ extension Matrix where Scalar == Double {
         return padded(top: top, left: left, bottom: bottom, right: right)
     }
     
+    public func padded(inset: Int, repeating element: Scalar = .zero) -> Matrix {
+        return padded(top: inset, left: inset, bottom: inset, right: inset, repeating: element)
+    }
+    
     public func padded(top: Int = 0, left: Int = 0, bottom: Int = 0, right: Int = 0, repeating element: Scalar = .zero) -> Matrix {
         var output: Matrix = .init(shape: .init(rows: shape.rows + top + bottom, columns: shape.columns + left + right), repeating: element)
         output[top...(top + shape.rows - 1), left...(left + shape.columns - 1)] = self
@@ -82,6 +97,13 @@ extension ComplexMatrix where Scalar == Double {
         return ComplexMatrix(
             real: real.padded(to: shape, rule, repeating: element.real),
             imaginary: imaginary.padded(to: shape, rule, repeating: element.imaginary)
+        )
+    }
+    
+    public func padded(inset: Int, repeating element: Complex = .zero) -> ComplexMatrix {
+        return ComplexMatrix(
+            real: real.padded(inset: inset),
+            imaginary: imaginary.padded(inset: inset)
         )
     }
     
