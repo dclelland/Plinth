@@ -187,15 +187,19 @@ Apply a circular shift to a matrix.
 
 Concatentate multiple matrices together, row-wise or column-wise.
 
-## Comparisons
+## Mathematics
 
-### [Comparisons](Sources/Plinth/Extensions/Comparisons/Comparisons.swift)
+### [Comparisons](Sources/Plinth/Extensions/Mathematics/Comparisons.swift)
 
 `<`, `<=`, `>`, `>=`, `==`, `!==` infix operators.
 
 Pointwise comparison or equality checks, returning `0.0` for `false` and `1.0` for `true`.
 
-## Mathematics
+### [Interpolation](Sources/Plinth/Extensions/Mathematics/Interpolation.swift)
+
+Linear interpolate values from a given range to/from `0.0...1.0`.
+
+> This is similar to C++'s [`std::lerp`](https://en.cppreference.com/w/cpp/numeric/lerp).
 
 ### [Powers](Sources/Plinth/Extensions/Mathematics/Powers.swift)
 
@@ -207,11 +211,9 @@ Includes special functions for taking integer powers of matrices, for use when r
 
 This also supports negative integers by applying `vForce.reciprocal` to the result.
 
-### [Interpolation](Sources/Plinth/Extensions/Statistics/Interpolation.swift)
+### [Ramps](Sources/Plinth/Extensions/Mathematics/Ramps.swift)
 
-Linear interpolate values from a given range to/from `0.0...1.0`.
-
-> This is similar to C++'s [`std::lerp`](https://en.cppreference.com/w/cpp/numeric/lerp).
+Generate matrices which ramp from the start to end of a range of values, along cartesian or polar coordinates.
 
 ## Statistics
 
