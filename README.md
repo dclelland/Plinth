@@ -337,3 +337,7 @@ Apply a circular rotation to a frequency-domain matrix so that the DC/DC signal 
 ### [Autocorrelation](Sources/Plinth/Extensions/Signal%20Processing/Autocorrelation.swift)
 
 Calculate the autocorrelation of a matrix by taking the square magnitudes in the frequency domain.
+
+### [Convolution](Sources/Plinth/Extensions/Signal%20Processing/Autocorrelation.swift)
+
+Calculate convolutions using 3x3, 5x5 and image kernels.
