@@ -8,18 +8,19 @@
 import Foundation
 import Accelerate
 
+
 extension Matrix where Scalar == Float {
     
     public func autocorrelated(setup: FFT<Scalar>.Setup? = nil) -> ComplexMatrix<Scalar> {
-        return fft(setup: setup).squareMagnitudes().ifft(setup: setup) / Scalar(shape.count)
+        let frequencies = fft(setup: setup)
+        let correlated = frequencies * frequencies.conjugate()
+        return correlated.ifft(setup: setup) / Scalar(shape.count)
     }
     
-}
-
-extension ComplexMatrix where Scalar == Float {
-    
-    public func autocorrelated(setup: FFT<Scalar>.Setup? = nil) -> ComplexMatrix {
-        return fft(setup: setup).squareMagnitudes().ifft(setup: setup) / Scalar(shape.count)
+    public func magnitudeAutocorrelated(setup: FFT<Scalar>.Setup? = nil) -> ComplexMatrix<Scalar> {
+        let frequencies = fft(setup: setup)
+        let correlated = frequencies * frequencies.absolute()
+        return correlated.ifft(setup: setup) / Scalar(shape.count)
     }
     
 }
@@ -27,15 +28,15 @@ extension ComplexMatrix where Scalar == Float {
 extension Matrix where Scalar == Double {
     
     public func autocorrelated(setup: FFT<Scalar>.Setup? = nil) -> ComplexMatrix<Scalar> {
-        return fft(setup: setup).squareMagnitudes().ifft(setup: setup) / Scalar(shape.count)
+        let frequencies = fft(setup: setup)
+        let correlated = frequencies * frequencies.conjugate()
+        return correlated.ifft(setup: setup) / Scalar(shape.count)
     }
     
-}
-
-extension ComplexMatrix where Scalar == Double {
-    
-    public func autocorrelated(setup: FFT<Scalar>.Setup? = nil) -> ComplexMatrix {
-        return fft(setup: setup).squareMagnitudes().ifft(setup: setup) / Scalar(shape.count)
+    public func magnitudeAutocorrelated(setup: FFT<Scalar>.Setup? = nil) -> ComplexMatrix<Scalar> {
+        let frequencies = fft(setup: setup)
+        let correlated = frequencies * frequencies.absolute()
+        return correlated.ifft(setup: setup) / Scalar(shape.count)
     }
     
 }
