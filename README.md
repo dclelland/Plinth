@@ -334,10 +334,14 @@ Some of the inverse fourier transform methods implement energy conservation by d
 
 Apply a circular rotation to a frequency-domain matrix so that the DC/DC signal is at the top left of the lower right quadrant.
 
+### [FFTRamp](Sources/Plinth/Extensions/Signal%20Processing/FFTRamp.swift)
+
+Generate ramps aligned to the 2D FFT layout, for use when masking 2D FFT signals.
+
 ### [Autocorrelation](Sources/Plinth/Extensions/Signal%20Processing/Autocorrelation.swift)
 
 Calculate the autocorrelation of a matrix by taking the square magnitudes in the frequency domain.
 
-### [Convolution](Sources/Plinth/Extensions/Signal%20Processing/Autocorrelation.swift)
+### [Convolution](Sources/Plinth/Extensions/Signal%20Processing/Convolution.swift)
 
 Calculate convolutions using 3x3, 5x5 and image kernels.
