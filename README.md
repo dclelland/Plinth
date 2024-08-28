@@ -340,11 +340,11 @@ Generate ramps aligned to the 2D FFT layout, for use when masking 2D FFT signals
 
 ### [Autocorrelation](Sources/Plinth/Extensions/Signal%20Processing/Autocorrelation.swift)
 
-Calculate the autocorrelation of a matrix by taking the product of the spectrum with the complex conjugate or magnitudes.
+Calculate the autocorrelation of a matrix by taking the product of the spectrum with its complex conjugate or magnitudes.
 
 ### [Autoconvolution](Sources/Plinth/Extensions/Signal%20Processing/Autoconvolution.swift)
 
-Calculate the autocorrelation of a matrix by taking the square of the spectrum.
+Calculate the autoconvolution of a matrix by taking the square of the spectrum or its magnitudes.
 
 ### [Convolution](Sources/Plinth/Extensions/Signal%20Processing/Convolution.swift)
 
