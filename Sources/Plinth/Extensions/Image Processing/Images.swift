@@ -76,14 +76,12 @@ extension Matrix where Scalar == UInt8 {
         return pixelBuffer.makeCGImage(cgImageFormat: Self.cgImageFormat)!
     }
     
-    private static var cgImageFormat: vImage_CGImageFormat {
-        return vImage_CGImageFormat(
-            bitsPerComponent: vImage.Planar8.bitCountPerComponent,
-            bitsPerPixel: vImage.Planar8.bitCountPerPixel,
-            colorSpace: CGColorSpaceCreateDeviceGray(),
-            bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
-        )!
-    }
+    private static let cgImageFormat = vImage_CGImageFormat(
+        bitsPerComponent: vImage.Planar8.bitCountPerComponent,
+        bitsPerPixel: vImage.Planar8.bitCountPerPixel,
+        colorSpace: CGColorSpaceCreateDeviceGray(),
+        bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
+    )!
     
 }
 
@@ -166,14 +164,12 @@ extension Matrix where Scalar == Float {
         return pixelBuffer.makeCGImage(cgImageFormat: Self.cgImageFormat)!
     }
     
-    private static var cgImageFormat: vImage_CGImageFormat {
-        return vImage_CGImageFormat(
-            bitsPerComponent: vImage.PlanarF.bitCountPerComponent,
-            bitsPerPixel: vImage.PlanarF.bitCountPerPixel,
-            colorSpace: CGColorSpaceCreateDeviceGray(),
-            bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue | CGBitmapInfo.floatComponents.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
-        )!
-    }
+    private static let cgImageFormat = vImage_CGImageFormat(
+        bitsPerComponent: vImage.PlanarF.bitCountPerComponent,
+        bitsPerPixel: vImage.PlanarF.bitCountPerPixel,
+        colorSpace: CGColorSpaceCreateDeviceGray(),
+        bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue | CGBitmapInfo.floatComponents.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
+    )!
     
 }
 
