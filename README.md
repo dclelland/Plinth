@@ -2,6 +2,11 @@
 
 Hardware-accelerated matrix/numeric programming library for Swift.
 
+```swift
+let frumb: Matrix<Double> = .random(shape: .square(length: 4), in: -1.0...1.0)
+let brumf = frumb <*> frumb.transposed()
+```
+
 ## Installation
 
 ### Swift Package Manager
