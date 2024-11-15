@@ -7,8 +7,6 @@ let frumb: Matrix<Double> = .random(shape: .square(length: 4), in: -1.0...1.0)
 let brumf = frumb <*> frumb.transposed()
 ```
 
-Plinth's philosophy is to do "the simplest thing that works". For example, many of the arithmetic/numeric functions are implemented twice – for both `Matrix<Float>` and `Matrix<Double>` – instead of managing this through a morass of protocols and protocol implementations, we just implement the given function twice using copy and paste.
-
 ## Installation
 
 ### Swift Package Manager
@@ -67,6 +65,10 @@ import Numerics
 - [ ] Write notes on architecture and API design
 - [ ] Write code examples
 - [ ] ~~Add Cocoapods support~~ Can't do this, `swift-numerics` only supports SPM. Perhaps I should make my own `Complex` type.
+
+## Philosophy
+
+Plinth's philosophy is to do "the simplest thing that works". For example, many of the arithmetic/numeric functions are implemented twice – for both `Matrix<Float>` and `Matrix<Double>` – instead of managing this through a morass of protocols and protocol implementations, we just implement the given function twice using copy and paste.
 
 # Documentation
 
