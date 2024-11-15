@@ -7,7 +7,7 @@ let frumb: Matrix<Double> = .random(shape: .square(length: 4), in: -1.0...1.0)
 let brumf = frumb <*> frumb.transposed()
 ```
 
-Plinth's philosophy is to do "the simplest thing that works". For example, many of the arithmetic/numeric functions are implemented twice – for both `Matrix<Float>` and `Matrix<Double>` – instead of managing this through a morass of different typeclasses and typeclass implementations, we just copy and paste the implementation and change the type argument.
+Plinth's philosophy is to do "the simplest thing that works". For example, many of the arithmetic/numeric functions are implemented twice – for both `Matrix<Float>` and `Matrix<Double>` – instead of managing this through a morass of protocols and protocol implementations, we just implement the given function twice using copy and paste.
 
 ## Installation
 
