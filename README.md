@@ -68,7 +68,7 @@ import Numerics
 
 ## Philosophy
 
-Plinth's philosophy is to do "the simplest thing that works". For example, many of the arithmetic/numeric functions are implemented twice – for both `Matrix<Float>` and `Matrix<Double>` – instead of managing this through a morass of protocols and protocol implementations, we just implement the given function twice using copy and paste.
+Plinth's philosophy is to do "the simplest thing that works". For example, many of the arithmetic/numeric functions are implemented twice – for both `Matrix<Float>` and `Matrix<Double>` – instead of managing this through a morass of protocols and protocol implementations, we just implement the given function twice using copy and paste. Plinth is not [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 
 # Documentation
 
