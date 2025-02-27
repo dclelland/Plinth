@@ -2,6 +2,11 @@
 
 Hardware-accelerated matrix/numeric programming library for Swift.
 
+```swift
+let frumb: Matrix<Double> = .random(shape: .square(length: 4), in: -1.0...1.0)
+let brumf = frumb <*> frumb.transposed()
+```
+
 ## Installation
 
 ### Swift Package Manager
@@ -60,6 +65,10 @@ import Numerics
 - [ ] Implement API for specifying seeds for LAPACK random number generator calls.
     - Note the LAPACK specifications: "ISEED is INTEGER array, dimension (4). On entry, the seed of the random number generator; the array elements must be between 0 and 4095, and ISEED(4) must be odd."
 - [ ] Write code examples
+
+## Philosophy
+
+Plinth's philosophy is to do "the simplest thing that works". For example, many of the arithmetic/numeric functions are implemented twice – for both `Matrix<Float>` and `Matrix<Double>` – instead of managing this through a morass of protocols and protocol implementations, we just implement the given function twice using copy and paste. Plinth is not [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 
 # Documentation
 
