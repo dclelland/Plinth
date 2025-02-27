@@ -49,17 +49,17 @@ import Numerics
 
 ## Todo
 
+- [ ] ~~Add Cocoapods support~~ Can't do this, `swift-numerics` only supports SPM. I'd have to make my own `Complex` type.
 - [x] Implement Equality/Comparisons extension
 - [x] Implement both `.zeros` and `.ones` initializers
 - [x] Implement exception handling for LAPACK calls
-- [ ] Implement wrappers for `vDSP.fill`, `vDSP.clear`, `vDSP.window`, `vDSP.ramp`, `vDSP.stereoRamp`
+- [x] Revisit `Eigendecomposition.sorted`, is sorting the eigenvalues by real component or the magnitude preferable?
+- [x] Implement wrapper for `vDSP.ramp`
 - [x] Implement wrapper for `vDSP.convolve`
+- [ ] Implement wrappers for `vDSP.fill`, `vDSP.clear`, `vDSP.window`, `vDSP.stereoRamp`
 - [ ] Implement API for specifying seeds for LAPACK random number generator calls.
     - Note the LAPACK specifications: "ISEED is INTEGER array, dimension (4). On entry, the seed of the random number generator; the array elements must be between 0 and 4095, and ISEED(4) must be odd."
-- [x] Revisit `Eigendecomposition.sorted`, is sorting the eigenvalues by real component or the magnitude preferable?
-- [ ] Write notes on architecture and API design
 - [ ] Write code examples
-- [ ] ~~Add Cocoapods support~~ Can't do this, `swift-numerics` only supports SPM. Perhaps I should make my own `Complex` type.
 
 # Documentation
 
@@ -172,6 +172,10 @@ Crop a matrix towards the center, given a rounding rule.
 ### [Pad](Sources/Plinth/Extensions/Transformations/Pad.swift)
 
 Zero-pad a matrix away from the center, given a rounding rule.
+
+### [Repeat](Sources/Plinth/Extensions/Transformations/Repeat.swift)
+
+Repeat the elements in a matrix as rows or columns.
 
 ### [Reshape](Sources/Plinth/Extensions/Transformations/Reshape.swift)
 
@@ -322,9 +326,19 @@ Conversion to and from `vImage.PixelBuffer`, `CGImage`, `CIImage`, `NSImage`, an
 
 ### [FFT](Sources/Plinth/Extensions/Signal%20Processing/FFT.swift)
 
-Forward and inverse two-dimensional fourier transforms.
-
 Includes support for creating, reusing, and destroying your own [`FFTSetup`](https://developer.apple.com/documentation/accelerate/fftsetup)/[`FFTSetupD`](https://developer.apple.com/documentation/accelerate/fftsetupd) structure.
+
+### [FFT1D](Sources/Plinth/Extensions/Signal%20Processing/FFT1D.swift)
+
+Forward and inverse one-dimensional fourier transforms.
+
+Some of the inverse fourier transform methods implement energy conservation by dividing by the size of the matrix.
+
+> Uses Accelerate's [`vDSP_fft_zip`](https://developer.apple.com/documentation/accelerate/1450224-vdsp_fft_zip)/[`vDSP_fft_zipD`](https://developer.apple.com/documentation/accelerate/1449916-vdsp_fft_zipd).
+
+### [FFT2D](Sources/Plinth/Extensions/Signal%20Processing/FFT2D.swift)
+
+Forward and inverse two-dimensional fourier transforms.
 
 Some of the inverse fourier transform methods implement energy conservation by dividing by the size of the matrix.
 

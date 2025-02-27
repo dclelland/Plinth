@@ -42,7 +42,7 @@ extension Matrix where Scalar == Float {
     }
     
     public func shifted(columns: Int) -> Matrix {
-        let columns = columns %% shape.rows
+        let columns = columns %% shape.columns
         
         guard columns != 0 else {
             return self
@@ -64,7 +64,7 @@ extension Matrix where Scalar == Float {
     
     public func shifted(rows: Int, columns: Int) -> Matrix {
         let rows = rows %% shape.rows
-        let columns = columns %% shape.rows
+        let columns = columns %% shape.columns
         
         switch (rows, columns) {
         case (0, 0):
@@ -140,7 +140,7 @@ extension Matrix where Scalar == Double {
     }
     
     public func shifted(columns: Int) -> Matrix {
-        let columns = columns %% shape.rows
+        let columns = columns %% shape.columns
         
         guard columns != 0 else {
             return self
@@ -162,7 +162,7 @@ extension Matrix where Scalar == Double {
     
     public func shifted(rows: Int, columns: Int) -> Matrix {
         let rows = rows %% shape.rows
-        let columns = columns %% shape.rows
+        let columns = columns %% shape.columns
         
         switch (rows, columns) {
         case (0, 0):
