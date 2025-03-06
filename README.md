@@ -372,3 +372,7 @@ Calculate the autoconvolution of a matrix by taking the square of the spectrum o
 ### [Convolution](Sources/Plinth/Extensions/Signal%20Processing/Convolution.swift)
 
 Calculate convolutions using 3x3, 5x5 and image kernels.
+
+### [Downsampling](Sources/Plinth/Extensions/Signal%20Processing/Downsampling.swift)
+
+Decimate signals, with an optional anti-aliasing filter.
