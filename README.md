@@ -359,7 +359,7 @@ Apply a circular rotation to a frequency-domain matrix so that the DC/DC signal 
 
 ### [FFTRamp](Sources/Plinth/Extensions/Signal%20Processing/FFTRamp.swift)
 
-Generate ramps aligned to the 2D FFT layout, for use when masking 2D FFT signals.
+Generate centered ramps and ramps aligned to the FFT layout, for use when masking FFT signals.
 
 ### [Autocorrelation](Sources/Plinth/Extensions/Signal%20Processing/Autocorrelation.swift)
 
