@@ -373,6 +373,6 @@ Calculate the autoconvolution of a matrix by taking the square of the spectrum o
 
 Calculate convolutions using 3x3, 5x5 and image kernels.
 
-### [Downsampling](Sources/Plinth/Extensions/Signal%20Processing/Downsampling.swift)
+### [Resampling](Sources/Plinth/Extensions/Signal%20Processing/Resampling.swift)
 
-Decimate signals, with an optional anti-aliasing filter.
+Upsample and downsample signals, with an optional anti-aliasing filter.
