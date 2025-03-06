@@ -63,7 +63,7 @@ extension ComplexMatrix where Scalar == Float {
     }
     
     private func fft1D(direction: FFTDirection, setup: FFT<Scalar>.Setup) -> ComplexMatrix {
-        let log2N = vDSP_Length(log2(Scalar(shape.length)))
+        let log2N = vDSP_Length(log2(Scalar(shape.count)))
         return fmap { inputVector in
             vDSP_fft_zip(setup, &inputVector, 1, log2N, direction)
         }
@@ -126,7 +126,7 @@ extension ComplexMatrix where Scalar == Double {
     }
     
     private func fft1D(direction: FFTDirection, setup: FFT<Scalar>.Setup) -> ComplexMatrix {
-        let log2N = vDSP_Length(log2(Scalar(shape.length)))
+        let log2N = vDSP_Length(log2(Scalar(shape.count)))
         return fmap { inputVector in
             vDSP_fft_zipD(setup, &inputVector, 1, log2N, direction)
         }
