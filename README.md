@@ -377,9 +377,13 @@ Calculate the autocorrelation of a matrix by taking the product of the spectrum 
 
 Calculate the autoconvolution of a matrix by taking the square of the spectrum or its magnitudes.
 
-### [Convolution](Sources/Plinth/Extensions/Signal%20Processing/Convolution.swift)
+### [Convolution1D](Sources/Plinth/Extensions/Signal%20Processing/Convolution1D.swift)
 
-Calculate convolutions using 3x3, 5x5 and image kernels.
+Calculate convolutions using one-dimensional kernels.
+
+### [Convolution2D](Sources/Plinth/Extensions/Signal%20Processing/Convolution2D.swift)
+
+Calculate convolutions using two-dimensional kernels.
 
 ### [Resampling](Sources/Plinth/Extensions/Signal%20Processing/Resampling.swift)
 

@@ -1,5 +1,5 @@
 //
-//  Convolutions.swift
+//  Convolution2D.swift
 //  Plinth
 //
 //  Created by Daniel Clelland on 27/08/24.
@@ -70,7 +70,7 @@ extension Matrix where Scalar == Float {
         return output
     }
     
-    public func convolve(filter: Matrix) -> Matrix {
+    public func convolve2D(filter: Matrix) -> Matrix {
         let input = self
         var output: Matrix = .zeros(shape: shape)
         input.withUnsafeBufferPointer { inputVector in
@@ -145,7 +145,7 @@ extension Matrix where Scalar == Double {
         return output
     }
     
-    public func convolve(filter: Matrix) -> Matrix {
+    public func convolve2D(filter: Matrix) -> Matrix {
         let input = self
         var output: Matrix = .zeros(shape: shape)
         input.withUnsafeBufferPointer { inputVector in
