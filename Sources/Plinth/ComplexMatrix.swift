@@ -41,8 +41,8 @@ public struct ComplexMatrix<Scalar> where Scalar: Real {
     public init(shape: Shape, _ closure: (_ row: Int, _ column: Int) throws -> Complex) rethrows {
         var elements: [Complex] = []
         elements.reserveCapacity(shape.count)
-        for row in 0..<shape.rows {
-            for column in 0..<shape.columns {
+        for row in shape.rowIndices {
+            for column in shape.columnIndices {
                 elements.append(try closure(row, column))
             }
         }
