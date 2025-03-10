@@ -174,6 +174,10 @@ Wrappers over most of the basic `vDSP` and `vForce` functions in Accelerate.
 
 Find the center point of a matrix, given a rounding rule.
 
+### [Concatenate](Sources/Plinth/Extensions/Transformations/Concatenate.swift)
+
+Concatentate multiple matrices together, row-wise or column-wise.
+
 ### [Crop](Sources/Plinth/Extensions/Transformations/Crop.swift)
 
 Crop a matrix towards the center, given a rounding rule.
@@ -192,13 +196,13 @@ Apply a new shape to a matrix, or reshape it as a single row or column.
 
 This also supports both `.rowMajor` and `.columnMajor` orderings.
 
+### [Reverse](Sources/Plinth/Extensions/Transformations/Reverse.swift)
+
+Reverse a matrix's elements, rows, or columns.
+
 ### [Shift](Sources/Plinth/Extensions/Transformations/Shift.swift)
 
 Apply a circular shift to a matrix.
-
-### [Concatenate](Sources/Plinth/Extensions/Transformations/Concatenate.swift)
-
-Concatentate multiple matrices together, row-wise or column-wise.
 
 ## Mathematics
 
@@ -267,6 +271,10 @@ Generate identity matrices.
 ### [Diagonal](Sources/Plinth/Extensions/Linear%20Algebra/Diagonal.swift)
 
 Generate diagonal matrices.
+
+### [Circulant](Sources/Plinth/Extensions/Linear%20Algebra/Circulant.swift)
+
+Generate circulant matrices.
 
 ### [Transposition](Sources/Plinth/Extensions/Linear%20Algebra/Transposition.swift)
 
