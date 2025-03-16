@@ -13,13 +13,13 @@ extension Matrix where Scalar == Float {
     public func upsampled(factor: Int = 2) -> Matrix {
         var elements = Matrix.zeros(shape: .init(rows: shape.count, columns: factor))
         elements[column: 0] = asColumn()
-        return elements.asRow()
+        return elements.reshaped(.init(rows: shape.rows, columns: shape.columns * factor))
     }
 
     public func downsampled(factor: Int = 2, filter: [Scalar] = [1.0]) -> Matrix {
         let coefficients = [Scalar](repeating: 1.0 / Scalar(factor), count: factor)
         let elements = vDSP.downsample(elements, decimationFactor: factor, filter: filter)
-        return Matrix(shape: .row(length: shape.count / factor), elements: elements)
+        return Matrix(shape: .init(rows: shape.rows, columns: shape.columns / factor), elements: elements)
     }
 
 }
@@ -47,13 +47,13 @@ extension Matrix where Scalar == Double {
     public func upsampled(factor: Int = 2) -> Matrix {
         var elements = Matrix.zeros(shape: .init(rows: shape.count, columns: factor))
         elements[column: 0] = asColumn()
-        return elements.asRow()
+        return elements.reshaped(.init(rows: shape.rows, columns: shape.columns * factor))
     }
 
     public func downsampled(factor: Int = 2, filter: [Scalar] = [1.0]) -> Matrix {
         let coefficients = [Scalar](repeating: 1.0 / Scalar(factor), count: factor)
         let elements = vDSP.downsample(elements, decimationFactor: factor, filter: filter)
-        return Matrix(shape: .row(length: shape.count / factor), elements: elements)
+        return Matrix(shape: .init(rows: shape.rows, columns: shape.columns / factor), elements: elements)
     }
 
 }
