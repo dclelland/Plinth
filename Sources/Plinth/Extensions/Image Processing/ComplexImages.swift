@@ -71,16 +71,20 @@ extension ComplexMatrix where Scalar == Float {
     
     public func rgbColormap() -> (red: Matrix, green: Matrix, blue: Matrix) {
         let (hue, saturation, brightness) = hsbColormap()
-        let chroma = saturation * brightness
-        let intermediary = chroma * (hue * 6.0).remainder(.init(shape: shape, repeating: 2.0)).absolute()
-        let masks = (0..<6).map { index -> Matrix in
-            return (hue * 6.0).floor() == Scalar(index)
-        }
-        let match = brightness - chroma
+        
+        let sextant = hue * 6.0
+        let chroma = brightness * saturation
+        let match = 1.0 - saturation
+        
+        let sector = sextant.floor()
+        let sectors = (0..<6).map { sector == Scalar($0) }
+        let ramp = sextant.remainder(.init(shape: shape, repeating: 2.0)).absolute()
+        let ramps = (0..<6).map { sectors[$0] * ramp }
+        
         return (
-            red: chroma * masks[0] + intermediary * masks[1] + intermediary * masks[4] + chroma * masks[5] + match,
-            green: intermediary * masks[0] + chroma * masks[1] + chroma * masks[2] + intermediary * masks[3] + match,
-            blue: intermediary * masks[2] + chroma * masks[3] + chroma * masks[4] + intermediary * masks[5] + match
+            red: (ramps[4] + sectors[5] + sectors[0] + ramps[1]) * chroma + match,
+            green: (ramps[0] + sectors[1] + sectors[2] + ramps[3]) * chroma + match,
+            blue: (ramps[2] + sectors[3] + sectors[4] + ramps[5]) * chroma + match
         )
     }
     
