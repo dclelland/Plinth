@@ -339,6 +339,10 @@ Conversion to and from floating point formats in the range `0.0...1.0` to 8-bit 
 
 Conversion to and from `vImage.PixelBuffer`, `CGImage`, `CIImage`, `NSImage`, and `UIImage`.
 
+### [ComplexImages](Sources/Plinth/Extensions/Image%20Processing/ComplexImages.swift)
+
+Conversion to and from `vImage.PixelBuffer`, `CGImage`, `CIImage`, `NSImage`, and `UIImage`, using an opinionated colormap to represent complex values.
+
 ## Signal Processing
 
 ### [FFT](Sources/Plinth/Extensions/Signal%20Processing/FFT.swift)
