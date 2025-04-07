@@ -74,7 +74,7 @@ extension ComplexMatrix where Scalar == Float {
         
         let sextant = hue * 6.0
         let chroma = brightness * saturation
-        let match = 1.0 - saturation
+        let match = brightness - chroma
         
         let sector = sextant.floor()
         let sectors = (0..<6).map { sector == Scalar($0) }
